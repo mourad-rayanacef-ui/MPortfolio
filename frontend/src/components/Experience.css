@@ -1,75 +1,70 @@
 /* Experience Section - Premium Design */
 .experience {
-  padding: 6rem 0;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FDFBF8 100%);
+  padding: 4rem 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFE5C1 100%);
   transition: background 0.3s ease;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .dark .experience {
-  background: linear-gradient(180deg, #022A3C 0%, #011C29 100%);
+  background: linear-gradient(180deg, #1F2032 0%, #1a1b2a 100%);
 }
 
 .experience-container {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
-/* Section Header */
 .section-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
 .section-badge {
   display: inline-block;
-  padding: 0.3rem 1rem;
-  background: rgba(2, 42, 60, 0.06);
+  padding: 0.25rem 0.8rem;
+  background: rgba(31, 32, 50, 0.06);
   color: #4A5D68;
   border-radius: 30px;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.5px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   text-transform: uppercase;
 }
 
 .dark .section-badge {
-  background: rgba(243, 173, 122, 0.12);
-  color: #F3AD7A;
+  background: rgba(249, 151, 123, 0.12);
+  color: #F9977B;
 }
 
 .section-title {
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: #022A3C;
+  margin-bottom: 0.5rem;
+  color: #1F2032;
   letter-spacing: -0.02em;
 }
 
 .dark .section-title {
-  color: #FDF9F6;
+  color: #FFFFFF;
 }
 
 .section-divider {
-  width: 50px;
+  width: 40px;
   height: 2px;
-  background: #F3AD7A;
-  margin: 1rem auto 0;
+  background: #F9977B;
+  margin: 0.75rem auto 0;
   border-radius: 2px;
-}
-
-.dark .section-divider {
-  background: #F3AD7A;
 }
 
 .section-subtitle {
   color: #5B6E78;
-  font-size: 1rem;
-  margin-top: 1rem;
-  max-width: 500px;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  max-width: 450px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -78,28 +73,27 @@
   color: #9FB4BE;
 }
 
-/* Experience Timeline */
 .experience-timeline {
   position: relative;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .experience-group {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .experience-group-title {
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #022A3C;
-  margin-bottom: 1.5rem;
-  padding-left: 2.5rem;
+  color: #1F2032;
+  margin-bottom: 1rem;
+  padding-left: 2rem;
   position: relative;
 }
 
 .dark .experience-group-title {
-  color: #FDF9F6;
+  color: #FFFFFF;
 }
 
 .experience-group-title::before {
@@ -108,20 +102,15 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px;
+  width: 16px;
   height: 2px;
-  background: #F3AD7A;
+  background: #F9977B;
 }
 
-.dark .experience-group-title::before {
-  background: #F3AD7A;
-}
-
-/* Experience Item */
 .experience-item {
   display: flex;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
   position: relative;
 }
 
@@ -129,101 +118,95 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 2rem;
+  width: 1.5rem;
   flex-shrink: 0;
   position: relative;
 }
 
 .marker-dot {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: #022A3C;
-  border: 3px solid #FFFFFF;
-  box-shadow: 0 0 0 3px rgba(2, 42, 60, 0.12);
+  background: #1F2032;
+  border: 2.5px solid #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(31, 32, 50, 0.1);
   flex-shrink: 0;
   z-index: 1;
 }
 
 .dark .marker-dot {
-  background: #0A3D54;
-  border-color: #022A3C;
-  box-shadow: 0 0 0 3px rgba(10, 61, 84, 0.3);
+  background: #3a3b4f;
+  border-color: #1F2032;
+  box-shadow: 0 0 0 2px rgba(58, 59, 79, 0.2);
 }
 
 .marker-dot.internship {
-  background: #F3AD7A;
+  background: #F9977B;
   border-color: #FFFFFF;
-  box-shadow: 0 0 0 3px rgba(243, 173, 122, 0.25);
+  box-shadow: 0 0 0 2px rgba(249, 151, 123, 0.2);
 }
 
 .dark .marker-dot.internship {
-  border-color: #022A3C;
-  box-shadow: 0 0 0 3px rgba(243, 173, 122, 0.25);
+  border-color: #1F2032;
+  box-shadow: 0 0 0 2px rgba(249, 151, 123, 0.2);
 }
 
 .marker-line {
   flex: 1;
   width: 2px;
-  background: rgba(2, 42, 60, 0.15);
-  margin: 4px 0;
+  background: rgba(31, 32, 50, 0.1);
+  margin: 3px 0;
 }
 
 .dark .marker-line {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .experience-item:last-child .marker-line {
   display: none;
 }
 
-/* Experience Content */
 .experience-item-content {
   flex: 1;
   background: #FFFFFF;
-  border-radius: 16px;
-  padding: 1.5rem;
-  border: 1px solid rgba(2, 42, 60, 0.06);
+  border-radius: 10px;
+  padding: 1.25rem;
+  border: 1px solid rgba(31, 32, 50, 0.04);
   transition: all 0.3s ease;
 }
 
 .dark .experience-item-content {
-  background: #022A3C;
-  border-color: rgba(255, 255, 255, 0.05);
+  background: #1F2032;
+  border-color: rgba(255, 255, 255, 0.03);
 }
 
 .experience-item-content:hover {
-  transform: translateX(4px);
-  border-color: rgba(243, 173, 122, 0.35);
+  transform: translateX(3px);
+  border-color: rgba(249, 151, 123, 0.25);
 }
 
-.dark .experience-item-content:hover {
-  border-color: rgba(243, 173, 122, 0.3);
-}
-
-/* Experience Header */
 .experience-header {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
+  gap: 0.75rem;
+  margin-bottom: 0.3rem;
   flex-wrap: wrap;
 }
 
 .experience-company-logo {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
-  border-radius: 10px;
-  background: #F8F2EC;
-  padding: 6px;
+  border-radius: 8px;
+  background: #FFE5C1;
+  padding: 4px;
   flex-shrink: 0;
-  border: 1px solid rgba(2, 42, 60, 0.06);
+  border: 1px solid rgba(31, 32, 50, 0.04);
 }
 
 .dark .experience-company-logo {
-  background: #011C29;
-  border-color: rgba(255, 255, 255, 0.06);
+  background: #2a2b3d;
+  border-color: rgba(255, 255, 255, 0.03);
 }
 
 .experience-title-group {
@@ -233,18 +216,18 @@
 
 .experience-title {
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-  font-size: 1.05rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: #022A3C;
-  margin-bottom: 0.1rem;
+  color: #1F2032;
+  margin-bottom: 0.05rem;
 }
 
 .dark .experience-title {
-  color: #FDF9F6;
+  color: #FFFFFF;
 }
 
 .experience-company {
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   color: #5B6E78;
   font-weight: 500;
 }
@@ -255,31 +238,30 @@
 
 .experience-type-badge {
   display: inline-block;
-  padding: 0.2rem 0.75rem;
+  padding: 0.15rem 0.5rem;
   border-radius: 30px;
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   font-weight: 700;
   color: #FFFFFF;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
   flex-shrink: 0;
 }
 
 .internship-badge {
-  color: #022A3C;
+  color: #1F2032;
 }
 
-/* Experience Meta */
 .experience-meta {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.3rem;
   flex-wrap: wrap;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .experience-date {
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   color: #5B6E78;
   font-weight: 500;
 }
@@ -297,7 +279,7 @@
 }
 
 .experience-location {
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   color: #5B6E78;
 }
 
@@ -305,33 +287,31 @@
   color: #9FB4BE;
 }
 
-/* Experience Description */
 .experience-description {
-  margin: 0.75rem 0;
+  margin: 0.5rem 0;
 }
 
 .experience-description p {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   color: #4A5D68;
-  line-height: 1.6;
+  line-height: 1.4;
 }
 
 .dark .experience-description p {
   color: #9FB4BE;
 }
 
-/* Achievements */
 .experience-achievements {
-  margin: 1rem 0;
+  margin: 0.75rem 0;
 }
 
 .experience-achievements h4 {
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: #4A5D68;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 
 .dark .experience-achievements h4 {
@@ -345,11 +325,11 @@
 }
 
 .experience-achievements li {
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   color: #4A5D68;
-  padding: 0.3rem 0 0.3rem 1.2rem;
+  padding: 0.2rem 0 0.2rem 0.8rem;
   position: relative;
-  line-height: 1.5;
+  line-height: 1.3;
 }
 
 .dark .experience-achievements li {
@@ -360,41 +340,35 @@
   content: '▹';
   position: absolute;
   left: 0;
-  color: #F3AD7A;
+  color: #F9977B;
 }
 
-.dark .experience-achievements li::before {
-  color: #F3AD7A;
-}
-
-/* Technologies */
 .experience-technologies {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
 }
 
 .tech-tag {
-  padding: 0.2rem 0.7rem;
-  background: #F3E4D3;
+  padding: 0.15rem 0.5rem;
+  background: #FFE5C1;
   border-radius: 30px;
-  font-size: 0.7rem;
+  font-size: 0.55rem;
   color: #4A5D68;
   font-weight: 500;
 }
 
 .dark .tech-tag {
-  background: #011C29;
+  background: #2a2b3d;
   color: #9FB4BE;
 }
 
-/* Experience Website Link */
 .experience-website {
   display: inline-block;
-  margin-top: 0.75rem;
-  font-size: 0.8rem;
-  color: #022A3C;
+  margin-top: 0.5rem;
+  font-size: 0.65rem;
+  color: #1F2032;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s ease;
@@ -405,239 +379,150 @@
 }
 
 .experience-website:hover {
-  color: #E8935C;
-}
-
-.dark .experience-website:hover {
-  color: #F3AD7A;
+  color: #F9977B;
 }
 
 /* ===== RESPONSIVE ===== */
-
 @media (max-width: 1024px) {
   .experience-container {
-    padding: 0 1.5rem;
+    padding: 0 1.25rem;
   }
-  
   .experience-item-content {
-    padding: 1.25rem;
+    padding: 1rem;
   }
 }
 
 @media (max-width: 768px) {
   .experience {
-    padding: 4rem 0;
+    padding: 3rem 0;
   }
-  
   .experience-container {
-    padding: 0 1.25rem;
+    padding: 0 1rem;
   }
-  
   .section-title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
-  
   .experience-item {
     flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
   }
-  
   .experience-item-marker {
     width: 100%;
     flex-direction: row;
-    padding-left: 1rem;
-    align-items: center;
-    gap: 0.5rem;
+    padding-left: 0.75rem;
+    gap: 0.3rem;
   }
-  
   .marker-line {
     display: none;
   }
-  
   .experience-header {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
-  
   .experience-title-group {
     flex-basis: auto;
   }
-  
   .experience-type-badge {
     margin-left: auto;
   }
-  
   .experience-item-content {
-    padding: 1rem;
-    border-radius: 12px;
+    padding: 0.875rem;
+    border-radius: 8px;
   }
-  
   .experience-company-logo {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
   }
-  
   .experience-title {
-    font-size: 0.95rem;
-  }
-  
-  .experience-company {
     font-size: 0.8rem;
   }
-  
+  .experience-company {
+    font-size: 0.65rem;
+  }
   .experience-group-title {
-    font-size: 1rem;
+    font-size: 0.85rem;
     padding-left: 1.5rem;
   }
-  
   .experience-group {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .experience {
-    padding: 3rem 0;
+    padding: 2.5rem 0;
   }
-  
-  .experience-container {
-    padding: 0 1rem;
-  }
-  
-  .section-header {
-    margin-bottom: 2rem;
-  }
-  
   .section-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
-  
   .section-badge {
-    font-size: 0.65rem;
-    padding: 0.2rem 0.8rem;
+    font-size: 0.55rem;
+    padding: 0.2rem 0.6rem;
   }
-  
   .section-subtitle {
-    font-size: 0.85rem;
-  }
-  
-  .experience-timeline {
-    margin-top: 1.5rem;
-  }
-  
-  .experience-item {
-    margin-bottom: 1.25rem;
-  }
-  
-  .experience-item-marker {
-    display: none;
-  }
-  
-  .experience-item-content {
-    padding: 0.875rem;
-    border-radius: 10px;
-  }
-  
-  .experience-company-logo {
-    width: 32px;
-    height: 32px;
-    padding: 4px;
-    border-radius: 8px;
-  }
-  
-  .experience-title {
-    font-size: 0.85rem;
-  }
-  
-  .experience-company {
     font-size: 0.75rem;
   }
-  
-  .experience-type-badge {
-    font-size: 0.5rem;
-    padding: 0.15rem 0.5rem;
+  .experience-item-content {
+    padding: 0.75rem;
   }
-  
+  .experience-company-logo {
+    width: 28px;
+    height: 28px;
+    padding: 3px;
+  }
+  .experience-title {
+    font-size: 0.75rem;
+  }
+  .experience-company {
+    font-size: 0.6rem;
+  }
+  .experience-type-badge {
+    font-size: 0.45rem;
+    padding: 0.1rem 0.4rem;
+  }
   .experience-date,
   .experience-location {
-    font-size: 0.7rem;
-  }
-  
-  .experience-description p {
-    font-size: 0.8rem;
-  }
-  
-  .experience-achievements li {
-    font-size: 0.75rem;
-    padding: 0.2rem 0 0.2rem 1rem;
-  }
-  
-  .tech-tag {
     font-size: 0.6rem;
-    padding: 0.15rem 0.5rem;
   }
-  
-  .experience-group-title {
-    font-size: 0.9rem;
-    padding-left: 1.25rem;
-    margin-bottom: 1rem;
-  }
-  
-  .experience-group-title::before {
-    width: 14px;
-  }
-  
-  .experience-website {
+  .experience-description p {
     font-size: 0.7rem;
   }
-  
-  .experience-header {
-    gap: 0.75rem;
+  .experience-achievements li {
+    font-size: 0.65rem;
+    padding: 0.15rem 0 0.15rem 0.7rem;
   }
-  
-  .experience-meta {
-    gap: 0.35rem;
-    margin-bottom: 0.5rem;
+  .tech-tag {
+    font-size: 0.5rem;
+    padding: 0.1rem 0.4rem;
+  }
+  .experience-group-title {
+    font-size: 0.8rem;
+    padding-left: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .experience-group-title::before {
+    width: 12px;
   }
 }
 
 @media (max-width: 360px) {
   .experience-item-content {
-    padding: 0.75rem;
+    padding: 0.6rem;
   }
-  
   .experience-company-logo {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
   }
-  
   .experience-title {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
-  
   .experience-company {
-    font-size: 0.7rem;
-  }
-  
-  .experience-description p {
-    font-size: 0.75rem;
-    line-height: 1.5;
-  }
-  
-  .experience-achievements h4 {
-    font-size: 0.7rem;
-  }
-  
-  .experience-achievements li {
-    font-size: 0.7rem;
-  }
-  
-  .tech-tag {
     font-size: 0.55rem;
-    padding: 0.12rem 0.4rem;
   }
-  
-  .section-title {
-    font-size: 1.35rem;
+  .experience-description p {
+    font-size: 0.65rem;
+  }
+  .experience-achievements li {
+    font-size: 0.6rem;
   }
 }

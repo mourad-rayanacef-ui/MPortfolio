@@ -5,13 +5,13 @@
   align-items: center;
   justify-content: center;
   background: #FFFFFF;
-  padding: 100px 1.5rem 60px;
+  padding: 80px 1rem 40px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
 }
 
 .hero.dark {
-  background: #022A3C;
+  background: #1F2032;
 }
 
 .hero-container {
@@ -21,16 +21,15 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 4rem;
+  gap: 3rem;
 }
 
-/* ===== Left Content ===== */
 .hero-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  gap: 0.8rem;
+  gap: 0.5rem;
   animation: fadeInUp 0.7s ease-out both;
 }
 
@@ -46,7 +45,7 @@
 }
 
 .hero-greeting {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: #000000;
   letter-spacing: 0.5px;
@@ -60,36 +59,34 @@
   font-family: 'Inter', sans-serif;
   font-size: 2.8rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.15;
   margin: 0;
-  color: #022A3C;
+  color: #1F2032;
 }
 
 .hero.dark .hero-name {
   color: #FFFFFF;
 }
 
-/* Title — BOLD, single color */
 .hero-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  line-height: 1.5;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
   margin: 0;
-  color: #022A3C;
+  color: #1F2032;
 }
 
 .hero.dark .hero-title {
-  color: #F3AD7A;
+  color: #F9977B;
 }
 
-/* Description */
 .hero-description {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.5;
   color: #4A5D68;
   max-width: 420px;
-  margin: 0.2rem 0 0.4rem;
+  margin: 0;
 }
 
 .hero.dark .hero-description {
@@ -103,27 +100,27 @@
 .btn-primary {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.6rem;
-  background: #F3AD7A;
-  color: #022A3C;
+  gap: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  background: #F9977B;
+  color: #1F2032;
   border: none;
   border-radius: 50px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 3px 12px rgba(243, 173, 122, 0.3);
+  box-shadow: 0 3px 12px rgba(249, 151, 123, 0.3);
 }
 
 .btn-primary:hover {
+  background: #e88568;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(243, 173, 122, 0.4);
 }
 
 .hero-socials {
   display: flex;
-  gap: 0.8rem;
+  gap: 0.6rem;
   margin-top: 0.2rem;
 }
 
@@ -131,21 +128,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: transparent;
-  border: 1.5px solid #022A3C;
-  color: #022A3C;
-  font-size: 1rem;
+  border: 1.5px solid #1F2032;
+  color: #1F2032;
+  font-size: 0.85rem;
   transition: all 0.25s ease;
   text-decoration: none;
 }
 
 .social-link:hover {
-  background: #F3AD7A;
-  border-color: #F3AD7A;
-  color: #022A3C;
+  background: #F9977B;
+  border-color: #F9977B;
+  color: #1F2032;
   transform: translateY(-2px);
 }
 
@@ -155,12 +152,11 @@
 }
 
 .hero.dark .social-link:hover {
-  background: #F3AD7A;
-  border-color: #F3AD7A;
-  color: #022A3C;
+  background: #F9977B;
+  border-color: #F9977B;
+  color: #1F2032;
 }
 
-/* ===== Right Image ===== */
 .hero-image {
   display: flex;
   justify-content: center;
@@ -180,12 +176,12 @@
 }
 
 .profile-image {
-  width: 320px;
-  height: 320px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   object-fit: cover;
   display: block;
-  border: 3px solid #022A3C;
+  border: 3px solid #1F2032;
   transition: transform 0.3s ease;
 }
 
@@ -194,164 +190,131 @@
 }
 
 .hero.dark .profile-image {
-  border-color: #F3AD7A;
+  border-color: #F9977B;
 }
 
 /* ===== RESPONSIVE ===== */
-
-/* Tablets & Small Laptops */
 @media (max-width: 1024px) {
   .hero-container {
-    gap: 3rem;
+    gap: 2rem;
   }
-  
   .profile-image {
-    width: 280px;
-    height: 280px;
+    width: 240px;
+    height: 240px;
   }
-  
   .hero-name {
     font-size: 2.4rem;
   }
 }
 
-/* Mobile Landscape */
 @media (max-width: 900px) {
   .hero-container {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
     text-align: center;
   }
-
   .hero-content {
     align-items: center;
     text-align: center;
     order: 2;
   }
-
   .hero-image {
     order: 1;
   }
-  
   .hero-description {
     max-width: 100%;
   }
-  
   .hero-buttons {
     display: flex;
     justify-content: center;
   }
-  
   .hero-socials {
     justify-content: center;
   }
-  
-  .profile-image {
-    width: 250px;
-    height: 250px;
-  }
-
-  .hero-name {
-    font-size: 2.2rem;
-  }
-  
-  .hero-title {
-    font-size: 1rem;
-  }
-  
-  .hero-description {
-    font-size: 0.9rem;
-  }
-}
-
-/* Mobile Portrait */
-@media (max-width: 480px) {
-  .hero {
-    padding: 80px 1rem 50px;
-    min-height: auto;
-  }
-  
-  .hero-container {
-    gap: 2rem;
-  }
-  
-  .hero-greeting {
-    font-size: 0.8rem;
-  }
-
-  .hero-name {
-    font-size: 1.8rem;
-  }
-  
-  .hero-title {
-    font-size: 0.9rem;
-  }
-  
-  .hero-description {
-    font-size: 0.8rem;
-    line-height: 1.5;
-  }
-
   .profile-image {
     width: 200px;
     height: 200px;
-    border-width: 2px;
   }
-  
-  .btn-primary {
-    padding: 0.5rem 1.2rem;
-    font-size: 0.8rem;
+  .hero-name {
+    font-size: 2rem;
   }
-  
-  .social-link {
-    width: 36px;
-    height: 36px;
+  .hero-title {
+    font-size: 0.95rem;
+  }
+  .hero-description {
     font-size: 0.85rem;
-    border-width: 1.5px;
-  }
-  
-  .hero-socials {
-    gap: 0.6rem;
   }
 }
 
-/* Very Small Screens */
-@media (max-width: 360px) {
+@media (max-width: 480px) {
   .hero {
-    padding: 70px 0.75rem 40px;
+    padding: 70px 0.75rem 35px;
+    min-height: auto;
   }
-  
+  .hero-container {
+    gap: 1.5rem;
+  }
+  .hero-greeting {
+    font-size: 0.7rem;
+  }
   .hero-name {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
-  
+  .hero-title {
+    font-size: 0.85rem;
+  }
+  .hero-description {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
   .profile-image {
     width: 160px;
     height: 160px;
+    border-width: 2px;
   }
-  
-  .hero-title {
-    font-size: 0.8rem;
-  }
-  
-  .hero-description {
-    font-size: 0.75rem;
-  }
-  
   .btn-primary {
     padding: 0.4rem 1rem;
     font-size: 0.75rem;
     width: 100%;
     justify-content: center;
   }
-  
   .hero-buttons {
     width: 100%;
   }
-  
   .social-link {
     width: 32px;
     height: 32px;
     font-size: 0.75rem;
+  }
+  .hero-socials {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero {
+    padding: 60px 0.6rem 30px;
+  }
+  .hero-name {
+    font-size: 1.4rem;
+  }
+  .profile-image {
+    width: 130px;
+    height: 130px;
+  }
+  .hero-title {
+    font-size: 0.75rem;
+  }
+  .hero-description {
+    font-size: 0.7rem;
+  }
+  .btn-primary {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.7rem;
+  }
+  .social-link {
+    width: 28px;
+    height: 28px;
+    font-size: 0.65rem;
   }
 }
