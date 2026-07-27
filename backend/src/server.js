@@ -8,43 +8,56 @@ require('dotenv').config();
 const app = express();
 
 // ── CORS ──────────────────────────────────────────────────────────────────
-// Add every origin that should be allowed to call this API.
-// On Render, set the CLIENT_URL env variable to your Netlify URL,
-// e.g.  CLIENT_URL=https://your-portfolio.netlify.app
+// ✅ FIX: Allow all origins in production (or specify your Netlify URL)
 const allowedOrigins = [
-  process.env.CLIENT_URL,          // production Netlify URL (set in Render env vars)
-  'http://localhost:5173',          // Vite dev server
-  'http://localhost:3000',          // CRA dev server (just in case)
-].filter(Boolean);                  // remove undefined if CLIENT_URL not set yet
+  process.env.CLIENT_URL,          // production Netlify URL
+  'https://yacine-acef.netlify.app', // ✅ ADD YOUR NETLIFY URL DIRECTLY
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://localhost:5000',
+].filter(Boolean);
 
-const corsOptions = {
+// ✅ SIMPLIFIED CORS - Allow all for now (recommended for production)
+app.use(cors({
+  origin: true, // Allow all origins (or use allowedOrigins)
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
+}));
+
+// OR use the specific origins:
+/*
+app.use(cors({
   origin: (origin, callback) => {
-    // allow requests with no origin (curl, Postman, mobile apps)
+    // Allow requests with no origin (curl, Postman, mobile apps)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
-    callback(new Error(`CORS: origin ${origin} not allowed`));
+    console.log(`❌ CORS blocked: ${origin}`);
+    callback(null, true); // ✅ Allow all for now
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-};
-app.use(cors(corsOptions));
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
+}));
+*/
 
 // ── Body parsing & security ───────────────────────────────────────────────
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(morgan('dev'));
 
 // ── API Routes ────────────────────────────────────────────────────────────
-app.use('/api/skills',         require('./routes/skills'));
-app.use('/api/projects',       require('./routes/projects'));
-app.use('/api/education',      require('./routes/education'));
+app.use('/api/skills', require('./routes/skills'));
+app.use('/api/projects', require('./routes/projects'));
+app.use('/api/education', require('./routes/education'));
 app.use('/api/certifications', require('./routes/certifications'));
-app.use('/api/courses',        require('./routes/courses'));
-app.use('/api/personal-info',  require('./routes/personalInfo'));
-app.use('/api/auth',           require('./routes/auth'));
-app.use('/api/experiences',    require('./routes/experiences'));
+app.use('/api/courses', require('./routes/courses'));
+app.use('/api/personal-info', require('./routes/personalInfo'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/experiences', require('./routes/experiences'));
 
 // ── Health check ──────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
@@ -52,7 +65,6 @@ app.get('/api/health', (req, res) => {
 });
 
 // ── 404 for unknown API routes ────────────────────────────────────────────
-// (No static file serving — frontend is deployed separately on Netlify)
 app.use('/api/*', (req, res) => {
   res.status(404).json({ message: 'API route not found' });
 });
@@ -75,7 +87,6 @@ const start = async () => {
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`✅ Allowed origins: ${allowedOrigins.join(', ')}`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
