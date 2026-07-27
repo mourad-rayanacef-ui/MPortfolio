@@ -2,10 +2,23 @@ const cloudinary = require('../config/cloudinary');
 
 const uploadToCloudinary = async (fileBuffer, folder, options = {}) => {
   return new Promise((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream({ folder: `portfolio/${folder}`, ...options }, (error, result) => {
-      if (error) reject(error);
-      else resolve(result);
-    });
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder: `portfolio/${folder}`, ...options },
+      (error, result) => {
+        if (error) {
+          // Log everything Cloudinary gives us — error.message alone hides the cause
+          console.error('❌ Cloudinary upload error:', {
+            message: error.message,
+            http_code: error.http_code,
+            name: error.name,
+            details: error.error || error,
+          });
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      }
+    );
     uploadStream.end(fileBuffer);
   });
 };

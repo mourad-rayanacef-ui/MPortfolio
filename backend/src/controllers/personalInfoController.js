@@ -1,6 +1,17 @@
 const { PersonalInfo } = require('../models');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinaryUpload');
 
+// Helper: pull the useful bits out of a Cloudinary error object.
+// error.error is where Cloudinary puts its actual message (e.g. "Invalid API key",
+// "Invalid Signature", account restrictions, etc). error.message alone is often
+// just the generic SDK wrapper text ("Server returned unexpected status code - 403").
+const cloudinaryErrorDetails = (error) => ({
+  message: error?.message,
+  http_code: error?.http_code,
+  name: error?.name,
+  reason: error?.error?.message || error?.error || null,
+});
+
 // GET personal info
 exports.getPersonalInfo = async (req, res) => {
   try {
@@ -21,7 +32,7 @@ exports.updatePersonalInfo = async (req, res) => {
     console.log('=== UPDATE PERSONAL INFO ===');
     console.log('Body:', req.body);
     console.log('Files:', req.files);
-    
+
     let info = await PersonalInfo.findOne();
 
     // Prepare data payload from request body
@@ -55,8 +66,12 @@ exports.updatePersonalInfo = async (req, res) => {
           updateData.cvPublicId = cvResult.public_id;
           console.log('✅ CV uploaded:', cvResult.secure_url);
         } catch (cvErr) {
-          console.error('CV upload failed:', cvErr);
-          return res.status(400).json({ message: 'CV upload failed: ' + cvErr.message });
+          const details = cloudinaryErrorDetails(cvErr);
+          console.error('❌ CV upload failed:', details);
+          return res.status(400).json({
+            message: 'CV upload failed: ' + cvErr.message,
+            cloudinaryDetails: details
+          });
         }
       }
 
@@ -74,8 +89,12 @@ exports.updatePersonalInfo = async (req, res) => {
           updateData.profileImagePublicId = imgResult.public_id;
           console.log('✅ Profile Image uploaded:', imgResult.secure_url);
         } catch (imgErr) {
-          console.error('Profile image upload failed:', imgErr);
-          return res.status(400).json({ message: 'Profile image upload failed: ' + imgErr.message });
+          const details = cloudinaryErrorDetails(imgErr);
+          console.error('❌ Profile image upload failed:', details);
+          return res.status(400).json({
+            message: 'Profile image upload failed: ' + imgErr.message,
+            cloudinaryDetails: details
+          });
         }
       }
     }
@@ -104,7 +123,7 @@ exports.uploadProfileImage = async (req, res) => {
   try {
     console.log('=== UPLOAD PROFILE IMAGE ===');
     console.log('File:', req.file);
-    
+
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
     }
@@ -142,8 +161,15 @@ exports.uploadProfileImage = async (req, res) => {
       publicId: result.public_id
     });
   } catch (error) {
-    console.error('❌ Upload profile image error:', error);
-    res.status(400).json({ message: error.message });
+    const details = cloudinaryErrorDetails(error);
+    console.error('❌ Upload profile image error:', details);
+    res.status(400).json({
+      message: error.message,
+      // TODO: remove cloudinaryDetails from the response once you've diagnosed
+      // the 403 — it's here temporarily so the frontend console shows the
+      // real Cloudinary reason instead of the generic SDK wrapper message.
+      cloudinaryDetails: details
+    });
   }
 };
 
@@ -152,7 +178,7 @@ exports.uploadCV = async (req, res) => {
   try {
     console.log('=== UPLOAD CV ===');
     console.log('File:', req.file);
-    
+
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
     }
@@ -190,7 +216,11 @@ exports.uploadCV = async (req, res) => {
       publicId: result.public_id
     });
   } catch (error) {
-    console.error('❌ Upload CV error:', error);
-    res.status(400).json({ message: error.message });
+    const details = cloudinaryErrorDetails(error);
+    console.error('❌ Upload CV error:', details);
+    res.status(400).json({
+      message: error.message,
+      cloudinaryDetails: details
+    });
   }
 };
