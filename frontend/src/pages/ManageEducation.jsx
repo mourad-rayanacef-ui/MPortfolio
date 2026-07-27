@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { educationAPI } from '../services/api';
+import { educationAPI, uploadPDFToCloudinaryDirect } from '../services/api';
 import './ManageEducation.css';
 
 export default function ManageEducation() {
   const [educations, setEducations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [certificateFiles, setCertificateFiles] = useState({});
   const [error, setError] = useState(null);
 
@@ -56,13 +57,13 @@ export default function ManageEducation() {
   const handleSave = async (edu) => {
     setSavingId(edu.id);
     setError(null);
+    setUploading(true);
     
     try {
       console.log('Saving education:', edu);
       
       const submitData = new FormData();
       
-      // Add all fields to FormData
       Object.entries(edu).forEach(([key, value]) => {
         if (value !== null && value !== undefined && 
             key !== 'Certifications' && key !== 'Courses' && 
@@ -73,33 +74,31 @@ export default function ManageEducation() {
         }
       });
 
-      // Add certificate file if present
+      // ✅ Upload certificate directly to Cloudinary from browser
       if (certificateFiles[edu.id]) {
-        submitData.append('certificate', certificateFiles[edu.id]);
-        console.log('Adding certificate file:', certificateFiles[edu.id].name);
+        const result = await uploadPDFToCloudinaryDirect(certificateFiles[edu.id], { 
+          resourceType: 'raw',
+          folder: 'portfolio/education'
+        });
+        submitData.append('certificateUrl', result.secure_url);
+        submitData.append('certificatePublicId', result.public_id);
+        console.log('✅ Certificate uploaded:', result.secure_url);
       }
 
       let response;
-      
-      // Check if this is a new entry OR if we should create it as new
-      // If the ID doesn't exist in database, treat as new
       const isNewRecord = edu.isNew || String(edu.id).startsWith('temp-');
       
       if (isNewRecord) {
-        // Create new education
         console.log('Creating new education...');
-        // Remove the 'id' from FormData for new entries
         submitData.delete('id');
         response = await educationAPI.create(submitData);
         console.log('Created:', response);
       } else {
-        // Try to update existing education
         console.log('Attempting to update education with ID:', edu.id);
         try {
           response = await educationAPI.update(edu.id, submitData);
           console.log('Updated:', response);
         } catch (updateError) {
-          // If update fails with 404, try creating it instead
           if (updateError.message.includes('404') || updateError.message.includes('Not Found')) {
             console.log('Education not found, creating new instead...');
             submitData.delete('id');
@@ -111,10 +110,8 @@ export default function ManageEducation() {
         }
       }
 
-      // Reload data to get latest from server
       await loadEducations();
       
-      // Clear the file input for this education
       setCertificateFiles(prev => {
         const newFiles = { ...prev };
         delete newFiles[edu.id];
@@ -129,13 +126,13 @@ export default function ManageEducation() {
       alert(`Error: ${errorMessage}\n\nCheck console for details.`);
     } finally {
       setSavingId(null);
+      setUploading(false);
     }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this education entry?')) return;
     
-    // If it's a temp ID, just remove from local state
     if (String(id).startsWith('temp-')) {
       setEducations(educations.filter(e => e.id !== id));
       return;
@@ -294,10 +291,11 @@ export default function ManageEducation() {
                     handleFileChange(edu.id, file);
                   }
                 }}
+                disabled={uploading}
               />
               {certificateFiles[edu.id] && (
                 <small style={{ color: '#10B981' }}>
-                  ✓ New file selected: {certificateFiles[edu.id].name}
+                  {uploading ? 'Uploading...' : `New file selected: ${certificateFiles[edu.id].name}`}
                 </small>
               )}
               {edu.certificateUrl && !certificateFiles[edu.id] && (
@@ -310,8 +308,8 @@ export default function ManageEducation() {
               )}
             </div>
 
-            <button type="submit" className="save-btn" disabled={savingId === edu.id}>
-              {savingId === edu.id ? 'Saving...' : 'Save This Education'}
+            <button type="submit" className="save-btn" disabled={savingId === edu.id || uploading}>
+              {savingId === edu.id || uploading ? 'Saving...' : 'Save This Education'}
             </button>
           </form>
         </div>

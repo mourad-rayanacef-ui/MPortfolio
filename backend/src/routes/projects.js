@@ -5,6 +5,8 @@ const auth = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
 router.get('/', projectController.getAllProjects);
+
+// ✅ Keep upload middleware to parse FormData
 router.post('/', auth, upload.single('image'), projectController.createProject);
 router.put('/:id', auth, upload.single('image'), projectController.updateProject);
 router.delete('/:id', auth, projectController.deleteProject);

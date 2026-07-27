@@ -6,8 +6,8 @@ export default function ManageProjects() {
   const [projects, setProjects] = useState([]);
   const [editing, setEditing] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     techStack: [],
@@ -64,13 +64,16 @@ export default function ManageProjects() {
         });
         submitData.append('image', result.secure_url);
         submitData.append('imagePublicId', result.public_id);
+        console.log('✅ Image uploaded:', result.secure_url);
       }
 
       let response;
       if (editing) {
         response = await projectAPI.update(editing.id, submitData);
+        console.log('✅ Project updated:', response);
       } else {
         response = await projectAPI.create(submitData);
+        console.log('✅ Project created:', response);
       }
       resetForm();
       loadProjects();

@@ -1,5 +1,5 @@
 const { Skill } = require('../models');
-const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinaryUpload');
+const { deleteFromCloudinary } = require('../utils/cloudinaryUpload');
 
 exports.getAllSkills = async (req, res) => {
   try { 
@@ -21,10 +21,8 @@ exports.createSkill = async (req, res) => {
     console.log('Body:', req.body);
     console.log('File:', req.file);
     
-    // Extract fields from request body
-    const { name, category, level, icon, iconType, description, since, projects, order, isActive } = req.body;
+    const { name, category, level, icon, iconType, iconUrl, iconPublicId, description, since, projects, order, isActive } = req.body;
     
-    // ✅ Validate required fields
     if (!name || name.trim() === '') {
       return res.status(400).json({ message: 'Skill name is required' });
     }
@@ -32,18 +30,8 @@ exports.createSkill = async (req, res) => {
       return res.status(400).json({ message: 'Category is required' });
     }
     
-    let iconUrl, iconPublicId;
+    // ✅ No Cloudinary upload here - frontend already uploaded
     
-    // Handle image upload if file exists
-    if (req.file) {
-      console.log('Uploading skill icon...');
-      const result = await uploadToCloudinary(req.file.buffer, 'skill-icons');
-      iconUrl = result.secure_url;
-      iconPublicId = result.public_id;
-      console.log('Icon uploaded:', iconUrl);
-    }
-    
-    // Parse projects if it's a string
     let projectsArray = projects;
     if (typeof projects === 'string') {
       try {
@@ -89,23 +77,8 @@ exports.updateSkill = async (req, res) => {
     const skill = await Skill.findByPk(req.params.id);
     if (!skill) return res.status(404).json({ message: 'Skill not found' });
     
-    const { name, category, level, icon, iconType, description, since, projects, order, isActive } = req.body;
+    const { name, category, level, icon, iconType, iconUrl, iconPublicId, description, since, projects, order, isActive } = req.body;
     
-    let iconUrl = skill.iconUrl;
-    let iconPublicId = skill.iconPublicId;
-    
-    // Handle image upload if file exists
-    if (req.file) {
-      if (skill.iconPublicId) {
-        await deleteFromCloudinary(skill.iconPublicId);
-      }
-      const result = await uploadToCloudinary(req.file.buffer, 'skill-icons');
-      iconUrl = result.secure_url;
-      iconPublicId = result.public_id;
-      console.log('Icon uploaded:', iconUrl);
-    }
-    
-    // Parse projects if it's a string
     let projectsArray = projects;
     if (typeof projects === 'string') {
       try {
@@ -115,14 +88,19 @@ exports.updateSkill = async (req, res) => {
       }
     }
     
+    // Delete old icon if new one is provided
+    if (iconPublicId && skill.iconPublicId && skill.iconPublicId !== iconPublicId) {
+      await deleteFromCloudinary(skill.iconPublicId);
+    }
+    
     const updateData = {
       name: name !== undefined ? name.trim() : skill.name,
       category: category !== undefined ? category.trim() : skill.category,
       level: level !== undefined ? level : skill.level,
       icon: icon || skill.icon,
       iconType: iconType || skill.iconType,
-      iconUrl: iconUrl,
-      iconPublicId: iconPublicId,
+      iconUrl: iconUrl !== undefined ? iconUrl : skill.iconUrl,
+      iconPublicId: iconPublicId !== undefined ? iconPublicId : skill.iconPublicId,
       description: description !== undefined ? description : skill.description,
       since: since !== undefined ? since : skill.since,
       projects: projectsArray || skill.projects,
@@ -146,7 +124,6 @@ exports.deleteSkill = async (req, res) => {
     const skill = await Skill.findByPk(req.params.id); 
     if (!skill) return res.status(404).json({ message: 'Skill not found' });
     
-    // Delete image from Cloudinary if exists
     if (skill.iconPublicId) {
       await deleteFromCloudinary(skill.iconPublicId);
     }

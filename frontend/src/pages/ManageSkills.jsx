@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { skillAPI } from '../services/api';
+import { skillAPI, uploadToCloudinaryDirect } from '../services/api';
 import './ManageSkills.css';
 
 export default function ManageSkills() {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [iconFile, setIconFile] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -79,24 +80,25 @@ export default function ManageSkills() {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    setUploading(true);
     
-    // ✅ Validate required fields
     if (!formData.name || formData.name.trim() === '') {
       setError('Skill name is required');
       alert('Skill name is required');
+      setUploading(false);
       return;
     }
     
     if (!formData.category || formData.category.trim() === '') {
       setError('Category is required');
       alert('Category is required');
+      setUploading(false);
       return;
     }
     
     try {
       console.log('📤 Submitting skill:', formData);
       
-      // ✅ Create FormData and append all fields
       const submitData = new FormData();
       submitData.append('name', formData.name.trim());
       submitData.append('category', formData.category.trim());
@@ -109,16 +111,15 @@ export default function ManageSkills() {
       submitData.append('order', formData.order || 0);
       submitData.append('isActive', formData.isActive !== undefined ? formData.isActive : true);
       
-      // ✅ Add icon file if selected
+      // ✅ Upload icon directly to Cloudinary from browser
       if (iconFile) {
-        submitData.append('iconImage', iconFile);
-        console.log('📎 Icon file attached:', iconFile.name);
-      }
-
-      // ✅ Log FormData contents for debugging
-      console.log('📤 FormData entries:');
-      for (let [key, value] of submitData.entries()) {
-        console.log(`  ${key}: ${value}`);
+        const result = await uploadToCloudinaryDirect(iconFile, { 
+          resourceType: 'image',
+          folder: 'portfolio/skill-icons'
+        });
+        submitData.append('iconUrl', result.secure_url);
+        submitData.append('iconPublicId', result.public_id);
+        console.log('✅ Icon uploaded:', result.secure_url);
       }
 
       let response;
@@ -140,6 +141,8 @@ export default function ManageSkills() {
       console.error('❌ Error saving skill:', error);
       setError(error.message || 'Failed to save skill');
       alert('Error saving skill: ' + (error.message || 'Unknown error'));
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -281,10 +284,11 @@ export default function ManageSkills() {
                   type="file"
                   accept=".jpg,.jpeg,.png,.gif,.webp,.svg"
                   onChange={handleFileChange}
+                  disabled={uploading}
                 />
                 {iconFile && (
                   <small style={{ color: '#10B981' }}>
-                    ✅ New file selected: {iconFile.name}
+                    {uploading ? 'Uploading...' : `New file selected: ${iconFile.name}`}
                   </small>
                 )}
                 {editing && editing.iconUrl && !iconFile && (
@@ -376,8 +380,8 @@ export default function ManageSkills() {
         </div>
 
         <div className="form-actions">
-          <button type="submit" className="save-btn">
-            {editing ? 'Update' : 'Add'} Skill
+          <button type="submit" className="save-btn" disabled={uploading}>
+            {uploading ? 'Uploading...' : (editing ? 'Update' : 'Add') + ' Skill'}
           </button>
           {editing && (
             <button type="button" className="cancel-btn" onClick={resetForm}>

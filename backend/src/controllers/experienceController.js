@@ -1,5 +1,5 @@
 const { Experience } = require('../models');
-const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinaryUpload');
+const { deleteFromCloudinary } = require('../utils/cloudinaryUpload');
 
 exports.getAllExperiences = async (req, res) => {
   try { 
@@ -37,18 +37,10 @@ exports.createExperience = async (req, res) => {
     const { 
       title, company, location, type, startDate, endDate, 
       isCurrent, description, achievements, technologies, 
-      website, order, isActive 
+      website, order, isActive, companyLogo, companyLogoPublicId
     } = req.body;
     
-    let companyLogo, companyLogoPublicId;
-    
-    if (req.file) {
-      console.log('Uploading company logo...');
-      const result = await uploadToCloudinary(req.file.buffer, 'company-logos');
-      companyLogo = result.secure_url;
-      companyLogoPublicId = result.public_id;
-      console.log('Logo uploaded:', companyLogo);
-    }
+    // ✅ No Cloudinary upload here - frontend already uploaded
     
     let achievementsArray = achievements;
     let technologiesArray = technologies;
@@ -113,21 +105,8 @@ exports.updateExperience = async (req, res) => {
     const { 
       title, company, location, type, startDate, endDate, 
       isCurrent, description, achievements, technologies, 
-      website, order, isActive 
+      website, order, isActive, companyLogo, companyLogoPublicId
     } = req.body;
-    
-    let companyLogo = experience.companyLogo;
-    let companyLogoPublicId = experience.companyLogoPublicId;
-    
-    if (req.file) {
-      if (experience.companyLogoPublicId) {
-        await deleteFromCloudinary(experience.companyLogoPublicId);
-      }
-      const result = await uploadToCloudinary(req.file.buffer, 'company-logos');
-      companyLogo = result.secure_url;
-      companyLogoPublicId = result.public_id;
-      console.log('Logo uploaded:', companyLogo);
-    }
     
     let achievementsArray = achievements;
     let technologiesArray = technologies;
@@ -151,8 +130,8 @@ exports.updateExperience = async (req, res) => {
     const updateData = {
       title: title || experience.title,
       company: company || experience.company,
-      companyLogo: companyLogo,
-      companyLogoPublicId: companyLogoPublicId,
+      companyLogo: companyLogo !== undefined ? companyLogo : experience.companyLogo,
+      companyLogoPublicId: companyLogoPublicId !== undefined ? companyLogoPublicId : experience.companyLogoPublicId,
       location: location !== undefined ? location : experience.location,
       type: type || experience.type,
       startDate: startDate || experience.startDate,
@@ -165,6 +144,11 @@ exports.updateExperience = async (req, res) => {
       order: order !== undefined ? parseInt(order) : experience.order,
       isActive: isActive !== undefined ? isActive : experience.isActive
     };
+    
+    // Delete old logo if new one is provided
+    if (companyLogoPublicId && experience.companyLogoPublicId && experience.companyLogoPublicId !== companyLogoPublicId) {
+      await deleteFromCloudinary(experience.companyLogoPublicId);
+    }
     
     console.log('Updating experience with data:', updateData);
     

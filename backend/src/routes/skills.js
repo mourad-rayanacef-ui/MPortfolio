@@ -5,6 +5,8 @@ const auth = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
 router.get('/', skillController.getAllSkills);
+
+// ✅ Keep upload middleware to parse FormData
 router.post('/', auth, upload.single('iconImage'), skillController.createSkill);
 router.put('/:id', auth, upload.single('iconImage'), skillController.updateSkill);
 router.delete('/:id', auth, skillController.deleteSkill);

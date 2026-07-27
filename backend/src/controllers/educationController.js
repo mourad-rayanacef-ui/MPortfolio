@@ -1,5 +1,5 @@
 const { Education, Certification, Course } = require('../models');
-const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinaryUpload');
+const { deleteFromCloudinary } = require('../utils/cloudinaryUpload');
 
 // GET all educations with their certifications and courses
 exports.getEducation = async (req, res) => {
@@ -43,50 +43,39 @@ exports.createEducation = async (req, res) => {
     console.log('Creating education with data:', req.body);
     console.log('File:', req.file);
     
-    // Strip out temporary ID if sent by frontend form data
     const bodyData = { ...req.body };
     if (bodyData.id && String(bodyData.id).startsWith('temp-')) {
       delete bodyData.id;
     }
 
-    // Ensure required fields
     if (!bodyData.degree || !bodyData.university) {
       return res.status(400).json({ message: 'Degree and University are required' });
     }
 
+    // ✅ No Cloudinary upload here - frontend already uploaded
+    // certificateUrl and certificatePublicId come from frontend
+    
     const education = await Education.create(bodyData);
     
-    let updatedEducation = education;
-    if (req.file) {
-      const result = await uploadToCloudinary(req.file.buffer, 'education');
-      await education.update({
-        certificateUrl: result.secure_url,
-        certificatePublicId: result.public_id
-      });
-      updatedEducation = await Education.findByPk(education.id);
-    }
-    
-    res.status(201).json(updatedEducation);
+    res.status(201).json(education);
   } catch (error) {
     console.error('Create education error:', error);
     res.status(400).json({ message: error.message });
   }
 };
 
-// PUT update specific education by ID - AUTO-CREATES IF NOT EXISTS
+// PUT update specific education by ID
 exports.updateEducation = async (req, res) => {
   try {
     const { id } = req.params;
     console.log('Updating education with ID:', id);
     
-    // If it's a temp ID, just create new
     if (String(id).startsWith('temp-')) {
       return exports.createEducation(req, res);
     }
 
     let education = await Education.findByPk(id);
     
-    // If education doesn't exist, CREATE IT instead of returning 404
     if (!education) {
       console.log(`Education with ID ${id} not found. Creating new record instead.`);
       const bodyData = { ...req.body };
@@ -95,19 +84,8 @@ exports.updateEducation = async (req, res) => {
       return exports.createEducation(req, res);
     }
     
-    // Update existing education
+    // ✅ Update education with fields from frontend (including certificate URLs)
     await education.update(req.body);
-    
-    if (req.file) {
-      if (education.certificatePublicId) {
-        await deleteFromCloudinary(education.certificatePublicId);
-      }
-      const result = await uploadToCloudinary(req.file.buffer, 'education');
-      await education.update({
-        certificateUrl: result.secure_url,
-        certificatePublicId: result.public_id
-      });
-    }
     
     const certifications = await Certification.findAll({
       where: { educationId: education.id }
@@ -157,19 +135,17 @@ exports.deleteEducation = async (req, res) => {
   }
 };
 
-// POST add certification to specific education - WITH LOGO SUPPORT
+// POST add certification to specific education
 exports.addCertification = async (req, res) => {
   try {
     console.log('=== ADD CERTIFICATION ===');
     console.log('Request body:', req.body);
     console.log('Request files:', req.files);
     
-    // Extract fields from request body (multer parses FormData into req.body)
-    const { name, issuer, date, educationId } = req.body;
+    const { name, issuer, date, educationId, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
     
-    console.log('Extracted values:', { name, issuer, date, educationId });
+    console.log('Extracted values:', { name, issuer, date, educationId, certificateUrl, logoUrl });
     
-    // Validate required fields
     if (!name || name.trim() === '') {
       console.error('❌ Name is required but not provided');
       return res.status(400).json({ 
@@ -178,29 +154,6 @@ exports.addCertification = async (req, res) => {
       });
     }
     
-    // Handle file uploads
-    let certificateUrl, certificatePublicId;
-    let logoUrl, logoPublicId;
-    
-    // Handle certificate file
-    if (req.files && req.files.certificate) {
-      console.log('📤 Uploading certificate file...');
-      const result = await uploadToCloudinary(req.files.certificate[0].buffer, 'certifications');
-      certificateUrl = result.secure_url;
-      certificatePublicId = result.public_id;
-      console.log('✅ Certificate uploaded:', certificateUrl);
-    }
-    
-    // Handle logo file
-    if (req.files && req.files.logo) {
-      console.log('📤 Uploading logo file...');
-      const result = await uploadToCloudinary(req.files.logo[0].buffer, 'certification-logos');
-      logoUrl = result.secure_url;
-      logoPublicId = result.public_id;
-      console.log('✅ Logo uploaded:', logoUrl);
-    }
-    
-    // Create certification with logo fields
     const certificationData = {
       name: name.trim(),
       issuer: issuer || '',
@@ -214,7 +167,6 @@ exports.addCertification = async (req, res) => {
     
     console.log('📝 Creating certification with data:', certificationData);
     
-    // Create the certification
     const certification = await Certification.create(certificationData);
     
     console.log('✅ Certification created successfully:', certification.toJSON());
@@ -225,16 +177,14 @@ exports.addCertification = async (req, res) => {
     
   } catch (error) {
     console.error('❌ Add certification error:', error);
-    console.error('Error details:', error.errors || error);
     res.status(400).json({ 
       success: false,
-      message: error.message,
-      errors: error.errors ? error.errors.map(e => e.message) : undefined
+      message: error.message
     });
   }
 };
 
-// PUT update certification - WITH LOGO SUPPORT
+// PUT update certification
 exports.updateCertification = async (req, res) => {
   try {
     console.log('=== UPDATE CERTIFICATION ===');
@@ -250,36 +200,24 @@ exports.updateCertification = async (req, res) => {
       });
     }
     
-    // Extract fields from request body
-    const { name, issuer, date, educationId } = req.body;
+    const { name, issuer, date, educationId, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
     
-    // Prepare update data
     const updateData = {};
     if (name !== undefined && name !== null) updateData.name = name.trim();
     if (issuer !== undefined) updateData.issuer = issuer;
     if (date !== undefined) updateData.date = date;
     if (educationId !== undefined) updateData.educationId = educationId;
+    if (certificateUrl !== undefined) updateData.certificateUrl = certificateUrl;
+    if (certificatePublicId !== undefined) updateData.certificatePublicId = certificatePublicId;
+    if (logoUrl !== undefined) updateData.logoUrl = logoUrl;
+    if (logoPublicId !== undefined) updateData.logoPublicId = logoPublicId;
     
-    // Handle certificate file upload
-    if (req.files && req.files.certificate) {
-      if (certification.certificatePublicId) {
-        await deleteFromCloudinary(certification.certificatePublicId);
-      }
-      const result = await uploadToCloudinary(req.files.certificate[0].buffer, 'certifications');
-      updateData.certificateUrl = result.secure_url;
-      updateData.certificatePublicId = result.public_id;
-      console.log('✅ Certificate uploaded:', result.secure_url);
+    // Delete old files if new ones are provided
+    if (certificatePublicId && certification.certificatePublicId && certification.certificatePublicId !== certificatePublicId) {
+      await deleteFromCloudinary(certification.certificatePublicId);
     }
-    
-    // Handle logo file upload
-    if (req.files && req.files.logo) {
-      if (certification.logoPublicId) {
-        await deleteFromCloudinary(certification.logoPublicId);
-      }
-      const result = await uploadToCloudinary(req.files.logo[0].buffer, 'certification-logos');
-      updateData.logoUrl = result.secure_url;
-      updateData.logoPublicId = result.public_id;
-      console.log('✅ Logo uploaded:', result.secure_url);
+    if (logoPublicId && certification.logoPublicId && certification.logoPublicId !== logoPublicId) {
+      await deleteFromCloudinary(certification.logoPublicId);
     }
     
     await certification.update(updateData);
@@ -298,7 +236,7 @@ exports.updateCertification = async (req, res) => {
   }
 };
 
-// DELETE certification - WITH LOGO SUPPORT
+// DELETE certification
 exports.deleteCertification = async (req, res) => {
   try {
     const certification = await Certification.findByPk(req.params.id);

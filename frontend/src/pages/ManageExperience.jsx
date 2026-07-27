@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { experienceAPI } from '../services/api';
+import { experienceAPI, uploadToCloudinaryDirect } from '../services/api';
 import './ManageExperience.css';
 
 export default function ManageExperience() {
   const [experiences, setExperiences] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [logoFile, setLogoFile] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -86,17 +87,17 @@ export default function ManageExperience() {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    setUploading(true);
     
-    // Validate required fields
     if (!formData.title || !formData.company || !formData.startDate) {
       setError('Title, Company, and Start Date are required');
+      setUploading(false);
       return;
     }
     
     try {
       const submitData = new FormData();
       
-      // Add all text fields
       submitData.append('title', formData.title);
       submitData.append('company', formData.company);
       submitData.append('location', formData.location || '');
@@ -111,9 +112,15 @@ export default function ManageExperience() {
       submitData.append('order', formData.order);
       submitData.append('isActive', formData.isActive);
       
-      // Add logo file if selected
+      // ✅ Upload logo directly to Cloudinary from browser
       if (logoFile) {
-        submitData.append('companyLogo', logoFile);
+        const result = await uploadToCloudinaryDirect(logoFile, { 
+          resourceType: 'image',
+          folder: 'portfolio/company-logos'
+        });
+        submitData.append('companyLogo', result.secure_url);
+        submitData.append('companyLogoPublicId', result.public_id);
+        console.log('✅ Logo uploaded:', result.secure_url);
       }
 
       let response;
@@ -132,6 +139,8 @@ export default function ManageExperience() {
     } catch (error) {
       console.error('Error saving experience:', error);
       setError(error.message || 'Failed to save experience');
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -344,10 +353,11 @@ export default function ManageExperience() {
               type="file"
               accept=".jpg,.jpeg,.png,.gif,.webp,.svg"
               onChange={handleFileChange}
+              disabled={uploading}
             />
             {logoFile && (
               <small style={{ color: '#10B981' }}>
-                ✅ New logo selected: {logoFile.name}
+                {uploading ? 'Uploading...' : `New logo selected: ${logoFile.name}`}
               </small>
             )}
             {editing && editing.companyLogo && !logoFile && (
@@ -391,8 +401,8 @@ export default function ManageExperience() {
         </div>
 
         <div className="form-actions">
-          <button type="submit" className="save-btn">
-            {editing ? 'Update' : 'Add'} Experience
+          <button type="submit" className="save-btn" disabled={uploading}>
+            {uploading ? 'Uploading...' : (editing ? 'Update' : 'Add') + ' Experience'}
           </button>
           {editing && (
             <button type="button" className="cancel-btn" onClick={resetForm}>

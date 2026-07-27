@@ -6,6 +6,8 @@ const upload = require('../middleware/upload');
 
 router.get('/', experienceController.getAllExperiences);
 router.get('/:id', experienceController.getExperience);
+
+// ✅ Keep upload middleware to parse FormData
 router.post('/', auth, upload.single('companyLogo'), experienceController.createExperience);
 router.put('/:id', auth, upload.single('companyLogo'), experienceController.updateExperience);
 router.delete('/:id', auth, experienceController.deleteExperience);

@@ -176,7 +176,6 @@ export const certificationAPI = {
       for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
       }
-      // ✅ fetchAPI will handle FormData correctly
       return fetchAPI('/certifications', { method: 'POST', body: formData });
     }
     return fetchAPI('/certifications', { method: 'POST', body: JSON.stringify(formData) });
@@ -234,9 +233,9 @@ export const uploadToCloudinaryDirect = async (file, { resourceType = 'image', f
   return response.json(); // { secure_url, public_id, ... }
 };
 
-// ✅ PersonalInfo API — text fields go through our backend as JSON;
-// files upload directly to Cloudinary, then the resulting URL/public_id
-// is saved via the /media endpoint.
+// ── PersonalInfo API ──────────────────────────────────────────────────────────
+// Text fields go through our backend as JSON; files upload directly to
+// Cloudinary, then the resulting URL/public_id is saved via the /media endpoint.
 export const personalInfoAPI = {
   get: () => fetchAPI('/personal-info'),
 
@@ -312,4 +311,14 @@ export const authAPI = {
     });
   },
   setup: () => fetchAPI('/auth/setup', { method: 'POST' })
+};
+
+// ── Helper function to upload PDF files directly to Cloudinary ──────────────
+// This is a convenience wrapper around uploadToCloudinaryDirect with
+// resourceType set to 'raw' for PDF files.
+export const uploadPDFToCloudinaryDirect = async (file, { folder } = {}) => {
+  return uploadToCloudinaryDirect(file, {
+    resourceType: 'raw',
+    folder: folder || 'portfolio/documents'
+  });
 };

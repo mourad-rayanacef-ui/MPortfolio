@@ -1,5 +1,5 @@
 const { Project } = require('../models');
-const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinaryUpload');
+const { deleteFromCloudinary } = require('../utils/cloudinaryUpload');
 
 exports.getAllProjects = async (req, res) => {
   try { 
@@ -19,35 +19,30 @@ exports.createProject = async (req, res) => {
     console.log('Body:', req.body);
     console.log('File:', req.file);
     
-    let imageUrl, imagePublicId;
+    // ✅ No Cloudinary upload here - frontend already uploaded
+    const { name, techStack, image, imagePublicId, description, details, startDate, endDate, challenges, learnings, order } = req.body;
     
-    if (req.file) { 
-      const result = await uploadToCloudinary(req.file.buffer, 'projects'); 
-      imageUrl = result.secure_url; 
-      imagePublicId = result.public_id; 
-    }
-    
-    let techStack = req.body.techStack;
+    let techStackArray = techStack;
     if (typeof techStack === 'string') {
       try {
-        techStack = JSON.parse(techStack);
+        techStackArray = JSON.parse(techStack);
       } catch (e) {
-        techStack = techStack.split(',').map(t => t.trim()).filter(Boolean);
+        techStackArray = techStack.split(',').map(t => t.trim()).filter(Boolean);
       }
     }
     
     const project = await Project.create({
-      name: req.body.name,
-      techStack: techStack || [],
-      image: imageUrl || null,
+      name: name,
+      techStack: techStackArray || [],
+      image: image || null,
       imagePublicId: imagePublicId || null,
-      description: req.body.description || null,
-      details: req.body.details || null,
-      startDate: req.body.startDate || null,
-      endDate: req.body.endDate || null,
-      challenges: req.body.challenges || null,
-      learnings: req.body.learnings || null,
-      order: req.body.order || 0
+      description: description || null,
+      details: details || null,
+      startDate: startDate || null,
+      endDate: endDate || null,
+      challenges: challenges || null,
+      learnings: learnings || null,
+      order: order || 0
     });
     
     res.status(201).json(project);
@@ -67,37 +62,34 @@ exports.updateProject = async (req, res) => {
     const project = await Project.findByPk(req.params.id);
     if (!project) return res.status(404).json({ message: 'Project not found' });
     
-    let imageUrl = project.image;
-    let imagePublicId = project.imagePublicId;
+    const { name, techStack, image, imagePublicId, description, details, startDate, endDate, challenges, learnings, order } = req.body;
     
-    if (req.file) {
-      if (project.imagePublicId) await deleteFromCloudinary(project.imagePublicId);
-      const result = await uploadToCloudinary(req.file.buffer, 'projects');
-      imageUrl = result.secure_url;
-      imagePublicId = result.public_id;
-    }
-    
-    let techStack = req.body.techStack;
+    let techStackArray = techStack;
     if (typeof techStack === 'string') {
       try {
-        techStack = JSON.parse(techStack);
+        techStackArray = JSON.parse(techStack);
       } catch (e) {
-        techStack = techStack.split(',').map(t => t.trim()).filter(Boolean);
+        techStackArray = techStack.split(',').map(t => t.trim()).filter(Boolean);
       }
     }
     
+    // Delete old image if new one is provided
+    if (imagePublicId && project.imagePublicId && project.imagePublicId !== imagePublicId) {
+      await deleteFromCloudinary(project.imagePublicId);
+    }
+    
     await project.update({
-      name: req.body.name !== undefined ? req.body.name : project.name,
-      techStack: techStack !== undefined ? techStack : project.techStack,
-      image: imageUrl,
-      imagePublicId: imagePublicId,
-      description: req.body.description !== undefined ? req.body.description : project.description,
-      details: req.body.details !== undefined ? req.body.details : project.details,
-      startDate: req.body.startDate !== undefined ? req.body.startDate : project.startDate,
-      endDate: req.body.endDate !== undefined ? req.body.endDate : project.endDate,
-      challenges: req.body.challenges !== undefined ? req.body.challenges : project.challenges,
-      learnings: req.body.learnings !== undefined ? req.body.learnings : project.learnings,
-      order: req.body.order !== undefined ? req.body.order : project.order
+      name: name !== undefined ? name : project.name,
+      techStack: techStackArray !== undefined ? techStackArray : project.techStack,
+      image: image !== undefined ? image : project.image,
+      imagePublicId: imagePublicId !== undefined ? imagePublicId : project.imagePublicId,
+      description: description !== undefined ? description : project.description,
+      details: details !== undefined ? details : project.details,
+      startDate: startDate !== undefined ? startDate : project.startDate,
+      endDate: endDate !== undefined ? endDate : project.endDate,
+      challenges: challenges !== undefined ? challenges : project.challenges,
+      learnings: learnings !== undefined ? learnings : project.learnings,
+      order: order !== undefined ? order : project.order
     });
     
     res.json(project);

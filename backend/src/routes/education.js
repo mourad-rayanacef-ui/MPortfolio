@@ -6,12 +6,11 @@ const upload = require('../middleware/upload');
 
 router.get('/', educationController.getEducation);
 
-// Support both general create/update and ID-specific updates/creations
+// ✅ Keep upload middleware to parse FormData
 router.post('/', auth, upload.single('certificate'), educationController.createEducation);
 router.put('/:id', auth, upload.single('certificate'), educationController.updateEducation);
 router.delete('/:id', auth, educationController.deleteEducation);
 
-// ✅ Use upload.fields() for certification routes with multiple files
 router.post('/certifications', auth, upload.fields([
   { name: 'certificate', maxCount: 1 },
   { name: 'logo', maxCount: 1 }
