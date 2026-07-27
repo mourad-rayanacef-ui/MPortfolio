@@ -24,8 +24,8 @@ export default function ManagePersonalInfo() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('success');
-  const [cvFile, setCvFile] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
+  const [uploadingCv, setUploadingCv] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -73,17 +73,17 @@ export default function ManagePersonalInfo() {
       return;
     }
     
-    setImageFile(file);
-    
-    const imageFormData = new FormData();
-    imageFormData.append('profileImage', file);
-    
+    setUploadingImage(true);
+    setMessage('');
+
     try {
-      const result = await personalInfoAPI.uploadImage(imageFormData);
+      // Uploads directly to Cloudinary from the browser, then saves the
+      // resulting URL to the backend — see personalInfoAPI.uploadImage.
+      const result = await personalInfoAPI.uploadImage(file);
       console.log('Upload result:', result);
-      setFormData(prev => ({ 
-        ...prev, 
-        profileImage: result.url || result.profileImage 
+      setFormData(prev => ({
+        ...prev,
+        profileImage: result.profileImage
       }));
       setMessage('Profile image updated!');
       setMessageType('success');
@@ -92,6 +92,50 @@ export default function ManagePersonalInfo() {
       console.error('Image upload error:', error);
       setMessage('Error uploading image: ' + (error.message || 'Unknown error'));
       setMessageType('error');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleCvUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.type !== 'application/pdf') {
+      setMessage('CV must be a PDF file');
+      setMessageType('error');
+      e.target.value = '';
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      setMessage('CV must be less than 10MB');
+      setMessageType('error');
+      e.target.value = '';
+      return;
+    }
+
+    setUploadingCv(true);
+    setMessage('');
+
+    try {
+      // Uploads directly to Cloudinary from the browser, then saves the
+      // resulting URL to the backend — see personalInfoAPI.uploadCV.
+      const result = await personalInfoAPI.uploadCV(file);
+      console.log('CV upload result:', result);
+      setFormData(prev => ({
+        ...prev,
+        cvUrl: result.cvUrl
+      }));
+      setMessage('CV updated!');
+      setMessageType('success');
+      setTimeout(() => setMessage(''), 3000);
+    } catch (error) {
+      console.error('CV upload error:', error);
+      setMessage('Error uploading CV: ' + (error.message || 'Unknown error'));
+      setMessageType('error');
+    } finally {
+      setUploadingCv(false);
     }
   };
 
@@ -102,69 +146,31 @@ export default function ManagePersonalInfo() {
     
     try {
       console.log('Submitting form data:', formData);
-      
-      // Using FormData to send text fields + files together
-      const submitData = new FormData();
-      
-      // Add all text fields to FormData
+
+      // Profile image and CV are already uploaded and saved (they go out
+      // immediately on file selection — see handleImageUpload/handleCvUpload).
+      // This submit only needs to send the text fields, as plain JSON.
       const textFields = [
         'name', 'title', 'bio', 'shortBio', 'email', 'phone', 'location',
-        'linkedin', 'currentFocus', 'totalExperience', 'currentJob', 
+        'linkedin', 'currentFocus', 'totalExperience', 'currentJob',
         'currentCompany', 'lastProject'
       ];
-      
+
+      const textData = {};
       textFields.forEach(field => {
         if (formData[field] !== null && formData[field] !== undefined) {
-          submitData.append(field, formData[field]);
-          console.log(`Adding ${field}:`, formData[field]);
+          textData[field] = formData[field];
         }
       });
-      
-      // Add CV file if selected
-      if (cvFile) {
-        // Validate CV file
-        if (cvFile.type !== 'application/pdf') {
-          setMessage('CV must be a PDF file');
-          setMessageType('error');
-          setSaving(false);
-          return;
-        }
-        if (cvFile.size > 10 * 1024 * 1024) {
-          setMessage('CV must be less than 10MB');
-          setMessageType('error');
-          setSaving(false);
-          return;
-        }
-        submitData.append('cv', cvFile);
-        console.log('Adding CV file:', cvFile.name);
-      }
-      
-      // Add image file if selected (and not already uploaded)
-      if (imageFile) {
-        submitData.append('profileImage', imageFile);
-        console.log('Adding profile image:', imageFile.name);
-      }
 
-      // Log all FormData entries for debugging
-      console.log('FormData entries:');
-      for (let [key, value] of submitData.entries()) {
-        console.log(key, value);
-      }
+      console.log('Submitting text data:', textData);
 
-      const response = await personalInfoAPI.update(submitData);
+      const response = await personalInfoAPI.update(textData);
       console.log('Update response:', response);
-      
+
       // Reload data to get the latest from server
       await loadData();
-      
-      // Clear file inputs
-      setCvFile(null);
-      setImageFile(null);
-      
-      // Reset file inputs
-      const fileInputs = document.querySelectorAll('input[type="file"]');
-      fileInputs.forEach(input => input.value = '');
-      
+
       setMessage('Personal info saved successfully!');
       setMessageType('success');
       setTimeout(() => setMessage(''), 3000);
@@ -198,31 +204,29 @@ export default function ManagePersonalInfo() {
                 <img src={formData.profileImage} alt="Profile" />
               </div>
             )}
-            <input 
-              type="file" 
-              accept="image/*" 
-              onChange={handleImageUpload} 
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              disabled={uploadingImage}
             />
-            {imageFile && (
-              <small style={{ color: '#10B981' }}>
-                New image selected: {imageFile.name} ({(imageFile.size / 1024).toFixed(1)} KB)
-              </small>
+            {uploadingImage && (
+              <small style={{ color: '#6B7280' }}>Uploading image…</small>
             )}
           </div>
 
           <div className="form-group">
             <label>CV / Resume (PDF)</label>
-            <input 
-              type="file" 
-              accept=".pdf" 
-              onChange={(e) => setCvFile(e.target.files[0])} 
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={handleCvUpload}
+              disabled={uploadingCv}
             />
-            {cvFile && (
-              <small style={{ color: '#10B981' }}>
-                New CV selected: {cvFile.name} ({(cvFile.size / 1024).toFixed(1)} KB)
-              </small>
+            {uploadingCv && (
+              <small style={{ color: '#6B7280' }}>Uploading CV…</small>
             )}
-            {formData.cvUrl && !cvFile && (
+            {formData.cvUrl && !uploadingCv && (
               <small>
                 Current CV: <a href={formData.cvUrl} target="_blank" rel="noopener noreferrer">View File</a>
               </small>

@@ -192,79 +192,83 @@ export const certificationAPI = {
   delete: (id) => fetchAPI(`/certifications/${id}`, { method: 'DELETE' })
 };
 
-// ✅ FIXED: PersonalInfo API with direct fetch for FormData
+// ── Direct-to-Cloudinary upload ─────────────────────────────────────────────
+// Uploads straight from the browser to Cloudinary using an UNSIGNED upload
+// preset, bypassing our backend entirely for the file transfer. This avoids
+// relying on our Render server's outbound network reaching Cloudinary
+// (which can be blocked/flagged on shared-IP free tiers).
+//
+// Setup required in Cloudinary dashboard:
+//   Settings → Upload → Upload presets → Add upload preset
+//   → Signing Mode: "Unsigned" → name it, e.g. "portfolio_unsigned"
+//
+// And add to your frontend .env:
+//   VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
+//   VITE_CLOUDINARY_UPLOAD_PRESET=portfolio_unsigned
+const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+
+export const uploadToCloudinaryDirect = async (file, { resourceType = 'image', folder } = {}) => {
+  if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET) {
+    throw new Error('Cloudinary is not configured (missing VITE_CLOUDINARY_CLOUD_NAME / VITE_CLOUDINARY_UPLOAD_PRESET)');
+  }
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  if (folder) formData.append('folder', folder);
+  if (resourceType === 'raw') formData.append('flags', 'attachment');
+
+  const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
+
+  const response = await fetch(url, { method: 'POST', body: formData });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error?.error?.message || 'Cloudinary upload failed');
+  }
+
+  return response.json(); // { secure_url, public_id, ... }
+};
+
+// ✅ PersonalInfo API — text fields go through our backend as JSON;
+// files upload directly to Cloudinary, then the resulting URL/public_id
+// is saved via the /media endpoint.
 export const personalInfoAPI = {
   get: () => fetchAPI('/personal-info'),
-  update: (formData) => {
-    console.log('Updating personal info with form data');
-    if (formData instanceof FormData) {
-      console.log('FormData contents:');
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-    }
-    // ✅ Use direct fetch for FormData
-    const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
-    return fetch(`${API_URL}/personal-info`, { 
-      method: 'PUT', 
-      headers: { 
-        ...(token && { 'Authorization': `Bearer ${token}` })
-      },
-      body: formData 
-    }).then(async res => {
-      if (!res.ok) {
-        const error = await res.json().catch(() => ({}));
-        throw new Error(error.message || 'Update failed');
-      }
-      return res.json();
+
+  // Text-only update (no files)
+  update: (data) => fetchAPI('/personal-info', { method: 'PUT', body: JSON.stringify(data) }),
+
+  // Uploads the file directly to Cloudinary, then tells the backend to save
+  // the resulting URL against the profileImage field.
+  uploadImage: async (file) => {
+    const result = await uploadToCloudinaryDirect(file, {
+      resourceType: 'image',
+      folder: 'portfolio/images'
+    });
+    return fetchAPI('/personal-info/media', {
+      method: 'PUT',
+      body: JSON.stringify({
+        profileImage: result.secure_url,
+        profileImagePublicId: result.public_id
+      })
     });
   },
-  uploadImage: (formData) => {
-    console.log('Uploading profile image');
-    if (formData instanceof FormData) {
-      console.log('FormData contents:');
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-    }
-    // ✅ Use direct fetch for FormData
-    const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
-    return fetch(`${API_URL}/personal-info/upload-image`, { 
-      method: 'POST', 
-      headers: { 
-        ...(token && { 'Authorization': `Bearer ${token}` })
-      },
-      body: formData 
-    }).then(async res => {
-      if (!res.ok) {
-        const error = await res.json().catch(() => ({}));
-        throw new Error(error.message || 'Upload failed');
-      }
-      return res.json();
+
+  // Uploads the CV PDF directly to Cloudinary, then tells the backend to
+  // save the resulting URL against the cvUrl field.
+  uploadCV: async (file) => {
+    const result = await uploadToCloudinaryDirect(file, {
+      resourceType: 'raw',
+      folder: 'portfolio/documents'
     });
-  },
-  uploadCV: (formData) => {
-    console.log('Uploading CV');
-    if (formData instanceof FormData) {
-      console.log('FormData contents:');
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-    }
-    // ✅ Use direct fetch for FormData
-    const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
-    return fetch(`${API_URL}/personal-info/upload-cv`, { 
-      method: 'POST', 
-      headers: { 
-        ...(token && { 'Authorization': `Bearer ${token}` })
-      },
-      body: formData 
-    }).then(async res => {
-      if (!res.ok) {
-        const error = await res.json().catch(() => ({}));
-        throw new Error(error.message || 'Upload failed');
-      }
-      return res.json();
+    return fetchAPI('/personal-info/media', {
+      method: 'PUT',
+      body: JSON.stringify({
+        cvUrl: result.secure_url,
+        cvPublicId: result.public_id
+      })
     });
   }
 };
