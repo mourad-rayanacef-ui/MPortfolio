@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { educationAPI, certificationAPI } from '../services/api';
+import { educationAPI, certificationAPI, uploadToCloudinaryDirect, uploadPDFToCloudinaryDirect } from '../services/api';
 import './ManageCertifications.css';
 
 export default function ManageCertifications() {
@@ -7,6 +7,7 @@ export default function ManageCertifications() {
   const [educations, setEducations] = useState([]);
   const [editing, setEditing] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
   const [certificateFile, setCertificateFile] = useState(null);
   const [logoFile, setLogoFile] = useState(null);
   const [formData, setFormData] = useState({
@@ -27,13 +28,12 @@ export default function ManageCertifications() {
       console.log('🔄 Loading certifications...');
       
       const certsData = await certificationAPI.getAll();
-      console.log('📚 Loaded certifications from /api/certifications:', certsData);
+      console.log('📚 Loaded certifications:', certsData);
       
       setCertifications(Array.isArray(certsData) ? certsData : []);
       
       try {
         const eduData = await educationAPI.get();
-        console.log('📚 Loaded education data:', eduData);
         setEducations(Array.isArray(eduData) ? eduData : []);
       } catch (eduError) {
         console.log('Could not load education data:', eduError);
@@ -83,10 +83,12 @@ export default function ManageCertifications() {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    setUploading(true);
     
     if (!formData.name || formData.name.trim() === '') {
       setError('Certification name is required');
       alert('Certification name is required');
+      setUploading(false);
       return;
     }
     
@@ -98,19 +100,28 @@ export default function ManageCertifications() {
       submitData.append('issuer', formData.issuer || '');
       submitData.append('date', formData.date || '');
       
-      console.log('📤 FormData entries:');
-      for (let [key, value] of submitData.entries()) {
-        console.log(`  ${key}: ${value}`);
-      }
-      
+      // ✅ Upload certificate directly to Cloudinary
       if (certificateFile) {
-        submitData.append('certificate', certificateFile);
-        console.log('📎 Certificate file attached:', certificateFile.name);
+        const resourceType = certificateFile.type === 'application/pdf' ? 'raw' : 'image';
+        const folder = resourceType === 'raw' ? 'certifications' : 'certifications';
+        const result = await uploadToCloudinaryDirect(certificateFile, { 
+          resourceType: resourceType,
+          folder: `portfolio/${folder}`
+        });
+        submitData.append('certificateUrl', result.secure_url);
+        submitData.append('certificatePublicId', result.public_id);
+        console.log('✅ Certificate uploaded:', result.secure_url);
       }
       
+      // ✅ Upload logo directly to Cloudinary
       if (logoFile) {
-        submitData.append('logo', logoFile);
-        console.log('🖼️ Logo file attached:', logoFile.name);
+        const result = await uploadToCloudinaryDirect(logoFile, { 
+          resourceType: 'image',
+          folder: 'portfolio/certification-logos'
+        });
+        submitData.append('logoUrl', result.secure_url);
+        submitData.append('logoPublicId', result.public_id);
+        console.log('✅ Logo uploaded:', result.secure_url);
       }
 
       let response;
@@ -125,17 +136,16 @@ export default function ManageCertifications() {
       }
       
       resetForm();
-      
-      console.log('🔄 Reloading data after save...');
       await loadData();
       
       setTimeout(() => setSuccess(null), 5000);
       
     } catch (error) { 
       console.error('❌ Error saving certification:', error);
-      const errorMessage = error.message || 'Unknown error occurred';
-      setError(errorMessage);
-      alert('Error saving certification: ' + errorMessage);
+      setError(error.message || 'Unknown error occurred');
+      alert('Error saving certification: ' + error.message);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -261,6 +271,7 @@ export default function ManageCertifications() {
               type="file" 
               accept=".jpg,.jpeg,.png,.gif,.webp,.svg" 
               onChange={(e) => handleFileChange(e, 'logo')} 
+              disabled={uploading}
             />
             {logoFile && (
               <small style={{ color: '#10B981' }}>
@@ -283,6 +294,7 @@ export default function ManageCertifications() {
               type="file" 
               accept=".pdf,.jpg,.jpeg,.png,.gif,.webp" 
               onChange={(e) => handleFileChange(e, 'certificate')} 
+              disabled={uploading}
             />
             {certificateFile && (
               <small style={{ color: '#10B981' }}>
@@ -299,8 +311,8 @@ export default function ManageCertifications() {
         </div>
         
         <div className="form-actions">
-          <button type="submit" className="save-btn">
-            {editing ? 'Update' : 'Add'} Certification
+          <button type="submit" className="save-btn" disabled={uploading}>
+            {uploading ? 'Uploading...' : (editing ? 'Update' : 'Add') + ' Certification'}
           </button>
           {editing && (
             <button type="button" className="cancel-btn" onClick={resetForm}>

@@ -1,5 +1,5 @@
 const { Certification } = require('../models');
-const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinaryUpload');
+const { deleteFromCloudinary } = require('../utils/cloudinaryUpload');
 
 exports.getAllCertifications = async (req, res) => {
   try { 
@@ -15,50 +15,24 @@ exports.getAllCertifications = async (req, res) => {
 exports.createCertification = async (req, res) => {
   try {
     console.log('=== CREATE CERTIFICATION ===');
-    console.log('Content-Type:', req.headers['content-type']);
     console.log('req.body:', req.body);
     console.log('req.files:', req.files);
     
-    // Get the raw form data from multer
-    const { name, issuer, date } = req.body;
-    
-    console.log('Name from body:', name);
-    console.log('Issuer from body:', issuer);
-    console.log('Date from body:', date);
-    
-    // Handle file uploads
-    let certificateUrl, certificatePublicId;
-    let logoUrl, logoPublicId;
-    
-    // Handle certificate file (PDF/Image)
-    if (req.files && req.files.certificate) {
-      console.log('Uploading certificate file...');
-      const result = await uploadToCloudinary(req.files.certificate[0].buffer, 'certifications');
-      certificateUrl = result.secure_url;
-      certificatePublicId = result.public_id;
-      console.log('Certificate uploaded to Cloudinary:', certificateUrl);
-    }
-    
-    // Handle logo file (Image)
-    if (req.files && req.files.logo) {
-      console.log('Uploading logo file...');
-      const result = await uploadToCloudinary(req.files.logo[0].buffer, 'certification-logos');
-      logoUrl = result.secure_url;
-      logoPublicId = result.public_id;
-      console.log('Logo uploaded to Cloudinary:', logoUrl);
-    }
+    // Extract fields from request body
+    const { name, issuer, date, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
     
     // Validate required fields
     if (!name || name.trim() === '') {
       console.error('❌ Name is required but not provided');
       return res.status(400).json({ 
         success: false,
-        message: 'Certification name is required',
-        received: req.body 
+        message: 'Certification name is required'
       });
     }
     
-    // Create certification
+    // ✅ No Cloudinary upload here - frontend already uploaded directly
+    // Just use the URLs provided by the frontend
+    
     const certificationData = {
       name: name.trim(),
       issuer: (issuer && issuer.trim()) ? issuer.trim() : '',
@@ -82,13 +56,9 @@ exports.createCertification = async (req, res) => {
     
   } catch (error) { 
     console.error('❌ Create certification error:', error);
-    console.error('Error details:', error.errors || error);
-    
     res.status(400).json({ 
       success: false,
-      message: error.message,
-      errors: error.errors ? error.errors.map(e => e.message) : undefined,
-      receivedBody: req.body 
+      message: error.message
     }); 
   }
 };
@@ -98,7 +68,6 @@ exports.updateCertification = async (req, res) => {
     console.log('=== UPDATE CERTIFICATION ===');
     console.log('ID:', req.params.id);
     console.log('req.body:', req.body);
-    console.log('req.files:', req.files);
     
     const certification = await Certification.findByPk(req.params.id);
     if (!certification) {
@@ -108,44 +77,27 @@ exports.updateCertification = async (req, res) => {
       });
     }
     
-    // Extract fields
-    const { name, issuer, date } = req.body;
+    // Extract fields from request body
+    const { name, issuer, date, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
     
     // Prepare update data
     const updateData = {};
-    if (name !== undefined && name !== null) {
-      updateData.name = name.trim();
-    }
-    if (issuer !== undefined && issuer !== null) {
-      updateData.issuer = issuer.trim();
-    }
-    if (date !== undefined && date !== null) {
-      updateData.date = date.trim();
-    }
+    if (name !== undefined && name !== null) updateData.name = name.trim();
+    if (issuer !== undefined) updateData.issuer = issuer;
+    if (date !== undefined) updateData.date = date;
+    if (certificateUrl !== undefined) updateData.certificateUrl = certificateUrl;
+    if (certificatePublicId !== undefined) updateData.certificatePublicId = certificatePublicId;
+    if (logoUrl !== undefined) updateData.logoUrl = logoUrl;
+    if (logoPublicId !== undefined) updateData.logoPublicId = logoPublicId;
     
-    // Handle certificate file upload
-    if (req.files && req.files.certificate) {
-      if (certification.certificatePublicId) {
-        await deleteFromCloudinary(certification.certificatePublicId);
-      }
-      const result = await uploadToCloudinary(req.files.certificate[0].buffer, 'certifications');
-      updateData.certificateUrl = result.secure_url;
-      updateData.certificatePublicId = result.public_id;
-      console.log('Certificate uploaded to Cloudinary:', result.secure_url);
+    // ✅ Delete old files from Cloudinary if new ones are provided
+    // (frontend already uploaded the new files, we just clean up old ones)
+    if (certificatePublicId && certification.certificatePublicId && certification.certificatePublicId !== certificatePublicId) {
+      await deleteFromCloudinary(certification.certificatePublicId);
     }
-    
-    // Handle logo file upload
-    if (req.files && req.files.logo) {
-      if (certification.logoPublicId) {
-        await deleteFromCloudinary(certification.logoPublicId);
-      }
-      const result = await uploadToCloudinary(req.files.logo[0].buffer, 'certification-logos');
-      updateData.logoUrl = result.secure_url;
-      updateData.logoPublicId = result.public_id;
-      console.log('Logo uploaded to Cloudinary:', result.secure_url);
+    if (logoPublicId && certification.logoPublicId && certification.logoPublicId !== logoPublicId) {
+      await deleteFromCloudinary(certification.logoPublicId);
     }
-    
-    console.log('Updating certification with:', updateData);
     
     await certification.update(updateData);
     console.log('✅ Certification updated successfully:', certification.toJSON());

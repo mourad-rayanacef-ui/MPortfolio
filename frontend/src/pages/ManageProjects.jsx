@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { projectAPI } from '../services/api';
+import { projectAPI, uploadToCloudinaryDirect } from '../services/api';
 import './ManageProjects.css';
 
 export default function ManageProjects() {
@@ -7,6 +7,7 @@ export default function ManageProjects() {
   const [editing, setEditing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imageFile, setImageFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     techStack: [],
@@ -41,24 +42,44 @@ export default function ManageProjects() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const submitData = new FormData();
-    Object.keys(formData).forEach(key => {
-      if (key === 'techStack') submitData.append(key, JSON.stringify(formData[key]));
-      else if (formData[key] !== undefined && formData[key] !== null) submitData.append(key, formData[key]);
-    });
-    if (imageFile) submitData.append('image', imageFile);
+    setUploading(true);
     
     try {
+      const submitData = new FormData();
+      
+      // Add all text fields
+      Object.keys(formData).forEach(key => {
+        if (key === 'techStack') {
+          submitData.append(key, JSON.stringify(formData[key]));
+        } else if (formData[key] !== undefined && formData[key] !== null) {
+          submitData.append(key, formData[key]);
+        }
+      });
+      
+      // ✅ Upload image directly to Cloudinary from browser
+      if (imageFile) {
+        const result = await uploadToCloudinaryDirect(imageFile, { 
+          resourceType: 'image',
+          folder: 'portfolio/projects'
+        });
+        submitData.append('image', result.secure_url);
+        submitData.append('imagePublicId', result.public_id);
+      }
+
+      let response;
       if (editing) {
-        await projectAPI.update(editing.id, submitData);
+        response = await projectAPI.update(editing.id, submitData);
       } else {
-        await projectAPI.create(submitData);
+        response = await projectAPI.create(submitData);
       }
       resetForm();
       loadProjects();
+      alert(editing ? 'Project updated!' : 'Project created!');
     } catch (error) { 
       console.error('Error:', error); 
       alert('Error saving project: ' + error.message);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -79,7 +100,16 @@ export default function ManageProjects() {
 
   const handleEdit = (project) => {
     setEditing(project);
-    setFormData(project);
+    setFormData({
+      name: project.name || '',
+      techStack: project.techStack || [],
+      description: project.description || '',
+      details: project.details || '',
+      startDate: project.startDate || '',
+      endDate: project.endDate || '',
+      challenges: project.challenges || '',
+      learnings: project.learnings || ''
+    });
   };
 
   const handleDelete = async (id) => {
@@ -148,9 +178,15 @@ export default function ManageProjects() {
             type="file" 
             accept="image/*" 
             onChange={(e) => setImageFile(e.target.files[0])} 
+            disabled={uploading}
           />
+          {imageFile && (
+            <small style={{ color: '#10B981' }}>
+              {uploading ? 'Uploading...' : `New image selected: ${imageFile.name}`}
+            </small>
+          )}
           {formData.image && !imageFile && (
-            <small>Current: {formData.image.split('/').pop()}</small>
+            <small>Current: <a href={formData.image} target="_blank">View Image</a></small>
           )}
         </div>
         
@@ -199,8 +235,8 @@ export default function ManageProjects() {
         </div>
         
         <div className="form-actions">
-          <button type="submit" className="save-btn">
-            {editing ? 'Update' : 'Create'} Project
+          <button type="submit" className="save-btn" disabled={uploading}>
+            {uploading ? 'Uploading...' : (editing ? 'Update' : 'Create') + ' Project'}
           </button>
           {editing && (
             <button type="button" className="cancel-btn" onClick={resetForm}>
