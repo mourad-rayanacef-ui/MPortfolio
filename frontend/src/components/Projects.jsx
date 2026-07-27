@@ -8,6 +8,16 @@ export default function Projects({ darkMode }) {
   const { projects, loading } = useData();
   const [selectedProject, setSelectedProject] = useState(null);
 
+  const handleProjectClick = (project) => {
+    console.log('🔍 Project clicked:', project);
+    setSelectedProject(project);
+  };
+
+  const handleCloseModal = () => {
+    console.log('🔒 Closing modal');
+    setSelectedProject(null);
+  };
+
   if (loading) {
     return (
       <section id="projects" className={`projects ${darkMode ? 'dark' : ''}`}>
@@ -46,10 +56,14 @@ export default function Projects({ darkMode }) {
                   animation="fadeUp" 
                   delay={150 + (index * 100)}
                   className="project-card"
-                  onClick={() => setSelectedProject(project)}
+                  onClick={() => handleProjectClick(project)}
                 >
                   <div className="project-image">
-                    <img src={project.image} alt={project.name} />
+                    {project.image ? (
+                      <img src={project.image} alt={project.name} />
+                    ) : (
+                      <div className="project-image-placeholder">📁</div>
+                    )}
                   </div>
                   <div className="project-info">
                     <h3 className="project-title">{project.name}</h3>
@@ -79,7 +93,7 @@ export default function Projects({ darkMode }) {
       {selectedProject && (
         <ProjectModal 
           project={selectedProject} 
-          onClose={() => setSelectedProject(null)}
+          onClose={handleCloseModal}
           darkMode={darkMode}
         />
       )}

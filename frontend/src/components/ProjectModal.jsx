@@ -15,6 +15,24 @@ export default function ProjectModal({ project, onClose, darkMode }) {
     }
   };
 
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [onClose]);
+
+  // If project is null or undefined, don't render
+  if (!project) {
+    return null;
+  }
+
   return (
     <div className={`modal-backdrop ${darkMode ? 'dark' : ''}`} onClick={handleBackdropClick}>
       <div className="modal-container">
@@ -25,10 +43,16 @@ export default function ProjectModal({ project, onClose, darkMode }) {
         <div className="modal-header-sticky">
           <div className="modal-header-content">
             <div className="modal-image-wrapper">
-              <img src={project.image} alt={project.name} className="modal-image" />
+              {project.image ? (
+                <img src={project.image} alt={project.name || 'Project'} className="modal-image" />
+              ) : (
+                <div className="modal-image-placeholder">
+                  <span>📁</span>
+                </div>
+              )}
             </div>
             <div className="modal-header-info">
-              <h2 className="modal-title">{project.name}</h2>
+              <h2 className="modal-title">{project.name || 'Untitled Project'}</h2>
               {project.startDate && (
                 <span className="modal-date">
                   {project.startDate} {project.endDate ? `— ${project.endDate}` : ''}
