@@ -20,8 +20,7 @@
     "cloudinary": "^1.41.0",
     "express-validator": "^6.15.0",
     "helmet": "^7.0.0",
-    "morgan": "^1.10.0",
-    "@emailjs/nodejs": "^3.0.0"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
