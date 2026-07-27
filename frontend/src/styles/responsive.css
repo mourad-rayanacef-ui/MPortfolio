@@ -1,0 +1,55 @@
+/* Tablet */
+@media (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+  
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.3rem; }
+}
+
+/* Mobile Landscape */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.2rem; }
+  
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  button, 
+  [role="button"],
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+  
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  
+  .section-padding {
+    padding: 3rem 0;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+  }
+}

@@ -1,0 +1,270 @@
+/* Manage Personal Info - Premium Professional Design */
+
+.manage-section {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 1.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.dark .manage-section {
+  background: #1A1F2E;
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.manage-section h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #111827;
+  letter-spacing: -0.3px;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dark .manage-section h2 {
+  color: #F9FAFB;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.manage-loading {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #6B7280;
+  font-size: 0.9rem;
+}
+
+.dark .manage-loading {
+  color: #9CA3AF;
+}
+
+/* Form Styles */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4B5563;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.dark .form-group label {
+  color: #9CA3AF;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.7rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  background: #F9FAFB;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.dark .form-group input,
+.dark .form-group textarea,
+.dark .form-group select {
+  background: #0F1419;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #F9FAFB;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #1F2937;
+  box-shadow: 0 0 0 2px rgba(31, 41, 55, 0.1);
+}
+
+.dark .form-group input:focus,
+.dark .form-group textarea:focus,
+.dark .form-group select:focus {
+  border-color: #6B7280;
+  box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2);
+}
+
+.form-group input[type="file"] {
+  padding: 0.5rem;
+  background: #F9FAFB;
+}
+
+.dark .form-group input[type="file"] {
+  background: #0F1419;
+}
+
+/* Image Preview */
+.image-preview {
+  margin-bottom: 0.5rem;
+}
+
+.image-preview img {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid #1F2937;
+}
+
+.dark .image-preview img {
+  border-color: #4B5563;
+}
+
+/* Small text helper */
+small {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.7rem;
+  color: #6B7280;
+}
+
+.dark small {
+  color: #9CA3AF;
+}
+
+small a {
+  color: #1F2937;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dark small a {
+  color: #9CA3AF;
+}
+
+small a:hover {
+  text-decoration: underline;
+}
+
+/* Save Button */
+.save-btn {
+  padding: 0.7rem 1.5rem;
+  background: #1F2937;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  align-self: flex-start;
+  transition: all 0.2s ease;
+}
+
+.dark .save-btn {
+  background: #374151;
+}
+
+.save-btn:hover {
+  background: #111827;
+  transform: translateY(-1px);
+}
+
+.dark .save-btn:hover {
+  background: #4B5563;
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Success Message */
+.success-message {
+  background: #ECFDF5;
+  color: #065F46;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-left: 3px solid #10B981;
+}
+
+.dark .success-message {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6EE7B7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .manage-section {
+    padding: 1.25rem;
+  }
+  
+  .manage-section h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .save-btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .manage-section {
+    padding: 1rem;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .save-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .image-preview img {
+    width: 55px;
+    height: 55px;
+  }
+}
+/* Add this to your existing CSS */
+.error-message {
+  background: #FEE2E2;
+  color: #991B1B;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-left: 3px solid #EF4444;
+}
+
+.dark .error-message {
+  background: rgba(239, 68, 68, 0.15);
+  color: #FCA5A5;
+}

@@ -1,0 +1,314 @@
+/* Projects Section - Professional Design */
+.projects {
+  padding: 6rem 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FDFBF8 100%);
+  transition: all 0.3s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.projects.dark {
+  background: linear-gradient(180deg, #022A3C 0%, #011C29 100%);
+}
+
+.projects-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  background: rgba(2, 42, 60, 0.06);
+  color: #4A5D68;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.projects.dark .section-badge {
+  background: rgba(243, 173, 122, 0.12);
+  color: #F3AD7A;
+}
+
+.section-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #022A3C;
+  letter-spacing: -0.02em;
+}
+
+.projects.dark .section-title {
+  color: #FDF9F6;
+}
+
+.section-divider {
+  width: 50px;
+  height: 2px;
+  background: #F3AD7A;
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+.projects.dark .section-divider {
+  background: #F3AD7A;
+}
+
+.section-subtitle {
+  font-size: 0.95rem;
+  color: #5B6E78;
+  max-width: 550px;
+  margin: 1.5rem auto 0;
+  line-height: 1.6;
+}
+
+.projects.dark .section-subtitle {
+  color: #9FB4BE;
+}
+
+/* Projects Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Project Card */
+.project-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(2, 42, 60, 0.08);
+}
+
+.projects.dark .project-card {
+  background: #022A3C;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(2, 42, 60, 0.1);
+  border-color: rgba(243, 173, 122, 0.35);
+}
+
+.projects.dark .project-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(243, 173, 122, 0.3);
+}
+
+/* Project Image */
+.project-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #F3E4D3;
+}
+
+.projects.dark .project-image {
+  background: #011C29;
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image img {
+  transform: scale(1.03);
+}
+
+/* Project Info */
+.project-info {
+  padding: 1.25rem;
+}
+
+.project-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #022A3C;
+  margin-bottom: 0.5rem;
+}
+
+.projects.dark .project-title {
+  color: #FDF9F6;
+}
+
+.project-description {
+  font-size: 0.85rem;
+  color: #5B6E78;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+.projects.dark .project-description {
+  color: #9FB4BE;
+}
+
+/* Project Tech Stack */
+.project-tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.project-tech-tag {
+  padding: 0.2rem 0.6rem;
+  background: #F3E4D3;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  color: #4A5D68;
+  font-weight: 500;
+}
+
+.projects.dark .project-tech-tag {
+  background: #011C29;
+  color: #9FB4BE;
+}
+
+.no-projects {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #5B6E78;
+  font-size: 0.9rem;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid rgba(2, 42, 60, 0.08);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.projects.dark .no-projects {
+  background: #022A3C;
+  color: #9FB4BE;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .projects-container {
+    padding: 0 1.5rem;
+  }
+  
+  .projects-grid {
+    gap: 1.5rem;
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 768px) {
+  .projects {
+    padding: 4rem 0;
+  }
+  
+  .projects-container {
+    padding: 0 1.25rem;
+  }
+  
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 450px;
+  }
+  
+  .project-image {
+    height: 180px;
+  }
+  
+  .project-info {
+    padding: 1rem;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+  .projects {
+    padding: 3rem 0;
+  }
+  
+  .projects-container {
+    padding: 0 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .section-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.8rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .project-image {
+    height: 160px;
+  }
+  
+  .project-info {
+    padding: 0.875rem;
+  }
+  
+  .project-title {
+    font-size: 0.9rem;
+  }
+  
+  .project-description {
+    font-size: 0.8rem;
+  }
+  
+  .project-tech-tag {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.5rem;
+  }
+}
+
+/* Very Small Screens */
+@media (max-width: 360px) {
+  .project-image {
+    height: 140px;
+  }
+  
+  .project-info {
+    padding: 0.75rem;
+  }
+  
+  .project-title {
+    font-size: 0.8rem;
+  }
+  
+  .project-description {
+    font-size: 0.75rem;
+  }
+}

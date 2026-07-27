@@ -1,0 +1,212 @@
+/* Manage Skills - Premium Professional Design */
+
+.items-list {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dark .items-list {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.items-list h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #111827;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dark .items-list h3 {
+  color: #9CA3AF;
+}
+
+/* List Item */
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #F9FAFB;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.dark .list-item {
+  background: #1A1F2E;
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.list-item:hover {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark .list-item:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info strong {
+  font-size: 0.9rem;
+  color: #111827;
+  font-weight: 600;
+}
+
+.dark .item-info strong {
+  color: #F9FAFB;
+}
+
+.item-description {
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin-top: 0.25rem;
+  line-height: 1.4;
+}
+
+.dark .item-description {
+  color: #9CA3AF;
+}
+
+/* Item Actions */
+.item-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Buttons */
+.edit-btn, .delete-btn, .cancel-btn {
+  padding: 0.35rem 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background: #F3F4F6;
+  color: #4B5563;
+}
+
+.dark .edit-btn {
+  background: #0F1419;
+  color: #9CA3AF;
+}
+
+.edit-btn:hover {
+  background: #E5E7EB;
+  transform: translateY(-1px);
+}
+
+.dark .edit-btn:hover {
+  background: #1A1F2E;
+}
+
+.delete-btn {
+  background: #FEF2F2;
+  color: #DC2626;
+}
+
+.dark .delete-btn {
+  background: rgba(220, 38, 38, 0.15);
+  color: #F87171;
+}
+
+.delete-btn:hover {
+  background: #FEE2E2;
+  transform: translateY(-1px);
+}
+
+.dark .delete-btn:hover {
+  background: rgba(220, 38, 38, 0.25);
+}
+
+.cancel-btn {
+  background: #F3F4F6;
+  color: #6B7280;
+  margin-left: 0.5rem;
+}
+
+.dark .cancel-btn {
+  background: #0F1419;
+  color: #9CA3AF;
+}
+
+/* Save Button */
+.save-btn {
+  padding: 0.6rem 1.25rem;
+  background: #1F2937;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dark .save-btn {
+  background: #374151;
+}
+
+.save-btn:hover {
+  background: #111827;
+  transform: translateY(-1px);
+}
+
+.dark .save-btn:hover {
+  background: #4B5563;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .list-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .item-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .cancel-btn {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .items-list {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+  }
+  
+  .list-item {
+    padding: 0.75rem;
+  }
+  
+  .item-info strong {
+    font-size: 0.85rem;
+  }
+  
+  .edit-btn, .delete-btn, .cancel-btn {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.65rem;
+  }
+}

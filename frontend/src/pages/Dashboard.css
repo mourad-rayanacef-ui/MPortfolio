@@ -1,0 +1,438 @@
+/* Dashboard - Premium Professional Design */
+.dashboard {
+  min-height: 100vh;
+  background: #F8FAFC;
+}
+
+.dark .dashboard {
+  background: #0F1419;
+}
+
+/* Header */
+.dashboard-header {
+  background: #FFFFFF;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dark .dashboard-header {
+  background: #1A1F2E;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard-header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  letter-spacing: -0.3px;
+}
+
+.dark .dashboard-header h1 {
+  color: #F9FAFB;
+}
+
+.admin-badge {
+  background: #1F2937;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.dark .admin-badge {
+  background: #374151;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-email {
+  color: #6B7280;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.dark .admin-email {
+  color: #9CA3AF;
+}
+
+.logout-btn {
+  background: #EF4444;
+  color: white;
+  border: none;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #DC2626;
+  transform: translateY(-1px);
+}
+
+/* Tabs */
+.dashboard-tabs {
+  background: #FFFFFF;
+  padding: 0 2rem;
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  overflow-x: auto;
+}
+
+.dark .dashboard-tabs {
+  background: #1A1F2E;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.tab-btn {
+  padding: 0.9rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6B7280;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 2px solid transparent;
+}
+
+.dark .tab-btn {
+  color: #9CA3AF;
+}
+
+.tab-btn:hover {
+  color: #1F2937;
+}
+
+.dark .tab-btn:hover {
+  color: #F9FAFB;
+}
+
+.tab-btn.active {
+  color: #1F2937;
+  border-bottom-color: #1F2937;
+}
+
+.dark .tab-btn.active {
+  color: #F9FAFB;
+  border-bottom-color: #F9FAFB;
+}
+
+.tab-icon {
+  font-size: 1rem;
+}
+
+/* Content */
+.dashboard-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.1rem;
+  }
+  
+  .dashboard-tabs {
+    padding: 0 1rem;
+  }
+  
+  .tab-btn {
+    padding: 0.7rem 1rem;
+    font-size: 0.75rem;
+  }
+  
+  .tab-label {
+    display: none;
+  }
+  
+  .tab-icon {
+    font-size: 1.1rem;
+  }
+  
+  .dashboard-content {
+    padding: 1rem;
+  }
+  
+  .admin-email {
+    font-size: 0.7rem;
+  }
+  
+  .logout-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h1 {
+    font-size: 1rem;
+  }
+  
+  .admin-badge {
+    font-size: 0.6rem;
+  }
+  
+  .tab-btn {
+    padding: 0.6rem 0.8rem;
+  }
+}
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #F9FAFB;
+}
+
+.dark .dashboard {
+  background: #0F1419;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #FFFFFF;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dark .dashboard-header {
+  background: #1A1F2E;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-left h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.dark .header-left h1 {
+  color: #F9FAFB;
+}
+
+.admin-badge {
+  padding: 0.2rem 0.8rem;
+  background: #1F2937;
+  color: white;
+  border-radius: 30px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.dark .admin-badge {
+  background: #374151;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-email {
+  font-size: 0.85rem;
+  color: #6B7280;
+}
+
+.dark .admin-email {
+  color: #9CA3AF;
+}
+
+.logout-btn {
+  padding: 0.4rem 1rem;
+  background: #EF4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #DC2626;
+}
+
+/* Tabs */
+.dashboard-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 1rem 2rem;
+  background: #FFFFFF;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dark .dashboard-tabs {
+  background: #1A1F2E;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: #6B7280;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.dark .tab-btn {
+  color: #9CA3AF;
+}
+
+.tab-btn:hover {
+  background: #F3F4F6;
+  color: #1F2937;
+}
+
+.dark .tab-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #F9FAFB;
+}
+
+.tab-btn.active {
+  background: #1F2937;
+  color: white;
+}
+
+.dark .tab-btn.active {
+  background: #374151;
+  color: #F9FAFB;
+}
+
+.tab-icon {
+  font-size: 1rem;
+}
+
+.tab-label {
+  font-size: 0.8rem;
+}
+
+/* Content */
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboard-welcome {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.dashboard-welcome h1 {
+  font-size: 2rem;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.dark .dashboard-welcome h1 {
+  color: #F9FAFB;
+}
+
+.dashboard-welcome p {
+  color: #6B7280;
+}
+
+.dark .dashboard-welcome p {
+  color: #9CA3AF;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+  
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .dashboard-tabs {
+    padding: 0.5rem 1rem;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  
+  .tab-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  
+  .tab-label {
+    display: none;
+  }
+  
+  .dashboard-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-btn {
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .tab-icon {
+    font-size: 0.9rem;
+  }
+}

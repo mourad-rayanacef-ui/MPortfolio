@@ -1,0 +1,787 @@
+/* Education Section - Premium Professional Design */
+.education {
+  padding: 6rem 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FDFBF8 100%);
+  transition: background 0.3s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.dark .education {
+  background: linear-gradient(180deg, #022A3C 0%, #011C29 100%);
+}
+
+.education-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.education-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  background: rgba(2, 42, 60, 0.06);
+  color: #4A5D68;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.dark .section-badge {
+  background: rgba(243, 173, 122, 0.12);
+  color: #F3AD7A;
+}
+
+.section-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #022A3C;
+  letter-spacing: -0.02em;
+}
+
+.dark .section-title {
+  color: #FDF9F6;
+}
+
+.section-divider {
+  width: 50px;
+  height: 2px;
+  background: #F3AD7A;
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+.dark .section-divider {
+  background: #F3AD7A;
+}
+
+/* Main Education Card */
+.education-main-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(2, 42, 60, 0.08);
+}
+
+.dark .education-main-card {
+  background: #022A3C;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.education-main-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(2, 42, 60, 0.08);
+  border-color: rgba(243, 173, 122, 0.3);
+}
+
+.dark .education-main-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  border-color: rgba(243, 173, 122, 0.25);
+}
+
+.education-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(2, 42, 60, 0.08);
+}
+
+.dark .education-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.education-degree {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.3rem;
+  color: #022A3C;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.dark .education-degree {
+  color: #FDF9F6;
+}
+
+.education-university {
+  font-size: 0.9rem;
+  color: #5B6E78;
+  font-weight: 500;
+}
+
+.dark .education-university {
+  color: #9FB4BE;
+}
+
+.education-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #F8F2EC;
+  border-radius: 8px;
+}
+
+.dark .detail-item {
+  background: #011C29;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #5B6E78;
+  font-size: 0.8rem;
+}
+
+.dark .detail-label {
+  color: #9FB4BE;
+}
+
+.detail-value {
+  color: #022A3C;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.dark .detail-value {
+  color: #FDF9F6;
+}
+
+.status-badge {
+  background: #F3AD7A;
+  color: #022A3C;
+  padding: 0.2rem 0.75rem;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.dark .status-badge {
+  background: #F3AD7A;
+  color: #022A3C;
+}
+
+/* Description & Coursework Sections */
+.education-description,
+.education-coursework {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed rgba(2, 42, 60, 0.12);
+}
+
+.dark .education-description,
+.dark .education-coursework {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.education-description h4,
+.education-coursework h4 {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #022A3C;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.2px;
+}
+
+.dark .education-description h4,
+.dark .education-coursework h4 {
+  color: #FDF9F6;
+}
+
+.education-description p {
+  font-size: 0.9rem;
+  color: #4A5D68;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.dark .education-description p {
+  color: #9FB4BE;
+}
+
+.education-coursework ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.7rem;
+}
+
+.education-coursework li {
+  font-size: 0.85rem;
+  color: #4A5D68;
+  font-weight: 500;
+}
+
+.dark .education-coursework li {
+  color: #9FB4BE;
+}
+
+/* Certificate Download Button */
+.certificate-download {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+.download-cert-small {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(2, 42, 60, 0.18);
+  border-radius: 6px;
+  color: #4A5D68;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.dark .download-cert-small {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #9FB4BE;
+}
+
+.download-cert-small:hover {
+  background: #F8F2EC;
+  border-color: #F3AD7A;
+  color: #022A3C;
+}
+
+.dark .download-cert-small:hover {
+  background: #011C29;
+  border-color: #F3AD7A;
+  color: #FDF9F6;
+}
+
+/* Download Certificate Button for Certifications */
+.download-cert-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(243, 173, 122, 0.4);
+  border-radius: 6px;
+  color: #C97A3F;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.dark .download-cert-btn {
+  border-color: rgba(243, 173, 122, 0.35);
+  color: #F3AD7A;
+}
+
+.download-cert-btn:hover {
+  background: rgba(243, 173, 122, 0.12);
+  border-color: #F3AD7A;
+}
+
+.dark .download-cert-btn:hover {
+  background: rgba(243, 173, 122, 0.15);
+}
+
+.download-cert-btn svg {
+  flex-shrink: 0;
+}
+
+/* Certifications Section */
+.certifications-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.2rem;
+  color: #022A3C;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.dark .certifications-title {
+  color: #FDF9F6;
+}
+
+.certifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.certification-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 1.2rem;
+  border: 1px solid rgba(2, 42, 60, 0.08);
+  transition: all 0.3s ease;
+}
+
+.dark .certification-card {
+  background: #022A3C;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.certification-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(2, 42, 60, 0.06);
+}
+
+.dark .certification-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.certification-header {
+  margin-bottom: 0.8rem;
+}
+
+.certification-name {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #022A3C;
+  margin-bottom: 0.2rem;
+}
+
+.dark .certification-name {
+  color: #FDF9F6;
+}
+
+.certification-issuer {
+  font-size: 0.75rem;
+  color: #5B6E78;
+}
+
+.dark .certification-issuer {
+  color: #9FB4BE;
+}
+
+.certification-details {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.cert-date {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cert-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #5B6E78;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.dark .cert-label {
+  color: #9FB4BE;
+}
+
+.cert-value {
+  font-size: 0.75rem;
+  color: #022A3C;
+}
+
+.dark .cert-value {
+  color: #FDF9F6;
+}
+
+/* Courses Section */
+.courses-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.2rem;
+  color: #022A3C;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.dark .courses-title {
+  color: #FDF9F6;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.course-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(2, 42, 60, 0.08);
+}
+
+.dark .course-card {
+  background: #022A3C;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(2, 42, 60, 0.06);
+}
+
+.dark .course-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.course-name {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #022A3C;
+  margin-bottom: 0.5rem;
+}
+
+.dark .course-name {
+  color: #FDF9F6;
+}
+
+.course-grade {
+  font-size: 0.75rem;
+  color: #5B6E78;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.dark .course-grade {
+  color: #9FB4BE;
+}
+
+.course-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.course-skill-tag {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.6rem;
+  background: #F3E4D3;
+  border-radius: 30px;
+  color: #4A5D68;
+}
+
+.dark .course-skill-tag {
+  background: #011C29;
+  color: #9FB4BE;
+}
+
+.show-more-btn {
+  display: block;
+  margin: 1rem auto 0;
+  padding: 0.5rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(2, 42, 60, 0.18);
+  border-radius: 30px;
+  color: #4A5D68;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.dark .show-more-btn {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #9FB4BE;
+}
+
+.show-more-btn:hover {
+  background: #F8F2EC;
+  border-color: #F3AD7A;
+  color: #022A3C;
+}
+
+.dark .show-more-btn:hover {
+  background: #011C29;
+  border-color: #F3AD7A;
+  color: #FDF9F6;
+}
+
+/* Certification Title Row with Logo */
+.certification-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cert-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #F8F2EC;
+  padding: 4px;
+  flex-shrink: 0;
+  border: 1px solid rgba(2, 42, 60, 0.06);
+}
+
+.dark .cert-logo {
+  background: #011C29;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .education-container {
+    padding: 0 1.5rem;
+  }
+  
+  .education-main-card {
+    padding: 1.5rem;
+  }
+  
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 768px) {
+  .education {
+    padding: 4rem 0;
+  }
+  
+  .education-container {
+    padding: 0 1.25rem;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .education-wrapper {
+    margin-top: 2rem;
+    gap: 2rem;
+  }
+  
+  .education-degree {
+    font-size: 1.1rem;
+  }
+  
+  .education-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .education-main-card {
+    padding: 1.25rem;
+  }
+  
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .certification-card {
+    padding: 1rem;
+  }
+  
+  .certification-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .certificate-download {
+    text-align: center;
+  }
+  
+  .cert-logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .certification-title-row {
+    gap: 0.75rem;
+  }
+  
+  .education-coursework ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+  .education {
+    padding: 3rem 0;
+  }
+  
+  .education-container {
+    padding: 0 1rem;
+  }
+  
+  .section-header {
+    margin-bottom: 2rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .section-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.8rem;
+  }
+  
+  .education-wrapper {
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .education-main-card {
+    padding: 1rem;
+    border-radius: 14px;
+  }
+  
+  .education-degree {
+    font-size: 1rem;
+  }
+  
+  .education-university {
+    font-size: 0.8rem;
+  }
+  
+  .education-details {
+    gap: 0.75rem;
+  }
+  
+  .detail-item {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+  
+  .detail-label {
+    font-size: 0.7rem;
+  }
+  
+  .detail-value {
+    font-size: 0.75rem;
+  }
+  
+  .status-badge {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.6rem;
+  }
+  
+  .education-description,
+  .education-coursework {
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+  
+  .education-description p {
+    font-size: 0.8rem;
+  }
+  
+  .education-coursework li {
+    font-size: 0.75rem;
+  }
+  
+  .certifications-title,
+  .courses-title {
+    font-size: 1rem;
+  }
+  
+  .certification-card {
+    padding: 0.875rem;
+  }
+  
+  .certification-name {
+    font-size: 0.85rem;
+  }
+  
+  .certification-issuer {
+    font-size: 0.7rem;
+  }
+  
+  .cert-value {
+    font-size: 0.7rem;
+  }
+  
+  .cert-logo {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .certification-title-row {
+    gap: 0.5rem;
+  }
+  
+  .course-card {
+    padding: 0.875rem;
+  }
+  
+  .course-name {
+    font-size: 0.8rem;
+  }
+  
+  .download-cert-small {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.75rem;
+    justify-content: center;
+  }
+  
+  .download-cert-btn {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.6rem;
+  }
+  
+  .show-more-btn {
+    font-size: 0.7rem;
+    padding: 0.4rem 1.25rem;
+  }
+}
+
+/* Very Small Screens */
+@media (max-width: 360px) {
+  .education-main-card {
+    padding: 0.875rem;
+  }
+  
+  .education-degree {
+    font-size: 0.9rem;
+  }
+  
+  .certification-card {
+    padding: 0.75rem;
+  }
+  
+  .course-card {
+    padding: 0.75rem;
+  }
+}
