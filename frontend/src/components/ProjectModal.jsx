@@ -2,15 +2,20 @@ import React, { useEffect } from 'react';
 import './ProjectModal.css';
 
 export default function ProjectModal({ project, onClose, darkMode }) {
+  console.log('🎯 ProjectModal rendering with:', project);
+
   useEffect(() => {
+    console.log('📌 Modal mounted');
     document.body.style.overflow = 'hidden';
     return () => {
+      console.log('📌 Modal unmounted');
       document.body.style.overflow = 'unset';
     };
   }, []);
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
+      console.log('🔙 Backdrop clicked, closing');
       onClose();
     }
   };
@@ -19,6 +24,7 @@ export default function ProjectModal({ project, onClose, darkMode }) {
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
+        console.log('⌨️ Escape pressed, closing');
         onClose();
       }
     };
@@ -30,6 +36,7 @@ export default function ProjectModal({ project, onClose, darkMode }) {
 
   // If project is null or undefined, don't render
   if (!project) {
+    console.log('⚠️ No project provided, returning null');
     return null;
   }
 

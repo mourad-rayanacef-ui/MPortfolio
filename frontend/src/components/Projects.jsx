@@ -10,6 +10,8 @@ export default function Projects({ darkMode }) {
 
   const handleProjectClick = (project) => {
     console.log('🔍 Project clicked:', project);
+    console.log('🔍 Project name:', project?.name);
+    console.log('🔍 Project id:', project?.id);
     setSelectedProject(project);
   };
 
@@ -33,6 +35,9 @@ export default function Projects({ darkMode }) {
     );
   }
 
+  // Debug: log projects when they load
+  console.log('📊 Projects loaded:', projects);
+
   return (
     <>
       <section id="projects" className={`projects ${darkMode ? 'dark' : ''}`}>
@@ -48,15 +53,17 @@ export default function Projects({ darkMode }) {
             </div>
           </AnimatedSection>
           
-          {projects.length > 0 && (
+          {projects && projects.length > 0 ? (
             <div className="projects-grid">
               {projects.map((project, index) => (
-                <AnimatedSection 
-                  key={project.id} 
-                  animation="fadeUp" 
-                  delay={150 + (index * 100)}
+                <div 
+                  key={project.id || index}
                   className="project-card"
-                  onClick={() => handleProjectClick(project)}
+                  onClick={() => {
+                    console.log('👆 Card clicked for:', project.name);
+                    handleProjectClick(project);
+                  }}
+                  style={{ cursor: 'pointer' }}
                 >
                   <div className="project-image">
                     {project.image ? (
@@ -66,8 +73,8 @@ export default function Projects({ darkMode }) {
                     )}
                   </div>
                   <div className="project-info">
-                    <h3 className="project-title">{project.name}</h3>
-                    <p className="project-description">{project.description}</p>
+                    <h3 className="project-title">{project.name || 'Untitled'}</h3>
+                    <p className="project-description">{project.description || 'No description'}</p>
                     <div className="project-tech-stack">
                       {project.techStack && project.techStack.slice(0, 4).map((tech, idx) => (
                         <span key={idx} className="project-tech-tag">{tech}</span>
@@ -77,12 +84,10 @@ export default function Projects({ darkMode }) {
                       )}
                     </div>
                   </div>
-                </AnimatedSection>
+                </div>
               ))}
             </div>
-          )}
-          
-          {projects.length === 0 && (
+          ) : (
             <div className="no-projects">
               <p>No projects available yet.</p>
             </div>
