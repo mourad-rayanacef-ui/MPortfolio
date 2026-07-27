@@ -244,6 +244,7 @@
   }
   .contact-form {
     padding: 1.5rem;
+    border-radius: 14px;
   }
 }
 
@@ -272,15 +273,23 @@
   }
   .contact-form {
     padding: 1.25rem;
+    border-radius: 12px;
   }
   .form-group input,
   .form-group textarea {
     padding: 0.65rem 0.8rem;
     font-size: 0.8rem;
+    border-radius: 8px;
   }
   .submit-btn {
     padding: 0.7rem;
     font-size: 0.8rem;
+    border-radius: 8px;
+  }
+  .success-message,
+  .error-message {
+    font-size: 0.7rem;
+    padding: 0.6rem;
   }
 }
 
@@ -294,6 +303,13 @@
   .form-group input,
   .form-group textarea {
     font-size: 0.75rem;
-    padding: 0.5rem 0.7rem;
+    padding: 0.55rem 0.7rem;
+  }
+  .submit-btn {
+    padding: 0.6rem;
+    font-size: 0.75rem;
+  }
+  .section-title {
+    font-size: 1.35rem;
   }
 }

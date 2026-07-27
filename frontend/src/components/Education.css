@@ -557,7 +557,6 @@
 
 /* ===== RESPONSIVE ===== */
 
-/* Tablets */
 @media (max-width: 1024px) {
   .education-container {
     padding: 0 1.5rem;
@@ -572,7 +571,6 @@
   }
 }
 
-/* Mobile Landscape */
 @media (max-width: 768px) {
   .education {
     padding: 4rem 0;
@@ -596,11 +594,12 @@
   }
   
   .education-details {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   
   .education-main-card {
     padding: 1.25rem;
+    border-radius: 16px;
   }
   
   .courses-grid {
@@ -612,9 +611,9 @@
   }
   
   .certification-details {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
   }
   
   .certificate-download {
@@ -631,11 +630,10 @@
   }
   
   .education-coursework ul {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-/* Mobile Portrait */
 @media (max-width: 480px) {
   .education {
     padding: 3rem 0;
@@ -677,7 +675,8 @@
   }
   
   .education-details {
-    gap: 0.75rem;
+    gap: 0.5rem;
+    grid-template-columns: 1fr;
   }
   
   .detail-item {
@@ -719,6 +718,7 @@
   
   .certification-card {
     padding: 0.875rem;
+    border-radius: 10px;
   }
   
   .certification-name {
@@ -744,6 +744,7 @@
   
   .course-card {
     padding: 0.875rem;
+    border-radius: 10px;
   }
   
   .course-name {
@@ -754,6 +755,7 @@
     font-size: 0.65rem;
     padding: 0.3rem 0.75rem;
     justify-content: center;
+    width: 100%;
   }
   
   .download-cert-btn {
@@ -765,16 +767,31 @@
     font-size: 0.7rem;
     padding: 0.4rem 1.25rem;
   }
+  
+  .certificate-download {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  
+  .certification-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
 }
 
-/* Very Small Screens */
 @media (max-width: 360px) {
   .education-main-card {
     padding: 0.875rem;
+    border-radius: 12px;
   }
   
   .education-degree {
     font-size: 0.9rem;
+  }
+  
+  .education-university {
+    font-size: 0.75rem;
   }
   
   .certification-card {
@@ -783,5 +800,17 @@
   
   .course-card {
     padding: 0.75rem;
+  }
+  
+  .section-title {
+    font-size: 1.35rem;
+  }
+  
+  .education-coursework ul {
+    grid-template-columns: 1fr;
+  }
+  
+  .detail-item {
+    padding: 0.35rem 0.5rem;
   }
 }

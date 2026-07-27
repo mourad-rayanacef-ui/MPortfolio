@@ -414,7 +414,6 @@
 
 /* ===== RESPONSIVE ===== */
 
-/* Tablets */
 @media (max-width: 1024px) {
   .experience-container {
     padding: 0 1.5rem;
@@ -425,7 +424,6 @@
   }
 }
 
-/* Mobile Landscape */
 @media (max-width: 768px) {
   .experience {
     padding: 4rem 0;
@@ -449,6 +447,8 @@
     width: 100%;
     flex-direction: row;
     padding-left: 1rem;
+    align-items: center;
+    gap: 0.5rem;
   }
   
   .marker-line {
@@ -456,11 +456,11 @@
   }
   
   .experience-header {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
   
   .experience-title-group {
-    flex-basis: 100%;
+    flex-basis: auto;
   }
   
   .experience-type-badge {
@@ -495,7 +495,6 @@
   }
 }
 
-/* Mobile Portrait */
 @media (max-width: 480px) {
   .experience {
     padding: 3rem 0;
@@ -526,14 +525,24 @@
     margin-top: 1.5rem;
   }
   
+  .experience-item {
+    margin-bottom: 1.25rem;
+  }
+  
+  .experience-item-marker {
+    display: none;
+  }
+  
   .experience-item-content {
     padding: 0.875rem;
+    border-radius: 10px;
   }
   
   .experience-company-logo {
     width: 32px;
     height: 32px;
     padding: 4px;
+    border-radius: 8px;
   }
   
   .experience-title {
@@ -581,9 +590,17 @@
   .experience-website {
     font-size: 0.7rem;
   }
+  
+  .experience-header {
+    gap: 0.75rem;
+  }
+  
+  .experience-meta {
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
-/* Very Small Screens */
 @media (max-width: 360px) {
   .experience-item-content {
     padding: 0.75rem;
@@ -596,5 +613,31 @@
   
   .experience-title {
     font-size: 0.8rem;
+  }
+  
+  .experience-company {
+    font-size: 0.7rem;
+  }
+  
+  .experience-description p {
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+  
+  .experience-achievements h4 {
+    font-size: 0.7rem;
+  }
+  
+  .experience-achievements li {
+    font-size: 0.7rem;
+  }
+  
+  .tech-tag {
+    font-size: 0.55rem;
+    padding: 0.12rem 0.4rem;
+  }
+  
+  .section-title {
+    font-size: 1.35rem;
   }
 }

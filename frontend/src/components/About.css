@@ -293,7 +293,6 @@
 
 /* ===== RESPONSIVE ===== */
 
-/* Tablets & Small Laptops */
 @media (max-width: 1024px) {
   .about-container {
     padding: 0 1.5rem;
@@ -312,7 +311,6 @@
   }
 }
 
-/* Mobile Landscape */
 @media (max-width: 768px) {
   .about {
     padding: 4rem 0;
@@ -368,7 +366,6 @@
   }
 }
 
-/* Mobile Portrait */
 @media (max-width: 480px) {
   .about {
     padding: 3rem 0;
@@ -389,6 +386,7 @@
   
   .about-bio-section {
     padding: 1.25rem;
+    border-radius: 12px;
   }
   
   .about-bio {
@@ -407,6 +405,7 @@
     align-items: center;
     text-align: center;
     gap: 0.5rem;
+    border-radius: 10px;
   }
   
   .info-card-icon {
@@ -441,7 +440,7 @@
   }
   
   .about-cv-btn {
-    padding: 0.4rem 0.875rem;
+    padding: 0.5rem 1rem;
     font-size: 0.75rem;
     width: 100%;
     justify-content: center;
@@ -453,7 +452,6 @@
   }
 }
 
-/* Very Small Screens */
 @media (max-width: 360px) {
   .info-cards-grid {
     grid-template-columns: 1fr;
@@ -463,5 +461,27 @@
     flex-direction: row;
     text-align: left;
     align-items: flex-start;
+    padding: 0.65rem;
+  }
+  
+  .info-card-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .info-card-value {
+    font-size: 0.7rem;
+  }
+  
+  .section-title {
+    font-size: 1.35rem;
+  }
+  
+  .about-bio-section {
+    padding: 1rem;
+  }
+  
+  .about-bio {
+    font-size: 0.8rem;
   }
 }

@@ -93,3 +93,36 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Mobile: faster animations, smaller transforms */
+@media (max-width: 768px) {
+  .animated-section {
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  
+  .animated-section.animate-fadeUp {
+    transform: translateY(25px);
+  }
+  
+  .animated-section.animate-fadeDown {
+    transform: translateY(-25px);
+  }
+  
+  .animated-section.animate-fadeLeft {
+    transform: translateX(-25px);
+  }
+  
+  .animated-section.animate-fadeRight {
+    transform: translateX(25px);
+  }
+  
+  .animated-section.animate-scale {
+    transform: scale(0.95);
+  }
+  
+  .animated-section.stagger-children > * {
+    transform: translateY(12px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+}
