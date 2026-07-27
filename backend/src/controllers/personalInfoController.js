@@ -15,25 +15,30 @@ exports.getPersonalInfo = async (req, res) => {
   }
 };
 
-// PUT update personal info (Handles CV/Resume and Profile Image uploads)
+// PUT update personal info
 exports.updatePersonalInfo = async (req, res) => {
   try {
     console.log('=== UPDATE PERSONAL INFO ===');
-    console.log('Files:', req.files);
     console.log('Body:', req.body);
+    console.log('Files:', req.files);
     
     let info = await PersonalInfo.findOne();
-    console.log('Existing info:', info ? 'Found' : 'Not found');
 
     // Prepare data payload from request body
     const updateData = { ...req.body };
 
-    // Never let raw form-data accidentally overwrite these managed fields
+    // Remove fields that shouldn't be updated directly
     delete updateData.id;
     delete updateData.createdAt;
     delete updateData.updatedAt;
+    delete updateData.profileImage;
+    delete updateData.profileImagePublicId;
+    delete updateData.cvUrl;
+    delete updateData.cvPublicId;
 
-    // Handle files if uploaded via multer
+    console.log('Update data:', updateData);
+
+    // Handle files if uploaded
     if (req.files) {
       // Handle CV upload
       if (req.files.cv && req.files.cv[0]) {
@@ -48,7 +53,7 @@ exports.updatePersonalInfo = async (req, res) => {
           });
           updateData.cvUrl = cvResult.secure_url;
           updateData.cvPublicId = cvResult.public_id;
-          console.log('CV uploaded successfully:', cvResult.secure_url);
+          console.log('✅ CV uploaded:', cvResult.secure_url);
         } catch (cvErr) {
           console.error('CV upload failed:', cvErr);
           return res.status(400).json({ message: 'CV upload failed: ' + cvErr.message });
@@ -67,29 +72,11 @@ exports.updatePersonalInfo = async (req, res) => {
           });
           updateData.profileImage = imgResult.secure_url;
           updateData.profileImagePublicId = imgResult.public_id;
-          console.log('Profile Image uploaded successfully:', imgResult.secure_url);
+          console.log('✅ Profile Image uploaded:', imgResult.secure_url);
         } catch (imgErr) {
           console.error('Profile image upload failed:', imgErr);
           return res.status(400).json({ message: 'Profile image upload failed: ' + imgErr.message });
         }
-      }
-    } else if (req.file) {
-      // Fallback if using single file upload for CV
-      try {
-        console.log('Processing single file upload (CV)...');
-        if (info && info.cvPublicId) {
-          await deleteFromCloudinary(info.cvPublicId, 'raw');
-        }
-        const result = await uploadToCloudinary(req.file.buffer, 'documents', {
-          resource_type: 'raw',
-          flags: 'attachment'
-        });
-        updateData.cvUrl = result.secure_url;
-        updateData.cvPublicId = result.public_id;
-        console.log('CV uploaded successfully:', result.secure_url);
-      } catch (cvErr) {
-        console.error('CV upload failed:', cvErr);
-        return res.status(400).json({ message: 'CV upload failed: ' + cvErr.message });
       }
     }
 
@@ -98,11 +85,14 @@ exports.updatePersonalInfo = async (req, res) => {
       info = await PersonalInfo.create(updateData);
       console.log('Created new PersonalInfo record');
     } else {
+      // ✅ Only update fields that are provided
       await info.update(updateData);
       console.log('Updated PersonalInfo record');
     }
 
-    res.json(info);
+    // Fetch the updated record
+    const updatedInfo = await PersonalInfo.findByPk(info.id);
+    res.json(updatedInfo);
   } catch (error) {
     console.error('Update personal info error:', error);
     res.status(400).json({ message: error.message });
@@ -119,36 +109,40 @@ exports.uploadProfileImage = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
+    if (!req.file.mimetype.startsWith('image/')) {
+      return res.status(400).json({ message: 'File must be an image' });
+    }
+
+    if (req.file.size > 5 * 1024 * 1024) {
+      return res.status(400).json({ message: 'File size must be less than 5MB' });
+    }
+
     let info = await PersonalInfo.findOne();
     if (!info) {
       info = await PersonalInfo.create({});
     }
 
-    // Delete old image if exists
     if (info.profileImagePublicId) {
       await deleteFromCloudinary(info.profileImagePublicId, 'image');
     }
 
-    // Upload new image
     const result = await uploadToCloudinary(req.file.buffer, 'images', {
       resource_type: 'image'
     });
 
-    // Update the profile image fields
     await info.update({
       profileImage: result.secure_url,
       profileImagePublicId: result.public_id
     });
 
-    console.log('Profile image uploaded successfully:', result.secure_url);
-
     res.json({
       message: 'Profile image uploaded successfully',
       url: result.secure_url,
+      profileImage: result.secure_url,
       publicId: result.public_id
     });
   } catch (error) {
-    console.error('Upload profile image error:', error);
+    console.error('❌ Upload profile image error:', error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -163,9 +157,12 @@ exports.uploadCV = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    // Check if file is PDF
     if (req.file.mimetype !== 'application/pdf') {
       return res.status(400).json({ message: 'CV must be a PDF file' });
+    }
+
+    if (req.file.size > 10 * 1024 * 1024) {
+      return res.status(400).json({ message: 'File size must be less than 10MB' });
     }
 
     let info = await PersonalInfo.findOne();
@@ -173,24 +170,19 @@ exports.uploadCV = async (req, res) => {
       info = await PersonalInfo.create({});
     }
 
-    // Delete old CV if exists
     if (info.cvPublicId) {
       await deleteFromCloudinary(info.cvPublicId, 'raw');
     }
 
-    // Upload new CV
     const result = await uploadToCloudinary(req.file.buffer, 'documents', {
       resource_type: 'raw',
       flags: 'attachment'
     });
 
-    // Update the CV fields
     await info.update({
       cvUrl: result.secure_url,
       cvPublicId: result.public_id
     });
-
-    console.log('CV uploaded successfully:', result.secure_url);
 
     res.json({
       message: 'CV uploaded successfully',
@@ -198,7 +190,7 @@ exports.uploadCV = async (req, res) => {
       publicId: result.public_id
     });
   } catch (error) {
-    console.error('Upload CV error:', error);
+    console.error('❌ Upload CV error:', error);
     res.status(400).json({ message: error.message });
   }
 };
