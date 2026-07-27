@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { useData } from '../contexts/DataContext';
-import ProjectModal from './ProjectModal';
 import AnimatedSection from './AnimatedSection';
 import './Projects.css';
+
+// Lazy load ProjectModal
+const ProjectModal = lazy(() => import('./ProjectModal'));
 
 export default function Projects({ darkMode }) {
   const { projects, loading } = useData();
   const [selectedProject, setSelectedProject] = useState(null);
 
   const handleProjectClick = (project) => {
-    console.log('🔍 Project clicked:', project);
-    console.log('🔍 Project name:', project?.name);
-    console.log('🔍 Project id:', project?.id);
     setSelectedProject(project);
   };
 
   const handleCloseModal = () => {
-    console.log('🔒 Closing modal');
     setSelectedProject(null);
   };
 
@@ -34,9 +32,6 @@ export default function Projects({ darkMode }) {
       </section>
     );
   }
-
-  // Debug: log projects when they load
-  console.log('📊 Projects loaded:', projects);
 
   return (
     <>
@@ -59,15 +54,17 @@ export default function Projects({ darkMode }) {
                 <div 
                   key={project.id || index}
                   className="project-card"
-                  onClick={() => {
-                    console.log('👆 Card clicked for:', project.name);
-                    handleProjectClick(project);
-                  }}
+                  onClick={() => handleProjectClick(project)}
                   style={{ cursor: 'pointer' }}
                 >
                   <div className="project-image">
                     {project.image ? (
-                      <img src={project.image} alt={project.name} />
+                      <img 
+                        src={project.image} 
+                        alt={project.name} 
+                        loading="lazy"
+                        decoding="async"
+                      />
                     ) : (
                       <div className="project-image-placeholder">📁</div>
                     )}
@@ -96,11 +93,13 @@ export default function Projects({ darkMode }) {
       </section>
       
       {selectedProject && (
-        <ProjectModal 
-          project={selectedProject} 
-          onClose={handleCloseModal}
-          darkMode={darkMode}
-        />
+        <Suspense fallback={<div className="modal-loading">Loading...</div>}>
+          <ProjectModal 
+            project={selectedProject} 
+            onClose={handleCloseModal}
+            darkMode={darkMode}
+          />
+        </Suspense>
       )}
     </>
   );

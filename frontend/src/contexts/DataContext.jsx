@@ -13,11 +13,32 @@ export const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Cache duration (5 minutes)
+  const CACHE_DURATION = 5 * 60 * 1000;
+
   const fetchAllData = async () => {
     setLoading(true);
     try {
       console.log('🔄 Fetching all data...');
       
+      // Check cache first
+      const cached = localStorage.getItem('portfolioData');
+      const cacheTime = localStorage.getItem('portfolioDataTime');
+      
+      if (cached && cacheTime && (Date.now() - parseInt(cacheTime)) < CACHE_DURATION) {
+        console.log('📦 Using cached data');
+        const data = JSON.parse(cached);
+        setSkills(data.skills || []);
+        setProjects(data.projects || []);
+        setEducation(data.education || null);
+        setPersonalInfo(data.personalInfo || null);
+        setCertifications(data.certifications || []);
+        setExperiences(data.experiences || []);
+        setLoading(false);
+        return;
+      }
+      
+      // Fetch fresh data with Promise.all
       const [skillsData, projectsData, educationData, personalData, certsData, expData] = await Promise.all([
         skillAPI.getAll().catch(() => []),
         projectAPI.getAll().catch(() => []),
@@ -27,23 +48,29 @@ export const DataProvider = ({ children }) => {
         experienceAPI.getAll().catch(() => [])
       ]);
       
-      console.log('✅ Skills loaded:', skillsData);
-      console.log('✅ Projects loaded:', projectsData);
-      console.log('✅ Education loaded:', educationData);
-      console.log('✅ Personal Info loaded:', personalData);
-      console.log('✅ Certifications loaded:', certsData);
-      console.log('✅ Experiences loaded:', expData);
+      const data = {
+        skills: skillsData || [],
+        projects: projectsData || [],
+        education: educationData || null,
+        personalInfo: personalData || null,
+        certifications: certsData || [],
+        experiences: expData || []
+      };
       
-      setSkills(skillsData || []);
-      setProjects(projectsData || []);
-      setEducation(educationData || null);
-      setPersonalInfo(personalData || null);
-      setCertifications(certsData || []);
-      setExperiences(expData || []);
+      // Save to cache
+      localStorage.setItem('portfolioData', JSON.stringify(data));
+      localStorage.setItem('portfolioDataTime', String(Date.now()));
+      
+      setSkills(data.skills);
+      setProjects(data.projects);
+      setEducation(data.education);
+      setPersonalInfo(data.personalInfo);
+      setCertifications(data.certifications);
+      setExperiences(data.experiences);
       setError(null);
     } catch (err) { 
       console.error('❌ Error fetching data:', err); 
-      setError(err.message); 
+      setError(err.message);
     } finally { 
       setLoading(false); 
     }
@@ -53,37 +80,26 @@ export const DataProvider = ({ children }) => {
     fetchAllData(); 
   }, []);
 
-  const refetch = () => fetchAllData();
+  const refetch = () => {
+    localStorage.removeItem('portfolioData');
+    localStorage.removeItem('portfolioDataTime');
+    fetchAllData();
+  };
 
   const refreshPersonalInfo = async () => {
     try {
       const data = await personalInfoAPI.get();
       setPersonalInfo(data || null);
+      // Update cache
+      const cached = localStorage.getItem('portfolioData');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        parsed.personalInfo = data || null;
+        localStorage.setItem('portfolioData', JSON.stringify(parsed));
+      }
       return data;
     } catch (error) {
       console.error('Error refreshing personal info:', error);
-      throw error;
-    }
-  };
-
-  const refreshExperiences = async () => {
-    try {
-      const data = await experienceAPI.getAll();
-      setExperiences(data || []);
-      return data;
-    } catch (error) {
-      console.error('Error refreshing experiences:', error);
-      throw error;
-    }
-  };
-
-  const refreshCertifications = async () => {
-    try {
-      const data = await certificationAPI.getAll();
-      setCertifications(data || []);
-      return data;
-    } catch (error) {
-      console.error('Error refreshing certifications:', error);
       throw error;
     }
   };
@@ -99,9 +115,7 @@ export const DataProvider = ({ children }) => {
       loading, 
       error, 
       refetch,
-      refreshPersonalInfo,
-      refreshExperiences,
-      refreshCertifications
+      refreshPersonalInfo
     }}>
       {children}
     </DataContext.Provider>

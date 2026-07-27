@@ -13,9 +13,9 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AdminLogin from './pages/AdminLogin';
 import Dashboard from './pages/Dashboard';
-import './App.css'; // ✅ Make sure this is imported
+import LoadingSpinner from './components/LoadingSpinner';
+import './App.css';
 
-// Protected Route component
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('adminToken');
   if (!token) {
@@ -24,17 +24,21 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
-// Main Portfolio Component
 function MainApp() {
   const { isDark, toggleDarkMode } = useDarkMode();
   const { personalInfo, loading } = useData();
 
   if (loading) {
-    return <div className={`loading-screen ${isDark ? 'dark' : ''}`}>Loading...</div>;
+    return (
+      <div className={`loading-screen ${isDark ? 'dark' : ''}`}>
+        <LoadingSpinner size="large" color="#F9977B" />
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
-    <div className={`app ${isDark ? 'dark' : ''}`}> {/* ✅ Add dark class here */}
+    <div className={`app ${isDark ? 'dark' : ''}`}>
       <Navigation darkMode={isDark} toggleDarkMode={toggleDarkMode} />
       <Hero personalInfo={personalInfo} darkMode={isDark} />
       <About personalInfo={personalInfo} />
@@ -48,7 +52,6 @@ function MainApp() {
   );
 }
 
-// App with Routes
 function App() {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 

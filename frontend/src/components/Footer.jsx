@@ -31,7 +31,6 @@ export default function Footer({ personalInfo }) {
         
         <div className="footer-bottom">
           <p>&copy; {currentYear} {personalInfo?.name || 'Portfolio'}. All rights reserved.</p>
-          <p>Built with React & 💙</p>
         </div>
       </div>
     </footer>

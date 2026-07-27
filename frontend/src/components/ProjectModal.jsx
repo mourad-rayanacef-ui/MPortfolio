@@ -1,30 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ProjectModal.css';
 
 export default function ProjectModal({ project, onClose, darkMode }) {
-  console.log('🎯 ProjectModal rendering with:', project);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
-    console.log('📌 Modal mounted');
     document.body.style.overflow = 'hidden';
     return () => {
-      console.log('📌 Modal unmounted');
       document.body.style.overflow = 'unset';
     };
   }, []);
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
-      console.log('🔙 Backdrop clicked, closing');
       onClose();
     }
   };
 
-  // Handle escape key
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
-        console.log('⌨️ Escape pressed, closing');
         onClose();
       }
     };
@@ -34,9 +29,7 @@ export default function ProjectModal({ project, onClose, darkMode }) {
     };
   }, [onClose]);
 
-  // If project is null or undefined, don't render
   if (!project) {
-    console.log('⚠️ No project provided, returning null');
     return null;
   }
 
@@ -51,7 +44,14 @@ export default function ProjectModal({ project, onClose, darkMode }) {
           <div className="modal-header-content">
             <div className="modal-image-wrapper">
               {project.image ? (
-                <img src={project.image} alt={project.name || 'Project'} className="modal-image" />
+                <img 
+                  src={project.image} 
+                  alt={project.name || 'Project'} 
+                  className="modal-image"
+                  loading="lazy"
+                  onLoad={() => setImageLoaded(true)}
+                  style={{ opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
+                />
               ) : (
                 <div className="modal-image-placeholder">
                   <span>📁</span>
@@ -70,7 +70,6 @@ export default function ProjectModal({ project, onClose, darkMode }) {
         </div>
         
         <div className="modal-body">
-          {/* Technologies */}
           {project.techStack && project.techStack.length > 0 && (
             <div className="modal-section">
               <h3 className="modal-section-title">Technologies</h3>
@@ -82,7 +81,6 @@ export default function ProjectModal({ project, onClose, darkMode }) {
             </div>
           )}
           
-          {/* Description */}
           {project.details && (
             <div className="modal-section">
               <h3 className="modal-section-title">Overview</h3>
@@ -90,7 +88,6 @@ export default function ProjectModal({ project, onClose, darkMode }) {
             </div>
           )}
           
-          {/* Challenges */}
           {project.challenges && (
             <div className="modal-section">
               <h3 className="modal-section-title">Challenges</h3>
@@ -98,7 +95,6 @@ export default function ProjectModal({ project, onClose, darkMode }) {
             </div>
           )}
           
-          {/* Learnings */}
           {project.learnings && (
             <div className="modal-section">
               <h3 className="modal-section-title">Key Learnings</h3>

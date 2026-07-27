@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaInstagram, FaFacebook, FaWhatsapp, FaLinkedinIn } from 'react-icons/fa';
 import './Hero.css';
 
 export default function Hero({ personalInfo, darkMode }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
   const handleDownloadCV = () => {
     if (personalInfo?.cvUrl) {
       window.open(personalInfo.cvUrl, '_blank');
@@ -144,11 +147,25 @@ export default function Hero({ personalInfo, darkMode }) {
 
         {/* Right: Profile Image */}
         <div className="hero-image">
-          <img
-            src={personalInfo?.profileImage || '/default-avatar.png'}
-            alt={personalInfo?.name || 'Profile'}
-            className="profile-image"
-          />
+          {personalInfo?.profileImage && !imageError ? (
+            <img
+              src={personalInfo.profileImage}
+              alt={personalInfo?.name || 'Profile'}
+              className={`profile-image ${imageLoaded ? 'loaded' : ''}`}
+              loading="lazy"
+              decoding="async"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageError(true)}
+              style={{ 
+                opacity: imageLoaded ? 1 : 0, 
+                transition: 'opacity 0.5s ease' 
+              }}
+            />
+          ) : (
+            <div className="profile-image-placeholder">
+              <span className="placeholder-text">{personalInfo?.name?.charAt(0) || '👤'}</span>
+            </div>
+          )}
         </div>
       </div>
     </section>

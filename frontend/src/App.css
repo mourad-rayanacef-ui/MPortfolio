@@ -106,3 +106,29 @@ body.dark-mode {
     font-size: 0.8rem;
   }
 }
+/* Add to App.css */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1rem;
+  background: #FFFFFF;
+  transition: background 0.3s ease;
+}
+
+.loading-screen.dark {
+  background: #1F2032;
+}
+
+.loading-screen p {
+  color: #5B6E78;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.dark .loading-screen p {
+  color: #9FB4BE;
+}
