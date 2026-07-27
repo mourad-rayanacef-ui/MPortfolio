@@ -57,6 +57,22 @@ export default function ManagePersonalInfo() {
     const file = e.target.files[0];
     if (!file) return;
     
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setMessage('Image must be less than 5MB');
+      setMessageType('error');
+      e.target.value = '';
+      return;
+    }
+    
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setMessage('Please upload an image file');
+      setMessageType('error');
+      e.target.value = '';
+      return;
+    }
+    
     setImageFile(file);
     
     const imageFormData = new FormData();
@@ -64,6 +80,7 @@ export default function ManagePersonalInfo() {
     
     try {
       const result = await personalInfoAPI.uploadImage(imageFormData);
+      console.log('Upload result:', result);
       setFormData(prev => ({ 
         ...prev, 
         profileImage: result.url || result.profileImage 
@@ -73,7 +90,7 @@ export default function ManagePersonalInfo() {
       setTimeout(() => setMessage(''), 3000);
     } catch (error) {
       console.error('Image upload error:', error);
-      setMessage('Error uploading image');
+      setMessage('Error uploading image: ' + (error.message || 'Unknown error'));
       setMessageType('error');
     }
   };
@@ -105,6 +122,19 @@ export default function ManagePersonalInfo() {
       
       // Add CV file if selected
       if (cvFile) {
+        // Validate CV file
+        if (cvFile.type !== 'application/pdf') {
+          setMessage('CV must be a PDF file');
+          setMessageType('error');
+          setSaving(false);
+          return;
+        }
+        if (cvFile.size > 10 * 1024 * 1024) {
+          setMessage('CV must be less than 10MB');
+          setMessageType('error');
+          setSaving(false);
+          return;
+        }
         submitData.append('cv', cvFile);
         console.log('Adding CV file:', cvFile.name);
       }
@@ -130,6 +160,10 @@ export default function ManagePersonalInfo() {
       // Clear file inputs
       setCvFile(null);
       setImageFile(null);
+      
+      // Reset file inputs
+      const fileInputs = document.querySelectorAll('input[type="file"]');
+      fileInputs.forEach(input => input.value = '');
       
       setMessage('Personal info saved successfully!');
       setMessageType('success');
@@ -171,7 +205,7 @@ export default function ManagePersonalInfo() {
             />
             {imageFile && (
               <small style={{ color: '#10B981' }}>
-                New image selected: {imageFile.name}
+                New image selected: {imageFile.name} ({(imageFile.size / 1024).toFixed(1)} KB)
               </small>
             )}
           </div>
@@ -185,7 +219,7 @@ export default function ManagePersonalInfo() {
             />
             {cvFile && (
               <small style={{ color: '#10B981' }}>
-                New CV selected: {cvFile.name}
+                New CV selected: {cvFile.name} ({(cvFile.size / 1024).toFixed(1)} KB)
               </small>
             )}
             {formData.cvUrl && !cvFile && (
@@ -204,6 +238,7 @@ export default function ManagePersonalInfo() {
               name="name" 
               value={formData.name || ''} 
               onChange={handleChange} 
+              placeholder="Your full name"
             />
           </div>
           <div className="form-group">
@@ -213,6 +248,7 @@ export default function ManagePersonalInfo() {
               name="title" 
               value={formData.title || ''} 
               onChange={handleChange} 
+              placeholder="e.g., Senior Developer"
             />
           </div>
         </div>
@@ -224,6 +260,7 @@ export default function ManagePersonalInfo() {
             name="shortBio" 
             value={formData.shortBio || ''} 
             onChange={handleChange} 
+            placeholder="A brief one-liner about yourself"
           />
         </div>
         
@@ -234,6 +271,7 @@ export default function ManagePersonalInfo() {
             rows="4" 
             value={formData.bio || ''} 
             onChange={handleChange}
+            placeholder="Tell your story..."
           ></textarea>
         </div>
         
@@ -245,6 +283,7 @@ export default function ManagePersonalInfo() {
               name="email" 
               value={formData.email || ''} 
               onChange={handleChange} 
+              placeholder="your@email.com"
             />
           </div>
           <div className="form-group">

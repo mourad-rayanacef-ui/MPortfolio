@@ -23,6 +23,7 @@ const fetchAPI = async (endpoint, options = {}) => {
   console.log('Making API request to:', url);
   console.log('Method:', options.method || 'GET');
   console.log('Is FormData:', isFormData);
+  console.log('Token exists:', !!token);
   
   const defaultOptions = {
     headers: { ...headers, ...(options.headers || {}) }
@@ -191,6 +192,7 @@ export const certificationAPI = {
   delete: (id) => fetchAPI(`/certifications/${id}`, { method: 'DELETE' })
 };
 
+// ✅ FIXED: PersonalInfo API with direct fetch for FormData
 export const personalInfoAPI = {
   get: () => fetchAPI('/personal-info'),
   update: (formData) => {
@@ -201,9 +203,20 @@ export const personalInfoAPI = {
         console.log(`${key}: ${value}`);
       }
     }
-    return fetchAPI('/personal-info', { 
+    // ✅ Use direct fetch for FormData
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+    return fetch(`${API_URL}/personal-info`, { 
       method: 'PUT', 
+      headers: { 
+        ...(token && { 'Authorization': `Bearer ${token}` })
+      },
       body: formData 
+    }).then(async res => {
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        throw new Error(error.message || 'Update failed');
+      }
+      return res.json();
     });
   },
   uploadImage: (formData) => {
@@ -214,9 +227,20 @@ export const personalInfoAPI = {
         console.log(`${key}: ${value}`);
       }
     }
-    return fetchAPI('/personal-info/upload-image', { 
+    // ✅ Use direct fetch for FormData
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+    return fetch(`${API_URL}/personal-info/upload-image`, { 
       method: 'POST', 
+      headers: { 
+        ...(token && { 'Authorization': `Bearer ${token}` })
+      },
       body: formData 
+    }).then(async res => {
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        throw new Error(error.message || 'Upload failed');
+      }
+      return res.json();
     });
   },
   uploadCV: (formData) => {
@@ -227,9 +251,20 @@ export const personalInfoAPI = {
         console.log(`${key}: ${value}`);
       }
     }
-    return fetchAPI('/personal-info/upload-cv', { 
+    // ✅ Use direct fetch for FormData
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+    return fetch(`${API_URL}/personal-info/upload-cv`, { 
       method: 'POST', 
+      headers: { 
+        ...(token && { 'Authorization': `Bearer ${token}` })
+      },
       body: formData 
+    }).then(async res => {
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        throw new Error(error.message || 'Upload failed');
+      }
+      return res.json();
     });
   }
 };
