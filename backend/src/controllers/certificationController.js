@@ -18,8 +18,10 @@ exports.createCertification = async (req, res) => {
     console.log('req.body:', req.body);
     console.log('req.files:', req.files);
     
-    // Extract fields from request body
+    // Extract fields from req.body (multer parses FormData)
     const { name, issuer, date, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
+    
+    console.log('Extracted values:', { name, issuer, date, certificateUrl, logoUrl });
     
     // Validate required fields
     if (!name || name.trim() === '') {
@@ -29,9 +31,6 @@ exports.createCertification = async (req, res) => {
         message: 'Certification name is required'
       });
     }
-    
-    // ✅ No Cloudinary upload here - frontend already uploaded directly
-    // Just use the URLs provided by the frontend
     
     const certificationData = {
       name: name.trim(),
@@ -77,10 +76,8 @@ exports.updateCertification = async (req, res) => {
       });
     }
     
-    // Extract fields from request body
     const { name, issuer, date, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
     
-    // Prepare update data
     const updateData = {};
     if (name !== undefined && name !== null) updateData.name = name.trim();
     if (issuer !== undefined) updateData.issuer = issuer;
@@ -90,8 +87,7 @@ exports.updateCertification = async (req, res) => {
     if (logoUrl !== undefined) updateData.logoUrl = logoUrl;
     if (logoPublicId !== undefined) updateData.logoPublicId = logoPublicId;
     
-    // ✅ Delete old files from Cloudinary if new ones are provided
-    // (frontend already uploaded the new files, we just clean up old ones)
+    // Delete old files if new ones are provided
     if (certificatePublicId && certification.certificatePublicId && certification.certificatePublicId !== certificatePublicId) {
       await deleteFromCloudinary(certification.certificatePublicId);
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { educationAPI, certificationAPI, uploadToCloudinaryDirect, uploadPDFToCloudinaryDirect } from '../services/api';
+import { educationAPI, certificationAPI, uploadToCloudinaryDirect } from '../services/api';
 import './ManageCertifications.css';
 
 export default function ManageCertifications() {
@@ -100,20 +100,19 @@ export default function ManageCertifications() {
       submitData.append('issuer', formData.issuer || '');
       submitData.append('date', formData.date || '');
       
-      // ✅ Upload certificate directly to Cloudinary
+      // ✅ Upload certificate directly to Cloudinary from browser
       if (certificateFile) {
         const resourceType = certificateFile.type === 'application/pdf' ? 'raw' : 'image';
-        const folder = resourceType === 'raw' ? 'certifications' : 'certifications';
         const result = await uploadToCloudinaryDirect(certificateFile, { 
           resourceType: resourceType,
-          folder: `portfolio/${folder}`
+          folder: `portfolio/certifications`
         });
         submitData.append('certificateUrl', result.secure_url);
         submitData.append('certificatePublicId', result.public_id);
         console.log('✅ Certificate uploaded:', result.secure_url);
       }
       
-      // ✅ Upload logo directly to Cloudinary
+      // ✅ Upload logo directly to Cloudinary from browser
       if (logoFile) {
         const result = await uploadToCloudinaryDirect(logoFile, { 
           resourceType: 'image',
@@ -122,6 +121,12 @@ export default function ManageCertifications() {
         submitData.append('logoUrl', result.secure_url);
         submitData.append('logoPublicId', result.public_id);
         console.log('✅ Logo uploaded:', result.secure_url);
+      }
+
+      // Log FormData contents
+      console.log('📤 FormData entries:');
+      for (let [key, value] of submitData.entries()) {
+        console.log(`  ${key}: ${value}`);
       }
 
       let response;
@@ -142,8 +147,9 @@ export default function ManageCertifications() {
       
     } catch (error) { 
       console.error('❌ Error saving certification:', error);
-      setError(error.message || 'Unknown error occurred');
-      alert('Error saving certification: ' + error.message);
+      const errorMessage = error.message || 'Unknown error occurred';
+      setError(errorMessage);
+      alert('Error saving certification: ' + errorMessage);
     } finally {
       setUploading(false);
     }

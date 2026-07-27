@@ -176,8 +176,10 @@ export const certificationAPI = {
       for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
       }
+      // ✅ fetchAPI will handle FormData correctly
+      return fetchAPI('/certifications', { method: 'POST', body: formData });
     }
-    return fetchAPI('/certifications', { method: 'POST', body: formData });
+    return fetchAPI('/certifications', { method: 'POST', body: JSON.stringify(formData) });
   },
   update: (id, formData) => {
     console.log('certificationAPI.update called with ID:', id);
@@ -186,8 +188,9 @@ export const certificationAPI = {
       for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
       }
+      return fetchAPI(`/certifications/${id}`, { method: 'PUT', body: formData });
     }
-    return fetchAPI(`/certifications/${id}`, { method: 'PUT', body: formData });
+    return fetchAPI(`/certifications/${id}`, { method: 'PUT', body: JSON.stringify(formData) });
   },
   delete: (id) => fetchAPI(`/certifications/${id}`, { method: 'DELETE' })
 };
