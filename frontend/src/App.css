@@ -37,20 +37,47 @@ body.dark-mode {
   color: #FFFFFF;
 }
 
+/* Loading Screen */
 .loading-screen {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  font-size: 1rem;
-  color: #1F2032;
+  gap: 1.5rem;
   background: #FFFFFF;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .loading-screen.dark {
   background: #1F2032;
-  color: #FFFFFF;
+}
+
+.loading-screen p {
+  color: #5B6E78;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.dark .loading-screen p {
+  color: #9FB4BE;
+}
+
+/* Section Loader */
+.section-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  padding: 2rem;
+  width: 100%;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 /* Scrollbar */
@@ -96,39 +123,22 @@ body.dark-mode {
   }
   
   .loading-screen {
-    font-size: 0.9rem;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .loading-screen p {
+    font-size: 0.8rem;
+  }
+  
+  .section-loader {
+    min-height: 100px;
     padding: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .loading-screen {
-    font-size: 0.8rem;
+  .loading-screen p {
+    font-size: 0.7rem;
   }
-}
-/* Add to App.css */
-.loading-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  gap: 1rem;
-  background: #FFFFFF;
-  transition: background 0.3s ease;
-}
-
-.loading-screen.dark {
-  background: #1F2032;
-}
-
-.loading-screen p {
-  color: #5B6E78;
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin: 0;
-}
-
-.dark .loading-screen p {
-  color: #9FB4BE;
 }

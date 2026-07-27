@@ -13,8 +13,8 @@ export const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Cache duration (5 minutes)
-  const CACHE_DURATION = 5 * 60 * 1000;
+  // Cache duration (10 minutes)
+  const CACHE_DURATION = 10 * 60 * 1000;
 
   const fetchAllData = async () => {
     setLoading(true);
@@ -38,12 +38,21 @@ export const DataProvider = ({ children }) => {
         return;
       }
       
-      // Fetch fresh data with Promise.all
-      const [skillsData, projectsData, educationData, personalData, certsData, expData] = await Promise.all([
-        skillAPI.getAll().catch(() => []),
+      // ✅ Fetch critical data first (Hero & About)
+      const [personalData, skillsData] = await Promise.all([
+        personalInfoAPI.get().catch(() => null),
+        skillAPI.getAll().catch(() => [])
+      ]);
+      
+      // Set critical data immediately
+      setPersonalInfo(personalData || null);
+      setSkills(skillsData || []);
+      setLoading(false); // ✅ Show content early
+      
+      // ✅ Fetch remaining data in background
+      const [projectsData, educationData, certsData, expData] = await Promise.all([
         projectAPI.getAll().catch(() => []),
         educationAPI.get().catch(() => null),
-        personalInfoAPI.get().catch(() => null),
         certificationAPI.getAll().catch(() => []),
         experienceAPI.getAll().catch(() => [])
       ]);
@@ -61,18 +70,15 @@ export const DataProvider = ({ children }) => {
       localStorage.setItem('portfolioData', JSON.stringify(data));
       localStorage.setItem('portfolioDataTime', String(Date.now()));
       
-      setSkills(data.skills);
       setProjects(data.projects);
       setEducation(data.education);
-      setPersonalInfo(data.personalInfo);
       setCertifications(data.certifications);
       setExperiences(data.experiences);
       setError(null);
     } catch (err) { 
       console.error('❌ Error fetching data:', err); 
       setError(err.message);
-    } finally { 
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -90,7 +96,6 @@ export const DataProvider = ({ children }) => {
     try {
       const data = await personalInfoAPI.get();
       setPersonalInfo(data || null);
-      // Update cache
       const cached = localStorage.getItem('portfolioData');
       if (cached) {
         const parsed = JSON.parse(cached);

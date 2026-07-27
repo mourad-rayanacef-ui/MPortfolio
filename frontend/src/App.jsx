@@ -1,20 +1,22 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { DataProvider, useData } from './contexts/DataContext';
 import { useDarkMode } from './hooks/useDarkMode';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import About from './components/About';
-import Education from './components/Education';
-import Skills from './components/Skills';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import AdminLogin from './pages/AdminLogin';
-import Dashboard from './pages/Dashboard';
 import LoadingSpinner from './components/LoadingSpinner';
 import './App.css';
+
+// ✅ Lazy load non-critical components
+const Education = lazy(() => import('./components/Education'));
+const Skills = lazy(() => import('./components/Skills'));
+const Experience = lazy(() => import('./components/Experience'));
+const Projects = lazy(() => import('./components/Projects'));
+const Contact = lazy(() => import('./components/Contact'));
+const Footer = lazy(() => import('./components/Footer'));
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('adminToken');
@@ -28,6 +30,7 @@ function MainApp() {
   const { isDark, toggleDarkMode } = useDarkMode();
   const { personalInfo, loading } = useData();
 
+  // ✅ Show loading state only for critical data
   if (loading) {
     return (
       <div className={`loading-screen ${isDark ? 'dark' : ''}`}>
@@ -42,12 +45,16 @@ function MainApp() {
       <Navigation darkMode={isDark} toggleDarkMode={toggleDarkMode} />
       <Hero personalInfo={personalInfo} darkMode={isDark} />
       <About personalInfo={personalInfo} />
-      <Education />
-      <Skills darkMode={isDark} />
-      <Experience />
-      <Projects darkMode={isDark} />
-      <Contact personalInfo={personalInfo} />
-      <Footer personalInfo={personalInfo} />
+      
+      {/* ✅ Lazy load sections with Suspense */}
+      <Suspense fallback={<div className="section-loader"><LoadingSpinner /></div>}>
+        <Education />
+        <Skills darkMode={isDark} />
+        <Experience />
+        <Projects darkMode={isDark} />
+        <Contact personalInfo={personalInfo} />
+        <Footer personalInfo={personalInfo} />
+      </Suspense>
     </div>
   );
 }
