@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaInstagram, FaFacebook, FaWhatsapp, FaLinkedinIn } from 'react-icons/fa';
+import { FaInstagram, FaFacebook, FaWhatsapp } from 'react-icons/fa';
 import './Hero.css';
 
 export default function Hero({ personalInfo, darkMode }) {
@@ -8,9 +8,8 @@ export default function Hero({ personalInfo, darkMode }) {
 
   // Static social media links
   const SOCIAL_LINKS = {
-    instagram: 'https://www.instagram.com/yx_cinx?igsh=MWhqOHo3OWx0NXhnZQ==', // Replace with your Instagram URL
-    facebook: 'https://www.facebook.com/yacine.madridista.7777',   // Replace with your Facebook URL
-    linkedin: 'https://www.linkedin.com/in/yourusername', // Replace with your LinkedIn URL
+    instagram: 'https://www.instagram.com/yx_cinx?igsh=MWhqOHo3OWx0NXhnZQ==',
+    facebook: 'https://www.facebook.com/yacine.madridista.7777',
   };
 
   const handleDownloadCV = () => {
@@ -58,7 +57,7 @@ export default function Hero({ personalInfo, darkMode }) {
           </div>
 
           <div className="hero-socials">
-            {/* Instagram - Static Link */}
+            {/* Instagram */}
             <a 
               href={SOCIAL_LINKS.instagram}
               className="social-link" 
@@ -69,7 +68,7 @@ export default function Hero({ personalInfo, darkMode }) {
               <FaInstagram />
             </a>
 
-            {/* Facebook - Static Link */}
+            {/* Facebook */}
             <a 
               href={SOCIAL_LINKS.facebook}
               className="social-link" 
@@ -80,7 +79,7 @@ export default function Hero({ personalInfo, darkMode }) {
               <FaFacebook />
             </a>
 
-            {/* WhatsApp - Dynamic from personalInfo */}
+            {/* WhatsApp */}
             {personalInfo?.phone ? (
               <a 
                 href={`https://wa.me/${personalInfo.phone.replace(/[^0-9]/g, '')}`} 
@@ -102,41 +101,41 @@ export default function Hero({ personalInfo, darkMode }) {
                 <FaWhatsapp />
               </a>
             )}
-
-            {/* LinkedIn - Static Link */}
-            <a 
-              href={SOCIAL_LINKS.linkedin}
-              className="social-link" 
-              aria-label="LinkedIn" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              <FaLinkedinIn />
-            </a>
           </div>
         </div>
 
-        {/* Right: Profile Image */}
+        {/* Right: Profile Image with Rings */}
         <div className="hero-image">
-          {personalInfo?.profileImage && !imageError ? (
-            <img
-              src={personalInfo.profileImage}
-              alt={personalInfo?.name || 'Profile'}
-              className={`profile-image ${imageLoaded ? 'loaded' : ''}`}
-              loading="lazy"
-              decoding="async"
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageError(true)}
-              style={{ 
-                opacity: imageLoaded ? 1 : 0, 
-                transition: 'opacity 0.5s ease' 
-              }}
-            />
-          ) : (
-            <div className="profile-image-placeholder">
-              <span className="placeholder-text">{personalInfo?.name?.charAt(0) || '👤'}</span>
+          <div className="profile-wrapper">
+            {/* Outer Brown Ring */}
+            <div className="ring ring-brown"></div>
+            
+            {/* Inner Blue Ring */}
+            <div className="ring ring-blue"></div>
+            
+            {/* Profile Image */}
+            <div className="profile-image-container">
+              {personalInfo?.profileImage && !imageError ? (
+                <img
+                  src={personalInfo.profileImage}
+                  alt={personalInfo?.name || 'Profile'}
+                  className={`profile-image ${imageLoaded ? 'loaded' : ''}`}
+                  loading="lazy"
+                  decoding="async"
+                  onLoad={() => setImageLoaded(true)}
+                  onError={() => setImageError(true)}
+                  style={{ 
+                    opacity: imageLoaded ? 1 : 0, 
+                    transition: 'opacity 0.5s ease' 
+                  }}
+                />
+              ) : (
+                <div className="profile-image-placeholder">
+                  <span className="placeholder-text">{personalInfo?.name?.charAt(0) || '👤'}</span>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </section>
