@@ -85,6 +85,9 @@ export default function Skills({ darkMode }) {
           {filteredSkills.length > 0 ? (
             filteredSkills.map((skill, index) => {
               const icon = renderSkillIcon(skill);
+              // Ensure level is a number between 0 and 100
+              const level = Math.min(Math.max(Number(skill.level) || 0, 0), 100);
+              
               return (
                 <AnimatedSection 
                   key={skill.id || index} 
@@ -111,12 +114,12 @@ export default function Skills({ darkMode }) {
                       <div 
                         className="skill-progress-fill"
                         style={{ 
-                          width: `${skill.level}%`,
-                          animation: `fillProgress 1s ease ${index * 0.08}s both`
+                          '--progress-width': `${level}%`,
+                          width: `${level}%`,
+                          animation: `fillProgress 0.8s ease ${index * 0.08}s forwards`
                         }}
                       ></div>
                     </div>
-                    {/* <span className="skill-level">{skill.level}%</span> */}
                   </div>
                   
                   <div className="skill-footer">
