@@ -180,21 +180,85 @@
 }
 
 .profile-wrapper {
+  position: relative;
+  width: 320px;
+  height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.profile-image-container {
-  width: 320px;
-  height: 320px;
+/*
+  Ring sizing model (box-sizing: border-box everywhere below):
+  The blue and brown rings are independent, absolutely-positioned
+  circles (not nested) so they can spin at different speeds without
+  dragging the photo around with them.
+
+  A perfectly "exact" fit (inner diameter = outer diameter - 2x border)
+  still leaves a hairline seam in most browsers because circular
+  borders get anti-aliased. To hide that seam, each inner layer is a
+  few px LARGER than the exact fit, so it slides slightly under the
+  layer outside it — that overlap is what removes the visible gap.
+*/
+.ring {
+  position: absolute;
   border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
 }
 
-.hero.dark .profile-image-container {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+/* Blue Ring - Outer */
+.ring-blue {
+  width: 320px;
+  height: 320px;
+  border: 8px solid #1F2032;
+  animation: rotateRing 20s linear infinite;
+}
+
+.hero.dark .ring-blue {
+  border-color: #85C1E9;
+}
+
+/* Brown/Orange Ring - overlaps a few px under the blue ring */
+.ring-brown {
+  width: 309px; /* exact fit 304 + 5px overlap */
+  height: 309px;
+  border: 8px solid #C97A3F;
+  animation: rotateRingReverse 15s linear infinite;
+}
+
+.hero.dark .ring-brown {
+  border-color: #F9977B;
+}
+
+/* Profile Image - overlaps a few px under the brown ring */
+.profile-image-container {
+  width: 298px; /* exact fit 293 + 5px overlap */
+  height: 298px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes rotateRing {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes rotateRingReverse {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
 }
 
 .profile-image {
@@ -257,9 +321,26 @@
     max-width: 480px;
   }
   
-  .profile-image-container {
+  .profile-wrapper {
     width: 380px;
     height: 380px;
+  }
+
+  .ring-blue {
+    width: 380px;
+    height: 380px;
+    border-width: 9px;
+  }
+
+  .ring-brown {
+    width: 367px; /* exact fit 362 + 5px overlap */
+    height: 367px;
+    border-width: 9px;
+  }
+
+  .profile-image-container {
+    width: 354px; /* exact fit 349 + 5px overlap */
+    height: 354px;
   }
 }
 
@@ -273,9 +354,26 @@
     font-size: 2.2rem;
   }
   
-  .profile-image-container {
+  .profile-wrapper {
     width: 280px;
     height: 280px;
+  }
+
+  .ring-blue {
+    width: 280px;
+    height: 280px;
+    border-width: 7px;
+  }
+
+  .ring-brown {
+    width: 270px; /* exact fit 266 + 4px overlap */
+    height: 270px;
+    border-width: 7px;
+  }
+
+  .profile-image-container {
+    width: 260px; /* exact fit 256 + 4px overlap */
+    height: 260px;
   }
 }
 
@@ -317,9 +415,26 @@
     justify-content: center;
   }
   
-  .profile-image-container {
+  .profile-wrapper {
     width: 240px;
     height: 240px;
+  }
+
+  .ring-blue {
+    width: 240px;
+    height: 240px;
+    border-width: 6px;
+  }
+
+  .ring-brown {
+    width: 232px; /* exact fit 228 + 4px overlap */
+    height: 232px;
+    border-width: 6px;
+  }
+
+  .profile-image-container {
+    width: 224px; /* exact fit 220 + 4px overlap */
+    height: 224px;
   }
 
   .hero-name {
@@ -363,9 +478,26 @@
     line-height: 1.5;
   }
 
-  .profile-image-container {
+  .profile-wrapper {
     width: 200px;
     height: 200px;
+  }
+
+  .ring-blue {
+    width: 200px;
+    height: 200px;
+    border-width: 5px;
+  }
+
+  .ring-brown {
+    width: 193px; /* exact fit 190 + 3px overlap */
+    height: 193px;
+    border-width: 5px;
+  }
+
+  .profile-image-container {
+    width: 186px; /* exact fit 183 + 3px overlap */
+    height: 186px;
   }
   
   .btn-primary {
@@ -396,9 +528,26 @@
     font-size: 1.3rem;
   }
   
-  .profile-image-container {
+  .profile-wrapper {
     width: 160px;
     height: 160px;
+  }
+
+  .ring-blue {
+    width: 160px;
+    height: 160px;
+    border-width: 4px;
+  }
+
+  .ring-brown {
+    width: 155px; /* exact fit 152 + 3px overlap */
+    height: 155px;
+    border-width: 4px;
+  }
+
+  .profile-image-container {
+    width: 150px; /* exact fit 147 + 3px overlap */
+    height: 150px;
   }
   
   .hero-title {

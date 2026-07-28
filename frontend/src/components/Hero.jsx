@@ -58,22 +58,22 @@ export default function Hero({ personalInfo, darkMode }) {
 
           <div className="hero-socials">
             {/* Instagram */}
-            <a 
+            <a
               href={SOCIAL_LINKS.instagram}
-              className="social-link" 
-              aria-label="Instagram" 
-              target="_blank" 
+              className="social-link"
+              aria-label="Instagram"
+              target="_blank"
               rel="noopener noreferrer"
             >
               <FaInstagram />
             </a>
 
             {/* Facebook */}
-            <a 
+            <a
               href={SOCIAL_LINKS.facebook}
-              className="social-link" 
-              aria-label="Facebook" 
-              target="_blank" 
+              className="social-link"
+              aria-label="Facebook"
+              target="_blank"
               rel="noopener noreferrer"
             >
               <FaFacebook />
@@ -81,21 +81,21 @@ export default function Hero({ personalInfo, darkMode }) {
 
             {/* WhatsApp */}
             {personalInfo?.phone ? (
-              <a 
-                href={`https://wa.me/${personalInfo.phone.replace(/[^0-9]/g, '')}`} 
-                className="social-link" 
-                aria-label="WhatsApp" 
-                target="_blank" 
+              <a
+                href={`https://wa.me/${personalInfo.phone.replace(/[^0-9]/g, '')}`}
+                className="social-link"
+                aria-label="WhatsApp"
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 <FaWhatsapp />
               </a>
             ) : (
-              <a 
-                href="#" 
-                className="social-link" 
-                aria-label="WhatsApp" 
-                target="_blank" 
+              <a
+                href="#"
+                className="social-link"
+                aria-label="WhatsApp"
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 <FaWhatsapp />
@@ -104,9 +104,16 @@ export default function Hero({ personalInfo, darkMode }) {
           </div>
         </div>
 
-        {/* Right: Profile Image */}
+        {/* Right: Profile Image with Rings */}
         <div className="hero-image">
           <div className="profile-wrapper">
+            {/* Outer Brown/Orange Ring */}
+            <div className="ring ring-brown"></div>
+
+            {/* Outer Blue Ring */}
+            <div className="ring ring-blue"></div>
+
+            {/* Profile Image */}
             <div className="profile-image-container">
               {personalInfo?.profileImage && !imageError ? (
                 <img
@@ -117,9 +124,9 @@ export default function Hero({ personalInfo, darkMode }) {
                   decoding="async"
                   onLoad={() => setImageLoaded(true)}
                   onError={() => setImageError(true)}
-                  style={{ 
-                    opacity: imageLoaded ? 1 : 0, 
-                    transition: 'opacity 0.5s ease' 
+                  style={{
+                    opacity: imageLoaded ? 1 : 0,
+                    transition: 'opacity 0.5s ease'
                   }}
                 />
               ) : (

@@ -8,38 +8,24 @@ require('dotenv').config();
 const app = express();
 
 // ── CORS ──────────────────────────────────────────────────────────────────
-// ✅ FIX: Allow all origins in production (or specify your Netlify URL)
+// ✅ Allow all origins including Vercel
 const allowedOrigins = [
-  process.env.CLIENT_URL,          // production Netlify URL
-  'https://yacine-acef.netlify.app', // ✅ ADD YOUR NETLIFY URL DIRECTLY
+  process.env.CLIENT_URL,
+  'https://yacine-acef.netlify.app',
+  'https://m-portfolio-5ps0le9xs-mourad-rayanacef-uis-projects.vercel.app/',
+  'https://m-portfolio-rouge.vercel.app/', 
   'http://localhost:5173',
   'http://localhost:3000',
   'http://localhost:5000',
 ].filter(Boolean);
 
-// ✅ SIMPLIFIED CORS - Allow all for now (recommended for production)
+// ✅ Simplified CORS - Allow all for production
 app.use(cors({
-  origin: true, // Allow all origins (or use allowedOrigins)
+  origin: true, // Allow all origins
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
 }));
-
-// OR use the specific origins:
-/*
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (curl, Postman, mobile apps)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    console.log(`❌ CORS blocked: ${origin}`);
-    callback(null, true); // ✅ Allow all for now
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
-}));
-*/
 
 // ── Body parsing & security ───────────────────────────────────────────────
 app.use(express.json({ limit: '50mb' }));
@@ -48,6 +34,26 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 app.use(morgan('dev'));
+
+// ── Keep-alive endpoint ──────────────────────────────────────────────────
+app.get('/api/keep-alive', async (req, res) => {
+  try {
+    const { sequelize } = require('./config/database');
+    await sequelize.query('SELECT 1');
+    res.json({
+      status: 'OK',
+      message: 'Server and database are awake!',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Keep-alive error:', error);
+    res.status(500).json({
+      status: 'ERROR',
+      message: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
 
 // ── API Routes ────────────────────────────────────────────────────────────
 app.use('/api/skills', require('./routes/skills'));
@@ -61,7 +67,11 @@ app.use('/api/experiences', require('./routes/experiences'));
 
 // ── Health check ──────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date() });
+  res.json({
+    status: 'OK',
+    timestamp: new Date(),
+    uptime: process.uptime()
+  });
 });
 
 // ── 404 for unknown API routes ────────────────────────────────────────────
@@ -87,6 +97,7 @@ const start = async () => {
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log(`📡 Allowed origins: ${allowedOrigins.join(', ')}`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
