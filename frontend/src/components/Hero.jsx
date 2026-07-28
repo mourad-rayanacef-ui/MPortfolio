@@ -104,16 +104,9 @@ export default function Hero({ personalInfo, darkMode }) {
           </div>
         </div>
 
-        {/* Right: Profile Image with Rings */}
+        {/* Right: Profile Image */}
         <div className="hero-image">
           <div className="profile-wrapper">
-            {/* Outer Brown Ring */}
-            <div className="ring ring-brown"></div>
-            
-            {/* Inner Blue Ring */}
-            <div className="ring ring-blue"></div>
-            
-            {/* Profile Image */}
             <div className="profile-image-container">
               {personalInfo?.profileImage && !imageError ? (
                 <img
