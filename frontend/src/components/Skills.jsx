@@ -85,7 +85,6 @@ export default function Skills({ darkMode }) {
           {filteredSkills.length > 0 ? (
             filteredSkills.map((skill, index) => {
               const icon = renderSkillIcon(skill);
-              // Ensure level is a number between 0 and 100
               const level = Math.min(Math.max(Number(skill.level) || 0, 0), 100);
               
               return (
@@ -120,6 +119,7 @@ export default function Skills({ darkMode }) {
                         }}
                       ></div>
                     </div>
+                    <span className="skill-level">{level}%</span>
                   </div>
                   
                   <div className="skill-footer">
