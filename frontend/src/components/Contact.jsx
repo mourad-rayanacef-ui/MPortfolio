@@ -62,61 +62,63 @@ export default function Contact({ personalInfo }) {
           </div>
         </AnimatedSection>
         
-        <AnimatedSection animation="fadeUp" delay={200} className="contact-content">
-          <form className="contact-form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            
-            <div className="form-group">
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            
-            <div className="form-group">
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                rows="5"
-                value={formData.message}
-                onChange={handleChange}
-                required
-              ></textarea>
-            </div>
-            
-            <button 
-              type="submit" 
-              className="submit-btn"
-              disabled={status === 'sending'}
-            >
-              {status === 'sending' ? 'Sending...' : 'Send Message'}
-            </button>
-            
-            {status === 'sent' && (
-              <div className="success-message">
-                ✨ Message sent successfully! I'll get back to you soon.
+        <AnimatedSection animation="fadeUp" delay={200}>
+          <div className="contact-form-wrapper">
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-            )}
-            
-            {status === 'error' && (
-              <div className="error-message">
-                ❌ Failed to send message. Please try again.
+              
+              <div className="form-group">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-            )}
-          </form>
+              
+              <div className="form-group">
+                <textarea
+                  name="message"
+                  placeholder="Your Message"
+                  rows="5"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                ></textarea>
+              </div>
+              
+              <button 
+                type="submit" 
+                className="submit-btn"
+                disabled={status === 'sending'}
+              >
+                {status === 'sending' ? 'Sending...' : 'Send Message'}
+              </button>
+              
+              {status === 'sent' && (
+                <div className="success-message">
+                  ✨ Message sent successfully! I'll get back to you soon.
+                </div>
+              )}
+              
+              {status === 'error' && (
+                <div className="error-message">
+                  ❌ Failed to send message. Please try again.
+                </div>
+              )}
+            </form>
+          </div>
         </AnimatedSection>
       </div>
     </section>

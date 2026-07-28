@@ -6,6 +6,13 @@ export default function Hero({ personalInfo, darkMode }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
+  // Static social media links
+  const SOCIAL_LINKS = {
+    instagram: 'https://www.instagram.com/yx_cinx?igsh=MWhqOHo3OWx0NXhnZQ==', // Replace with your Instagram URL
+    facebook: 'https://www.facebook.com/yacine.madridista.7777',   // Replace with your Facebook URL
+    linkedin: 'https://www.linkedin.com/in/yourusername', // Replace with your LinkedIn URL
+  };
+
   const handleDownloadCV = () => {
     if (personalInfo?.cvUrl) {
       window.open(personalInfo.cvUrl, '_blank');
@@ -51,53 +58,29 @@ export default function Hero({ personalInfo, darkMode }) {
           </div>
 
           <div className="hero-socials">
-            {/* Instagram */}
-            {personalInfo?.instagram ? (
-              <a 
-                href={personalInfo.instagram} 
-                className="social-link" 
-                aria-label="Instagram" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <FaInstagram />
-              </a>
-            ) : (
-              <a 
-                href="#" 
-                className="social-link" 
-                aria-label="Instagram" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <FaInstagram />
-              </a>
-            )}
+            {/* Instagram - Static Link */}
+            <a 
+              href={SOCIAL_LINKS.instagram}
+              className="social-link" 
+              aria-label="Instagram" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <FaInstagram />
+            </a>
 
-            {/* Facebook */}
-            {personalInfo?.facebook ? (
-              <a 
-                href={personalInfo.facebook} 
-                className="social-link" 
-                aria-label="Facebook" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <FaFacebook />
-              </a>
-            ) : (
-              <a 
-                href="#" 
-                className="social-link" 
-                aria-label="Facebook" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <FaFacebook />
-              </a>
-            )}
+            {/* Facebook - Static Link */}
+            <a 
+              href={SOCIAL_LINKS.facebook}
+              className="social-link" 
+              aria-label="Facebook" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <FaFacebook />
+            </a>
 
-            {/* WhatsApp */}
+            {/* WhatsApp - Dynamic from personalInfo */}
             {personalInfo?.phone ? (
               <a 
                 href={`https://wa.me/${personalInfo.phone.replace(/[^0-9]/g, '')}`} 
@@ -120,28 +103,16 @@ export default function Hero({ personalInfo, darkMode }) {
               </a>
             )}
 
-            {/* LinkedIn */}
-            {personalInfo?.linkedin ? (
-              <a 
-                href={personalInfo.linkedin} 
-                className="social-link" 
-                aria-label="LinkedIn" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <FaLinkedinIn />
-              </a>
-            ) : (
-              <a 
-                href="#" 
-                className="social-link" 
-                aria-label="LinkedIn" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <FaLinkedinIn />
-              </a>
-            )}
+            {/* LinkedIn - Static Link */}
+            <a 
+              href={SOCIAL_LINKS.linkedin}
+              className="social-link" 
+              aria-label="LinkedIn" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <FaLinkedinIn />
+            </a>
           </div>
         </div>
 

@@ -14,7 +14,6 @@ const Skills = lazy(() => import('./components/Skills'));
 const Experience = lazy(() => import('./components/Experience'));
 const Projects = lazy(() => import('./components/Projects'));
 const Contact = lazy(() => import('./components/Contact'));
-const Footer = lazy(() => import('./components/Footer'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 
@@ -53,7 +52,6 @@ function MainApp() {
         <Experience />
         <Projects darkMode={isDark} />
         <Contact personalInfo={personalInfo} />
-        <Footer personalInfo={personalInfo} />
       </Suspense>
     </div>
   );
