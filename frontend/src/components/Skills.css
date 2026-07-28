@@ -254,11 +254,10 @@
   color: #9FB4BE;
 }
 
-/* ===== Skill Progress Bar - BLUE ===== */
+/* ===== Skill Progress Bar - BLUE (No Percentage) ===== */
 .skill-progress-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   margin-bottom: 0.75rem;
 }
 
@@ -293,19 +292,6 @@
   to {
     width: var(--progress-width, 0%);
   }
-}
-
-/* ===== Skill Level Text ===== */
-.skill-level {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #1F2032;
-  min-width: 2rem;
-  text-align: right;
-}
-
-.dark .skill-level {
-  color: #9FB4BE;
 }
 
 .skill-footer {
