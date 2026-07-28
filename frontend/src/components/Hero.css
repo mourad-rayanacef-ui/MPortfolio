@@ -190,12 +190,10 @@
   height: 320px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid #1F2032;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
 .hero.dark .profile-image-container {
-  border-color: #F9977B;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
@@ -368,7 +366,6 @@
   .profile-image-container {
     width: 200px;
     height: 200px;
-    border-width: 3px;
   }
   
   .btn-primary {
@@ -402,7 +399,6 @@
   .profile-image-container {
     width: 160px;
     height: 160px;
-    border-width: 2px;
   }
   
   .hero-title {
