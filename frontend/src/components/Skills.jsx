@@ -116,7 +116,7 @@ export default function Skills({ darkMode }) {
                         }}
                       ></div>
                     </div>
-                    <span className="skill-level">{skill.level}%</span>
+                    {/* <span className="skill-level">{skill.level}%</span> */}
                   </div>
                   
                   <div className="skill-footer">

@@ -191,7 +191,7 @@ export default function Education() {
 
           {standaloneCertifications.length > 0 && (
             <AnimatedSection animation="fadeUp" delay={200} className="standalone-certifications-section" style={{ marginTop: '2rem' }}>
-              <h3 className="certifications-title">Professional Certifications</h3>
+              <h3 className="certifications-title">Training & Certifications</h3>
               <div className="certifications-list">
                 {standaloneCertifications.map((cert) => (
                   <div key={cert.id} className="certification-card">
