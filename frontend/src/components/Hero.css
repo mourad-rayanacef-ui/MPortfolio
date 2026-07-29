@@ -218,14 +218,14 @@
 }
 
 .hero.dark .ring-blue {
-  border-color: #85C1E9;
+  border-color: #FFFFFF;
 }
 
 /* Brown/Orange Ring - overlaps a few px under the blue ring */
 .ring-brown {
   width: 309px; /* exact fit 304 + 5px overlap */
   height: 309px;
-  border: 8px solid #C97A3F;
+  border: 11px solid #C97A3F;
   animation: rotateRingReverse 15s linear infinite;
 }
 
@@ -335,7 +335,7 @@
   .ring-brown {
     width: 367px; /* exact fit 362 + 5px overlap */
     height: 367px;
-    border-width: 9px;
+    border-width: 12px;
   }
 
   .profile-image-container {
@@ -368,7 +368,7 @@
   .ring-brown {
     width: 270px; /* exact fit 266 + 4px overlap */
     height: 270px;
-    border-width: 7px;
+    border-width: 10px;
   }
 
   .profile-image-container {
@@ -429,7 +429,7 @@
   .ring-brown {
     width: 232px; /* exact fit 228 + 4px overlap */
     height: 232px;
-    border-width: 6px;
+    border-width: 9px;
   }
 
   .profile-image-container {
@@ -492,7 +492,7 @@
   .ring-brown {
     width: 193px; /* exact fit 190 + 3px overlap */
     height: 193px;
-    border-width: 5px;
+    border-width: 7px;
   }
 
   .profile-image-container {
@@ -542,7 +542,7 @@
   .ring-brown {
     width: 155px; /* exact fit 152 + 3px overlap */
     height: 155px;
-    border-width: 4px;
+    border-width: 6px;
   }
 
   .profile-image-container {
