@@ -36,7 +36,7 @@ export default function About({ personalInfo }) {
               {personalInfo.phone && (
                 <div className="contact-item">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7294C21.7209 20.9845 21.5573 21.2136 21.352 21.4019C21.1467 21.5901 20.9041 21.7335 20.6397 21.8227C20.3754 21.9119 20.0949 21.945 19.816 21.92C16.743 21.5856 13.787 20.5341 11.18 18.85C8.77352 17.3147 6.70989 15.2511 5.174 12.85C3.48386 10.2409 2.43097 7.28032 2.1 4.204C2.07503 3.92514 2.10812 3.64459 2.19731 3.3802C2.2865 3.1158 2.42988 2.87322 2.61814 2.66791C2.8064 2.46261 3.0355 2.29898 3.29063 2.18739C3.54577 2.0758 3.82145 2.01878 4.1 2.01999H7.1C7.64507 2.01557 8.16988 2.2239 8.56 2.58999C8.95012 2.95609 9.16844 3.44322 9.18 3.95999C9.32623 5.28061 9.63678 6.57433 10.1 7.79999C10.2473 8.17436 10.2769 8.58386 10.1852 8.97442C10.0935 9.36498 9.88477 9.71424 9.594 9.96999L8.44 11.07C9.99712 13.9924 12.8679 16.3318 15.894 17.46L17.036 16.33C17.2954 16.0425 17.6459 15.8376 18.0352 15.7488C18.4245 15.66 18.8314 15.6918 19.202 15.84C20.4045 16.3074 21.6778 16.6243 22.978 16.78C23.4947 16.7923 23.9818 17.0115 24.3474 17.4028C24.7131 17.7941 24.9208 18.3199 24.916 18.866L22 16.92Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7294C21.7209 20.9845 21.5573 21.2136 21.352 21.4019C21.1467 21.5901 20.9041 21.7335 20.6397 21.8227C20.3754 21.9119 20.0949 21.945 19.816 21.92C16.743 21.5856 13.787 20.5341 11.18 18.85C8.77352 17.3147 6.70989 15.2511 5.174 12.85C3.48386 10.2409 2.43097 7.28032 2.1 4.204C2.07503 3.92514 2.10812 3.64459 2.19731 3.3802C2.2865 3.1158 2.42988 2.87322 2.61814 2.66791C2.8064 2.46261 3.0355 2.29898 3.29063 2.18739C3.54577 2.0758 3.82145 2.01878 4.1 2.01999H7.1C7.64507 2.01557 8.16988 2.2239 8.56 2.58999C8.95012 2.95609 9.16844 3.44322 9.18 3.95999C9.32623 5.28061 9.63678 6.57433 10.1 7.79999C10.2473 8.17436 10.2769 8.58386 10.1852 8.97442C10.0935 9.36498 8.88477 9.71424 8.594 9.96999L8.44 11.07C9.99712 13.9924 12.8679 16.3318 15.894 17.46L17.036 16.33C17.2954 16.0425 17.6459 15.8376 18.0352 15.7488C18.4245 15.66 18.8314 15.6918 19.202 15.84C20.4045 16.3074 21.6778 16.6243 22.978 16.78C23.4947 16.7923 23.9818 17.0115 24.3474 17.4028C24.7131 17.7941 24.9208 18.3199 24.916 18.866L22 16.92Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                   <a href={`tel:${personalInfo.phone}`}>{personalInfo.phone}</a>
                 </div>
@@ -61,7 +61,8 @@ export default function About({ personalInfo }) {
           {/* Right Column - Info Cards */}
           <AnimatedSection animation="fadeLeft" delay={300} className="about-info-section">
             <div className="info-cards-grid">
-              {/* Education Card */}
+              
+              {/* --- EDUCATION CARD --- */}
               <AnimatedSection animation="fadeUp" delay={350} className="info-card">
                 <div className="info-card-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,12 +73,12 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Education</h3>
-                  <p className="info-card-value">{personalInfo.education || "Computer Science"}</p>
-                  <p className="info-card-sub">{personalInfo.university || "University"}</p>
+                  <p className="info-card-value">Master degree in networks and distributed systems from USTHB</p>
+                  <p className="info-card-sub">Bringing hands-on technical experience across network engineering, security and infrastructure operations.</p>
                 </div>
               </AnimatedSection>
 
-              {/* Experience Card */}
+              {/* --- EXPERIENCE CARD (Years + Sentence underneath) --- */}
               <AnimatedSection animation="fadeUp" delay={400} className="info-card">
                 <div className="info-card-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +88,10 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Experience</h3>
+                  {/* Years appear here */}
                   <p className="info-card-value">{personalInfo.totalExperience || "1.5 Years"}</p>
+                  {/* Sentence appears underneath the years */}
+                  <p className="info-card-sub">Bringing hands-on technical experience across network engineering, security and infrastructure operations.</p>
                 </div>
               </AnimatedSection>
 
@@ -125,7 +129,7 @@ export default function About({ personalInfo }) {
                 </div>
               </AnimatedSection>
 
-              {/* Firewall & Network Expertise Card (NEW) */}
+              {/* Firewall & Network Expertise Card */}
               <AnimatedSection animation="fadeUp" delay={550} className="info-card">
                 <div className="info-card-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -140,7 +144,7 @@ export default function About({ personalInfo }) {
                 </div>
               </AnimatedSection>
 
-              {/* Certifications In Progress Card (NEW) */}
+              {/* Certifications In Progress Card */}
               <AnimatedSection animation="fadeUp" delay={600} className="info-card">
                 <div className="info-card-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -150,7 +154,7 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Certifications</h3>
-                  <p className="info-card-value">Arbor Edge Defense (AED) &<br /> PPDM Dell Implementation	and	Administration</p>
+                  <p className="info-card-value">Arbor Edge Defense (AED) &<br /> PPDM Dell Implementation and Administration</p>
                   <p className="info-card-sub">Completed</p>
                 </div>
               </AnimatedSection>
