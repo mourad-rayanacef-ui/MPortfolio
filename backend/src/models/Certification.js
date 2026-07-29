@@ -19,6 +19,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true
     },
+    status: {
+      type: DataTypes.ENUM('Completed', 'In Progress', 'Training Completed', 'Not Started', 'Expired'),
+      defaultValue: 'Completed'
+    },
     logoUrl: {
       type: DataTypes.STRING,
       allowNull: true

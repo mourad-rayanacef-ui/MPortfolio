@@ -25,6 +25,18 @@ export default function Education() {
     }
   };
 
+  // Helper function for status badge classes
+  const getStatusBadgeClass = (status) => {
+    const classes = {
+      'Completed': 'status-completed',
+      'In Progress': 'status-progress',
+      'Training Completed': 'status-training',
+      'Not Started': 'status-not-started',
+      'Expired': 'status-expired'
+    };
+    return classes[status] || 'status-default';
+  };
+
   if (loading) {
     return (
       <section id="education" className="education">
@@ -184,11 +196,21 @@ export default function Education() {
                       </div>
                     ))}
                   </div>
+                  
+                  {edu.Courses.length > 4 && (
+                    <button 
+                      className="show-more-btn"
+                      onClick={() => toggleCourses(edu.id)}
+                    >
+                      {showAllCourses[edu.id] ? 'Show Less ↑' : `Show ${edu.Courses.length - 4} More Courses ↓`}
+                    </button>
+                  )}
                 </div>
               )}
             </AnimatedSection>
           ))}
 
+          {/* Standalone Certifications Section with Status */}
           {standaloneCertifications.length > 0 && (
             <AnimatedSection animation="fadeUp" delay={200} className="standalone-certifications-section" style={{ marginTop: '2rem' }}>
               <h3 className="certifications-title">Training & Certifications</h3>
@@ -219,6 +241,71 @@ export default function Education() {
                         <span className="cert-label">Date:</span>
                         <span className="cert-value">{cert.date}</span>
                       </div>
+                      {cert.status && (
+                        <div className="cert-status">
+                          <span className={`status-badge ${getStatusBadgeClass(cert.status)}`}>
+                            {cert.status}
+                          </span>
+                        </div>
+                      )}
+                      {cert.certificateUrl && (
+                        <button 
+                          className="download-cert-btn"
+                          onClick={() => handleDownloadCertificate(cert.certificateUrl, cert.name)}
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M7 10L12 15L17 10" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M12 15V3" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round"/>
+                          </svg>
+                          View Certificate
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+          )}
+
+          {/* Combined Certifications Section (when no standalone) */}
+          {allCertifications.length > 0 && standaloneCertifications.length === 0 && (
+            <AnimatedSection animation="fadeUp" delay={200} className="all-certifications-section" style={{ marginTop: '2rem' }}>
+              <h3 className="certifications-title">All Certifications</h3>
+              <div className="certifications-list">
+                {allCertifications.map((cert) => (
+                  <div key={cert.id} className="certification-card">
+                    <div className="certification-header">
+                      <div className="certification-info">
+                        <div className="certification-title-row">
+                          {cert.logoUrl && (
+                            <img 
+                              src={cert.logoUrl} 
+                              alt={cert.issuer || 'Logo'} 
+                              className="cert-logo"
+                              loading="lazy"
+                              onError={(e) => e.target.style.display = 'none'}
+                            />
+                          )}
+                          <div>
+                            <h4 className="certification-name">{cert.name}</h4>
+                            <p className="certification-issuer">{cert.issuer}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="certification-details">
+                      <div className="cert-date">
+                        <span className="cert-label">Date:</span>
+                        <span className="cert-value">{cert.date}</span>
+                      </div>
+                      {cert.status && (
+                        <div className="cert-status">
+                          <span className={`status-badge ${getStatusBadgeClass(cert.status)}`}>
+                            {cert.status}
+                          </span>
+                        </div>
+                      )}
                       {cert.certificateUrl && (
                         <button 
                           className="download-cert-btn"

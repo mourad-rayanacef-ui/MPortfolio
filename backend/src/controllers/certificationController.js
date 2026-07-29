@@ -18,10 +18,10 @@ exports.createCertification = async (req, res) => {
     console.log('req.body:', req.body);
     console.log('req.files:', req.files);
     
-    // Extract fields from req.body (multer parses FormData)
-    const { name, issuer, date, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
+    // Extract fields from req.body
+    const { name, issuer, date, status, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
     
-    console.log('Extracted values:', { name, issuer, date, certificateUrl, logoUrl });
+    console.log('Extracted values:', { name, issuer, date, status, certificateUrl, logoUrl });
     
     // Validate required fields
     if (!name || name.trim() === '') {
@@ -36,6 +36,7 @@ exports.createCertification = async (req, res) => {
       name: name.trim(),
       issuer: (issuer && issuer.trim()) ? issuer.trim() : '',
       date: (date && date.trim()) ? date.trim() : '',
+      status: status || 'Completed',
       certificateUrl: certificateUrl || null,
       certificatePublicId: certificatePublicId || null,
       logoUrl: logoUrl || null,
@@ -76,12 +77,13 @@ exports.updateCertification = async (req, res) => {
       });
     }
     
-    const { name, issuer, date, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
+    const { name, issuer, date, status, certificateUrl, certificatePublicId, logoUrl, logoPublicId } = req.body;
     
     const updateData = {};
     if (name !== undefined && name !== null) updateData.name = name.trim();
     if (issuer !== undefined) updateData.issuer = issuer;
     if (date !== undefined) updateData.date = date;
+    if (status !== undefined) updateData.status = status;
     if (certificateUrl !== undefined) updateData.certificateUrl = certificateUrl;
     if (certificatePublicId !== undefined) updateData.certificatePublicId = certificatePublicId;
     if (logoUrl !== undefined) updateData.logoUrl = logoUrl;

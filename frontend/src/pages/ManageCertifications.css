@@ -413,3 +413,85 @@
     text-align: center;
   }
 }
+/* Add these to your ManageCertifications.css */
+
+/* Status Badge Styles */
+.status-badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 30px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.status-completed {
+  background: #ECFDF5;
+  color: #065F46;
+}
+
+.dark .status-completed {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6EE7B7;
+}
+
+.status-progress {
+  background: #EFF6FF;
+  color: #1E40AF;
+}
+
+.dark .status-progress {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93C5FD;
+}
+
+.status-training {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.dark .status-training {
+  background: rgba(245, 158, 11, 0.15);
+  color: #FCD34D;
+}
+
+.status-not-started {
+  background: #F3F4F6;
+  color: #4B5563;
+}
+
+.dark .status-not-started {
+  background: rgba(156, 163, 175, 0.15);
+  color: #9CA3AF;
+}
+
+.status-expired {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.dark .status-expired {
+  background: rgba(239, 68, 68, 0.15);
+  color: #FCA5A5;
+}
+
+.status-default {
+  background: #F3F4F6;
+  color: #4B5563;
+}
+
+.dark .status-default {
+  background: rgba(156, 163, 175, 0.15);
+  color: #9CA3AF;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .status-badge {
+    font-size: 0.5rem;
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.3rem;
+  }
+}

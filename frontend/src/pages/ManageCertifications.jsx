@@ -13,10 +13,20 @@ export default function ManageCertifications() {
   const [formData, setFormData] = useState({
     name: '', 
     issuer: '', 
-    date: ''
+    date: '',
+    status: 'Completed'
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
+  // Status options
+  const statusOptions = [
+    { value: 'Completed', label: '✅ Completed' },
+    { value: 'In Progress', label: '🔄 In Progress' },
+    { value: 'Training Completed', label: '📘 Training Completed' },
+    { value: 'Not Started', label: '⏳ Not Started' },
+    { value: 'Expired', label: '⏰ Expired' }
+  ];
 
   useEffect(() => { 
     loadData(); 
@@ -99,6 +109,7 @@ export default function ManageCertifications() {
       submitData.append('name', formData.name.trim());
       submitData.append('issuer', formData.issuer || '');
       submitData.append('date', formData.date || '');
+      submitData.append('status', formData.status || 'Completed');
       
       // ✅ Upload certificate directly to Cloudinary from browser
       if (certificateFile) {
@@ -159,7 +170,8 @@ export default function ManageCertifications() {
     setFormData({ 
       name: '', 
       issuer: '', 
-      date: '' 
+      date: '',
+      status: 'Completed'
     });
     setCertificateFile(null);
     setLogoFile(null);
@@ -175,7 +187,8 @@ export default function ManageCertifications() {
     setFormData({
       name: cert.name || '',
       issuer: cert.issuer || '',
-      date: cert.date || ''
+      date: cert.date || '',
+      status: cert.status || 'Completed'
     });
     setCertificateFile(null);
     setLogoFile(null);
@@ -209,6 +222,17 @@ export default function ManageCertifications() {
       return;
     }
     window.open(certificateUrl, '_blank');
+  };
+
+  const getStatusBadgeClass = (status) => {
+    const classes = {
+      'Completed': 'status-completed',
+      'In Progress': 'status-progress',
+      'Training Completed': 'status-training',
+      'Not Started': 'status-not-started',
+      'Expired': 'status-expired'
+    };
+    return classes[status] || 'status-default';
   };
 
   if (loading) {
@@ -272,6 +296,23 @@ export default function ManageCertifications() {
             />
           </div>
           <div className="form-group">
+            <label>Status</label>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+            >
+              {statusOptions.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        <div className="form-row">
+          <div className="form-group">
             <label>Issuer Logo (Image)</label>
             <input 
               type="file" 
@@ -291,9 +332,6 @@ export default function ManageCertifications() {
               </small>
             )}
           </div>
-        </div>
-        
-        <div className="form-row">
           <div className="form-group">
             <label>Certificate File (PDF/Image)</label>
             <input 
@@ -350,6 +388,11 @@ export default function ManageCertifications() {
                     <p className="item-description">
                       Date: {cert.date || 'Not specified'}
                     </p>
+                    {cert.status && (
+                      <span className={`status-badge ${getStatusBadgeClass(cert.status)}`}>
+                        {cert.status}
+                      </span>
+                    )}
                     {cert.certificateUrl && (
                       <span className="file-status">📄 Certificate uploaded</span>
                     )}

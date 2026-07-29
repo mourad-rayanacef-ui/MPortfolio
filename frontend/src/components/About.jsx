@@ -87,7 +87,7 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Experience</h3>
-                  <p className="info-card-value">{personalInfo.totalExperience || "3+ Years"}</p>
+                  <p className="info-card-value">{personalInfo.totalExperience || "1.5 Years"}</p>
                 </div>
               </AnimatedSection>
 
@@ -103,8 +103,8 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Current Role</h3>
-                  <p className="info-card-value">{personalInfo.currentJob || "Full-Stack Developer"}</p>
-                  <p className="info-card-sub">{personalInfo.currentCompany || "Tech Company"}</p>
+                  <p className="info-card-value">{personalInfo.currentJob || "Network Security & Operations Engineer"}</p>
+                  <p className="info-card-sub">{personalInfo.currentCompany || "Algérie Presse Service (APS) — National Press Agency, Algiers"}</p>
                 </div>
               </AnimatedSection>
 
@@ -120,8 +120,38 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Last Project</h3>
-                  <p className="info-card-value">{personalInfo.lastProject || "Building Amazing Things"}</p>
+                  <p className="info-card-value">{personalInfo.lastProject || "Built a full SIEM from scratch using ELK Stack"}</p>
                   <p className="info-card-sub">Completed / Ongoing</p>
+                </div>
+              </AnimatedSection>
+
+              {/* Firewall & Network Expertise Card (NEW) */}
+              <AnimatedSection animation="fadeUp" delay={550} className="info-card">
+                <div className="info-card-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M9.5 12L11 13.5L14.5 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div className="info-card-content">
+                  <h3 className="info-card-title">Firewall & Network</h3>
+                  <p className="info-card-value">FortiGate / FortiOS</p>
+                  <p className="info-card-sub">NAT, IPsec/SSL VPN, OSPF/BGP, Anti-DDoS</p>
+                </div>
+              </AnimatedSection>
+
+              {/* Certifications In Progress Card (NEW) */}
+              <AnimatedSection animation="fadeUp" delay={600} className="info-card">
+                <div className="info-card-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M9 14L7 22L12 19L17 22L15 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div className="info-card-content">
+                  <h3 className="info-card-title">Certifications</h3>
+                  <p className="info-card-value">Fortinet NSE4 & Azure AZ-104</p>
+                  <p className="info-card-sub">In progress</p>
                 </div>
               </AnimatedSection>
             </div>
