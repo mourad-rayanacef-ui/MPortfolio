@@ -135,8 +135,8 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Network & Firewalling</h3>
-                  <p className="info-card-value">FortiGate & Zabbix</p>
-                  <p className="info-card-sub">NAT, IPsec/SSL VPN, OSPF/BGP, Anti-DDoS</p>
+                  <p className="info-card-value">FortiGate & Zabbix For Monitoring and Observability</p>
+                  <p className="info-card-sub">NAT, IPsec/SSL VPN, OSPF/BGP, Anti-DDoS , SNNP & SYSLOG</p>
                 </div>
               </AnimatedSection>
 
