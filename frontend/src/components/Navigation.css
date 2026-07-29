@@ -75,9 +75,8 @@
   color: #1F2032;
 }
 
-.navigation.dark .logo-ico {
-  filter: brightness(0) saturate(100%) invert(0%) sepia(100%) saturate(7500%) hue-rotate(180deg) brightness(100%) contrast(100%);
-}
+/* ✅ FIX: Removed the filter that was turning the logo black in dark mode */
+/* The logo will now display normally in both light and dark modes */
 
 /* Menu - Right side */
 .nav-menu {
