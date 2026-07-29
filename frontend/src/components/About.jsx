@@ -62,7 +62,7 @@ export default function About({ personalInfo }) {
           <AnimatedSection animation="fadeLeft" delay={300} className="about-info-section">
             <div className="info-cards-grid">
               
-              {/* --- EDUCATION CARD --- */}
+              {/* --- UPDATED EDUCATION CARD --- */}
               <AnimatedSection animation="fadeUp" delay={350} className="info-card">
                 <div className="info-card-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,12 +73,14 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Education</h3>
+                  {/* TITLE */}
                   <p className="info-card-value">Master degree in networks and distributed systems from USTHB</p>
-                  <p className="info-card-sub">Bringing hands-on technical experience across network engineering, security and infrastructure operations.</p>
+                  {/* GREY SUBTITLE UNDERNEATH */}
+                  <p className="info-card-sub">University of Science and Technology – Houari Boumediene</p>
                 </div>
               </AnimatedSection>
 
-              {/* --- EXPERIENCE CARD (Years + Sentence underneath) --- */}
+              {/* --- EXPERIENCE CARD --- */}
               <AnimatedSection animation="fadeUp" delay={400} className="info-card">
                 <div className="info-card-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,9 +90,7 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Experience</h3>
-                  {/* Years appear here */}
                   <p className="info-card-value">{personalInfo.totalExperience || "1.5 Years"}</p>
-                  {/* Sentence appears underneath the years */}
                   <p className="info-card-sub">Bringing hands-on technical experience across network engineering, security and infrastructure operations.</p>
                 </div>
               </AnimatedSection>
