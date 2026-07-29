@@ -150,7 +150,7 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Certifications</h3>
-                  <p className="info-card-value">Arbor Edge Defense (AED)</p>
+                  <p className="info-card-value">Arbor Edge Defense (AED) &<br /> PPDM Dell Implementation	and	Administration</p>
                   <p className="info-card-sub">Completed</p>
                 </div>
               </AnimatedSection>
