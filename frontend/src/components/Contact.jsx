@@ -26,7 +26,7 @@ export default function Contact({ personalInfo }) {
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
-        to_email: personalInfo.email,
+        to_email: 'yassineacef@gmail.com',
         message: formData.message,
         reply_to: formData.email
       };

@@ -134,8 +134,8 @@ export default function About({ personalInfo }) {
                   </svg>
                 </div>
                 <div className="info-card-content">
-                  <h3 className="info-card-title">Firewall & Network</h3>
-                  <p className="info-card-value">FortiGate / FortiOS</p>
+                  <h3 className="info-card-title">Network & Firewalling</h3>
+                  <p className="info-card-value">FortiGate & Zabbix</p>
                   <p className="info-card-sub">NAT, IPsec/SSL VPN, OSPF/BGP, Anti-DDoS</p>
                 </div>
               </AnimatedSection>
@@ -150,8 +150,8 @@ export default function About({ personalInfo }) {
                 </div>
                 <div className="info-card-content">
                   <h3 className="info-card-title">Certifications</h3>
-                  <p className="info-card-value">Fortinet NSE4 & Azure AZ-104</p>
-                  <p className="info-card-sub">In progress</p>
+                  <p className="info-card-value">Arbor Edge Defense (AED)</p>
+                  <p className="info-card-sub">Completed</p>
                 </div>
               </AnimatedSection>
             </div>
