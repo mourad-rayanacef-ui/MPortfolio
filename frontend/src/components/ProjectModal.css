@@ -19,7 +19,7 @@
 }
 
 .modal-backdrop.dark {
-  background-color: rgba(20, 21, 35, 0.85);
+  background-color: rgba(2, 42, 60, 0.85);
 }
 
 @keyframes fadeIn {
@@ -42,7 +42,7 @@
 }
 
 .modal-backdrop.dark .modal-container {
-  background-color: #1F2032;
+  background-color: #022A3C;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
 }
 
@@ -86,7 +86,7 @@
 
 .modal-backdrop.dark .modal-close:hover {
   background-color: #F9977B;
-  color: #1F2032;
+  color: #022A3C;
 }
 
 /* Sticky Header */
@@ -100,7 +100,7 @@
 }
 
 .modal-backdrop.dark .modal-header-sticky {
-  background: #1F2032;
+  background: #022A3C;
   border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
@@ -125,7 +125,7 @@
 }
 
 .modal-backdrop.dark .modal-image-wrapper {
-  background: #2a2b3d;
+  background: #011C29;
 }
 
 .modal-image {
@@ -163,7 +163,7 @@
 }
 
 .modal-backdrop.dark .modal-title {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .modal-date {
@@ -213,7 +213,7 @@
 }
 
 .modal-backdrop.dark .modal-text {
-  color: #D7DEE2;
+  color: #9FB4BE;
 }
 
 /* Tech Stack */
@@ -233,7 +233,7 @@
 }
 
 .modal-backdrop.dark .modal-tech {
-  background-color: #2a2b3d;
+  background-color: #011C29;
   color: #9FB4BE;
 }
 

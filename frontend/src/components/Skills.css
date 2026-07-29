@@ -7,7 +7,7 @@
 }
 
 .dark .skills {
-  background: linear-gradient(180deg, #1a1b2a 0%, #1F2032 100%);
+  background: linear-gradient(180deg, #022A3C 0%, #011C29 100%);
 }
 
 .skills-container {
@@ -35,8 +35,8 @@
 }
 
 .dark .section-badge {
-  background: rgba(249, 151, 123, 0.12);
-  color: #F9977B;
+  background: rgba(243, 173, 122, 0.12);
+  color: #F3AD7A;
 }
 
 .section-title {
@@ -49,7 +49,7 @@
 }
 
 .dark .section-title {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .section-divider {
@@ -107,7 +107,7 @@
 .dark .filter-btn:hover {
   background: rgba(249, 151, 123, 0.08);
   border-color: #F9977B;
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .filter-btn.active {
@@ -119,7 +119,7 @@
 .dark .filter-btn.active {
   background: #F9977B;
   border-color: #F9977B;
-  color: #1F2032;
+  color: #022A3C;
 }
 
 .skills-grid {
@@ -139,8 +139,8 @@
 }
 
 .dark .skill-card {
-  background: #1F2032;
-  border-color: rgba(255, 255, 255, 0.03);
+  background: #022A3C;
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .skill-card:hover {
@@ -227,7 +227,7 @@
 }
 
 .dark .skill-name {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .skill-category {
@@ -270,19 +270,19 @@
 }
 
 .dark .skill-progress-bar {
-  background: #2a2b3d;
+  background: #011C29;
 }
 
 .skill-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #1F2032, #3a4a5c);
+  background: linear-gradient(90deg, #F9977B, #F3AD7A);
   border-radius: 3px;
   width: 0%;
   transition: width 0.3s ease;
 }
 
 .dark .skill-progress-fill {
-  background: linear-gradient(90deg, #4a6b8a, #6a8baa);
+  background: linear-gradient(90deg, #F9977B, #F3AD7A);
 }
 
 @keyframes fillProgress {
@@ -303,7 +303,7 @@
 }
 
 .dark .skill-footer {
-  border-top-color: rgba(255, 255, 255, 0.03);
+  border-top-color: rgba(255, 255, 255, 0.05);
 }
 
 .skill-since {
@@ -330,7 +330,7 @@
 }
 
 .dark .project-tag {
-  background: #2a2b3d;
+  background: #011C29;
   color: #9FB4BE;
 }
 

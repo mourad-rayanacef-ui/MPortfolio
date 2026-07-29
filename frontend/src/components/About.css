@@ -7,7 +7,7 @@
 }
 
 .dark .about {
-  background: linear-gradient(180deg, #1a1b2a 0%, #1F2032 100%);
+  background: linear-gradient(180deg, #022A3C 0%, #011C29 100%);
 }
 
 .about-container {
@@ -35,8 +35,8 @@
 }
 
 .dark .section-badge {
-  background: rgba(249, 151, 123, 0.12);
-  color: #F9977B;
+  background: rgba(243, 173, 122, 0.12);
+  color: #F3AD7A;
 }
 
 .section-title {
@@ -49,7 +49,7 @@
 }
 
 .dark .section-title {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .section-divider {
@@ -65,7 +65,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  align-items: start; /* left column no longer force-stretched to match a taller right column */
+  align-items: start;
 }
 
 /* ===== Left Column - Bio ===== */
@@ -82,8 +82,8 @@
 }
 
 .dark .about-bio-section {
-  background: #1F2032;
-  border-color: rgba(255, 255, 255, 0.03);
+  background: #022A3C;
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .about-bio-section:hover {
@@ -100,7 +100,7 @@
 }
 
 .dark .about-bio {
-  color: #D7DEE2;
+  color: #9FB4BE;
 }
 
 .about-contact-info {
@@ -140,7 +140,7 @@
 }
 
 .dark .contact-item a {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .dark .contact-item a:hover {
@@ -155,7 +155,7 @@
 }
 
 .dark .about-cv-wrapper {
-  border-top-color: rgba(255, 255, 255, 0.03);
+  border-top-color: rgba(255, 255, 255, 0.05);
 }
 
 .about-cv-btn {
@@ -174,7 +174,7 @@
 
 .dark .about-cv-btn {
   background: #F9977B;
-  color: #1F2032;
+  color: #022A3C;
 }
 
 .about-cv-btn:hover {
@@ -183,7 +183,7 @@
   box-shadow: 0 4px 12px rgba(249, 151, 123, 0.3);
 }
 
-/* ===== Right Column - Info Cards (now 6 cards, 2 cols x 3 rows) ===== */
+/* ===== Right Column - Info Cards ===== */
 .about-info-section {
   display: flex;
   flex-direction: column;
@@ -211,8 +211,8 @@
 }
 
 .dark .info-card {
-  background: #1F2032;
-  border-color: rgba(255, 255, 255, 0.03);
+  background: #022A3C;
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .info-card:hover {
@@ -265,7 +265,7 @@
 }
 
 .dark .info-card-value {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .info-card-sub {

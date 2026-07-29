@@ -25,7 +25,6 @@ export default function Education() {
     }
   };
 
-  // Helper function for status badge classes
   const getStatusBadgeClass = (status) => {
     const classes = {
       'Completed': 'status-completed',
@@ -119,7 +118,10 @@ export default function Education() {
               <div className="education-main-card">
                 <div className="education-header">
                   <div className="education-header-info">
-                    <h3 className="education-degree">{edu.degree}</h3>
+                    {/* UPDATED: Degree text */}
+                    <h3 className="education-degree">
+                      Master degree in networks and distributed systems from USTHB
+                    </h3>
                     <p className="education-university">{edu.university}</p>
                   </div>
                 </div>
@@ -137,6 +139,13 @@ export default function Education() {
                       {new Date().getFullYear() >= edu.expectedGraduationYear ? 'Graduated' : 'In Progress'}
                     </span>
                   </div>
+                </div>
+
+                {/* UPDATED: Added new subtitle sentence */}
+                <div className="education-subtitle" style={{ marginTop: '0.5rem', marginBottom: '1rem', fontStyle: 'italic' }}>
+                  <p style={{ fontSize: '0.85rem', color: '#4A5D68', lineHeight: '1.5' }}>
+                    Bringing hands-on technical experience across network engineering, security and infrastructure operations.
+                  </p>
                 </div>
 
                 {edu.description && (

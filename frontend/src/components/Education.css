@@ -814,6 +814,7 @@
     padding: 0.35rem 0.5rem;
   }
 }
+
 /* Status Badge Styles for Certifications */
 .status-badge {
   display: inline-block;
@@ -886,7 +887,6 @@
   color: #9CA3AF;
 }
 
-/* Certification Details - Status alignment */
 .cert-status {
   display: flex;
   align-items: center;
@@ -899,7 +899,6 @@
   flex-wrap: wrap;
 }
 
-/* Responsive */
 @media (max-width: 480px) {
   .status-badge {
     font-size: 0.5rem;

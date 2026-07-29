@@ -6,7 +6,7 @@
 }
 
 .dark .contact {
-  background: linear-gradient(180deg, #1F2032 0%, #1a1b2a 100%);
+  background: linear-gradient(180deg, #022A3C 0%, #011C29 100%);
 }
 
 .contact-container {
@@ -34,8 +34,8 @@
 }
 
 .dark .section-badge {
-  background: rgba(249, 151, 123, 0.12);
-  color: #F9977B;
+  background: rgba(243, 173, 122, 0.12);
+  color: #F3AD7A;
 }
 
 .section-title {
@@ -48,7 +48,7 @@
 }
 
 .dark .section-title {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .section-divider {
@@ -89,8 +89,8 @@
 }
 
 .dark .contact-form {
-  background: #1F2032;
-  border-color: rgba(255, 255, 255, 0.03);
+  background: #022A3C;
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .form-group {
@@ -112,9 +112,9 @@
 
 .dark .form-group input,
 .dark .form-group textarea {
-  background: #2a2b3d;
+  background: #011C29;
   border-color: rgba(255, 255, 255, 0.06);
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .form-group input:focus,
@@ -150,7 +150,7 @@
 
 .dark .submit-btn {
   background: #F9977B;
-  color: #1F2032;
+  color: #022A3C;
 }
 
 .submit-btn:hover {

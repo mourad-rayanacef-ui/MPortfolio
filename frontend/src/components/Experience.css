@@ -7,7 +7,7 @@
 }
 
 .dark .experience {
-  background: linear-gradient(180deg, #1F2032 0%, #1a1b2a 100%);
+  background: linear-gradient(180deg, #022A3C 0%, #011C29 100%);
 }
 
 .experience-container {
@@ -35,8 +35,8 @@
 }
 
 .dark .section-badge {
-  background: rgba(249, 151, 123, 0.12);
-  color: #F9977B;
+  background: rgba(243, 173, 122, 0.12);
+  color: #F3AD7A;
 }
 
 .section-title {
@@ -49,7 +49,7 @@
 }
 
 .dark .section-title {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .section-divider {
@@ -93,7 +93,7 @@
 }
 
 .dark .experience-group-title {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .experience-group-title::before {
@@ -135,9 +135,9 @@
 }
 
 .dark .marker-dot {
-  background: #3a3b4f;
-  border-color: #1F2032;
-  box-shadow: 0 0 0 2px rgba(58, 59, 79, 0.2);
+  background: #F9977B;
+  border-color: #022A3C;
+  box-shadow: 0 0 0 2px rgba(249, 151, 123, 0.2);
 }
 
 .marker-dot.internship {
@@ -147,7 +147,7 @@
 }
 
 .dark .marker-dot.internship {
-  border-color: #1F2032;
+  border-color: #022A3C;
   box-shadow: 0 0 0 2px rgba(249, 151, 123, 0.2);
 }
 
@@ -176,8 +176,8 @@
 }
 
 .dark .experience-item-content {
-  background: #1F2032;
-  border-color: rgba(255, 255, 255, 0.03);
+  background: #022A3C;
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .experience-item-content:hover {
@@ -205,8 +205,8 @@
 }
 
 .dark .experience-company-logo {
-  background: #2a2b3d;
-  border-color: rgba(255, 255, 255, 0.03);
+  background: #011C29;
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .experience-title-group {
@@ -223,7 +223,7 @@
 }
 
 .dark .experience-title {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .experience-company {
@@ -360,7 +360,7 @@
 }
 
 .dark .tech-tag {
-  background: #2a2b3d;
+  background: #011C29;
   color: #9FB4BE;
 }
 

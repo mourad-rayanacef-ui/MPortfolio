@@ -7,8 +7,8 @@
 }
 
 .dark .footer {
-  background: #1F2032;
-  border-top-color: rgba(255, 255, 255, 0.03);
+  background: #011C29;
+  border-top-color: rgba(255, 255, 255, 0.05);
 }
 
 .footer-container {
@@ -36,7 +36,7 @@
 }
 
 .dark .footer-logo .logo-text {
-  color: #FFFFFF;
+  color: #FDF9F6;
 }
 
 .footer-logo .logo-dot {
@@ -76,9 +76,9 @@
 }
 
 .dark .footer-social a {
-  background: #2a2b3d;
+  background: #022A3C;
   color: #9FB4BE;
-  border-color: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .footer-social a:hover {
@@ -90,7 +90,7 @@
 
 .dark .footer-social a:hover {
   background: #F9977B;
-  color: #1F2032;
+  color: #022A3C;
   border-color: #F9977B;
 }
 
@@ -101,7 +101,7 @@
 }
 
 .dark .footer-bottom {
-  border-top-color: rgba(255, 255, 255, 0.03);
+  border-top-color: rgba(255, 255, 255, 0.05);
 }
 
 .footer-bottom p {
