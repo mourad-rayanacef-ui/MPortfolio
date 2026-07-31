@@ -105,7 +105,7 @@ export default function Navigation({ darkMode, toggleDarkMode }) {
             alt="Acef Yacine Logo"
             className="logo-ico"
           />
-          <span className="logo-text">Acef Yacine</span>
+          <span className="logo-text">Yacine Acef</span>
         </div>
 
         {/* Backdrop overlay - only rendered/visible on mobile when menu is open */}

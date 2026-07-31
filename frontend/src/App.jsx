@@ -45,12 +45,12 @@ function MainApp() {
       <Hero personalInfo={personalInfo} darkMode={isDark} />
       <About personalInfo={personalInfo} />
       
-      {/* ✅ Lazy load sections with Suspense */}
+      {/* ✅ Lazy load sections with Suspense in the correct order */}
       <Suspense fallback={<div className="section-loader"><LoadingSpinner /></div>}>
-        <Education />
-        <Skills darkMode={isDark} />
         <Experience />
         <Projects darkMode={isDark} />
+        <Skills darkMode={isDark} />
+        <Education />
         <Contact personalInfo={personalInfo} />
       </Suspense>
     </div>
